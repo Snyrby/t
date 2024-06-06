@@ -1,23 +1,12 @@
-"use client";
-
-import { useScroll } from "@/hooks/use-scroll";
-import { ElementRef, useRef } from "react";
-import React, { useEffect } from "react";
-import { cn } from "@/lib/utils";
+import React, { useRef } from "react";
 import { FinanceBar } from "@/components/finance-bar";
 import { NavigationBar } from "@/components/navigation-bar";
 
 export default function Home() {
-  const targetRef = useRef<HTMLDivElement | null>(null);
-  const isInView = useScroll(targetRef);
   return (
     <div className="bg-white h-full">
-      <FinanceBar
-        targetRef={targetRef}
-      />
-      <NavigationBar 
-        isInView={isInView}
-      />
+      <FinanceBar />
+      <NavigationBar />
       <div className="h-full">test1</div>
       <div className="">test</div>
     </div>
