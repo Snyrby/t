@@ -1,13 +1,13 @@
 import { ReducerAction, ReducerWithoutAction, useReducer } from "react";
 
-export type ModalType = 
+export type ModalActions = 
     | "account"
     | "location"
 
-type ModalActions = {
-    type: ModalType | null,
+type ModalState = {
+    type: ModalActions | null,
     isOpen: boolean
-    onOpen: (type: ModalType) => void,
+    onOpen: (type: ModalActions) => void,
     onClose: () => void,
 }
 
@@ -17,16 +17,19 @@ const onClose = () => {
     
 }
 
-const onOpen = (type: ModalType) => {
+const onOpen = (type: ModalActions) => {
 return {
     type,
     isOpen: true,
 }
 }
 
-const modalReducer = (state: ModalActions, action: any) => {
-    if (action.type) {
-        onOpen(action.type)
+const modalReducer = (state: ModalState, action: ModalActions) => {
+    if (action) {
+        onOpen(action)
+    }
+    if (!action) {
+        onClose()
     }
     return state;
 }

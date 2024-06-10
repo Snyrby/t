@@ -1,0 +1,1 @@
+export type ModalActions = "account" | "location" | "close";
