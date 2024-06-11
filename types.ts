@@ -1,1 +1,1 @@
-export type ModalActions = "account" | "location" | "close";
+export type ModalActions = "ACCOUNT" | "LOCATION" | "CLOSE";

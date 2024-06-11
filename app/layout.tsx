@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Reddit_Mono } from "next/font/google";
 import "./globals.css";
-import { ModalProvider } from "@/providers/modal-provider";
+import { ModalProvider } from "@/hooks/use-modal-store";
 
 const inter = Reddit_Mono({ subsets: ["latin"] });
 
@@ -18,8 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ModalProvider />
+        <ModalProvider>
         {children}
+        </ModalProvider>
       </body>
     </html>
   );

@@ -1,40 +1,11 @@
 "use client";
 import { FinanceBarLinks } from "@/constants";
-import { useModal } from "@/hooks/use-modal-store";
-import { ModalActions } from "@/types";
 import { useRouter } from "next/navigation";
-import { createContext, useReducer } from "react";
+import { useModal } from "@/hooks/use-modal-store";
 
 export const FinanceBar = () => {
   const router = useRouter();
-
-  type ModalState = {
-    type: ModalActions | null;
-    isOpen: boolean;
-  };
-
-  const modalReducer = (state: ModalState, action: ModalActions) => {
-    if (action !== "close") {
-    return {
-      type: action,
-      isOpen: true,
-    };
-    }
-    if (action === "close") {
-      return {
-        type: action,
-        isOpen: false,
-      };
-    }
-    return state;
-  };
-
-  const [state, dispatch] = useReducer(modalReducer, {
-    type: null,
-    isOpen: false,
-  });
-  console.log(state);
-  
+  const {  } = useModal();
   return (
     <div className="h-[50px] target-red w-full">
       <div className="flex justify-between items-center mx-auto my-0 h-full max-w-[1400px]">
