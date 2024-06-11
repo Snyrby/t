@@ -1,5 +1,6 @@
 "use client";
 import { FinanceBarLinks } from "@/constants";
+import { useModal } from "@/hooks/use-modal-store";
 import { ModalActions } from "@/types";
 import { useRouter } from "next/navigation";
 import { createContext, useReducer } from "react";
