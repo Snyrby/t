@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Reddit_Mono } from "next/font/google";
 import "./globals.css";
-import { ModalProvider } from "@/hooks/use-modal-store";
+import { ModalProvider } from "@/providers/modal-context";
 
 const inter = Reddit_Mono({ subsets: ["latin"] });
 
