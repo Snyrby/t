@@ -12,14 +12,12 @@ export const ModalContext = createContext<TModalContext>(initContext);
 
 export const modalReducer = (state: TModalState, action: TModalActions) => {
   if (action !== "CLOSE") {
-    console.log("opened");
     return {
       type: action,
       isOpen: true,
     };
   }
   if (action === "CLOSE") {
-    console.log("closed");
     return {
       type: action,
       isOpen: false,
