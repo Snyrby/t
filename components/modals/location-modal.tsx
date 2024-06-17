@@ -45,7 +45,7 @@ export const LocationModal = () => {
         <div className="flex flex-col h-full">
           <div className="flex my-3 justify-between items-center mx-5">
             <p className="text-xl font-bold">Update shipping location</p>
-            <div className="bg-gray-100 opacity-50 rounded-full transition hover:opacity-100 size-7 flex justify-center items-center">
+            <div className="bg-gray-100 opacity-50 rounded-full transition hover:opacity-100 size-7 flexCenter">
               <X
                 onClick={() => onClose()}
                 className="cursor-pointer opacity-100"
@@ -56,54 +56,52 @@ export const LocationModal = () => {
           </div>
           <div className="border mx-0" />
           <div className="flex flex-col justify-between h-full mx-4">
-            <div className="">
-            <p className="text-sm my-4">
-              Item availability and shipping options will change based on
-              location.
-            </p>
-            <form
-              className="relative"
-              onSubmit={handleSubmit(onSubmit)}
-              noValidate
-            >
-              <label
-                htmlFor="zipCode"
-                className={clsx(
-                  "absolute -top-2 left-3 bg-white text-xs z-10",
-                  formState.errors.zipCode?.message &&
-                    "text-red-600 bg-amber-100"
-                )}
+            <div className="flex justify-start gap-y-4 items-center flex-col h-full">
+              <p className="text-sm my-4">
+                Item availability and shipping options will change based on
+                location.
+              </p>
+              <form
+                className="relative w-full"
+                onSubmit={handleSubmit(onSubmit)}
+                noValidate
               >
-                Zip code
-              </label>
-              <input
-                type="text"
-                id="zipCode"
-                {...register("zipCode", {
-                  required: {
-                    value: true,
-                    message: "Zipcode is required",
-                  },
-                  pattern: {
-                    value: /^[0-9]{5}$/,
-                    message: "Invalid zipcode",
-                  },
-                })}
-                className={clsx(
-                  "p-[10px] border-[1px] border-[rgb(136, 136, 136)] rounded-sm w-full outline-none focus:bg-white focus:border-[2px]",
-                  formState.errors.zipCode?.message &&
-                    "border-red-600 bg-amber-100 focus:bg-amber-100"
-                )}
-                disabled={isLoading}
-              />
-            </form>
-            <p className="text-xs text-red-600">
-              {formState.errors.zipCode?.message}
-            </p>
-          </div>
-          <div className="">
-            button
-          </div>
+                <label
+                  htmlFor="zipCode"
+                  className={clsx(
+                    "absolute -top-2 left-3 text-xs z-10",
+                    formState.errors.zipCode?.message ?
+                      "text-red-600 bg-amber-100" : "text-black bg-white"
+                  )}
+                >
+                  Zip code
+                </label>
+                <input
+                  type="text"
+                  id="zipCode"
+                  {...register("zipCode", {
+                    required: {
+                      value: true,
+                      message: "Zipcode is required",
+                    },
+                    pattern: {
+                      value: /^[0-9]{5}$/,
+                      message: "Invalid zipcode",
+                    },
+                  })}
+                  className={clsx(
+                    "p-[10px] border-[1px] border-[rgb(136, 136, 136)] rounded-sm w-full outline-none focus:bg-white focus:border-[2px]",
+                    formState.errors.zipCode?.message &&
+                      "border-red-600 bg-amber-100 focus:bg-amber-100"
+                  )}
+                  disabled={isLoading}
+                />
+              </form>
+              <p className="text-xs text-red-600">
+                {formState.errors.zipCode?.message}
+              </p>
+            </div>
+            <div className="">button</div>
           </div>
         </div>
       </aside>

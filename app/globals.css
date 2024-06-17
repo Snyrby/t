@@ -11,3 +11,9 @@ body,
 .target-red {
   background: #cc0000;
 }
+
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
