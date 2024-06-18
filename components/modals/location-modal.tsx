@@ -1,7 +1,7 @@
 import { useModal } from "@/hooks/use-modal-store";
 import clsx from "clsx";
 import { X } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 type LocationFormProps = {
@@ -10,8 +10,9 @@ type LocationFormProps = {
 
 export const LocationModal = () => {
   const { isOpen, onClose, onOpen, type } = useModal();
-  const { register, handleSubmit, setValue, getValues, formState } =
+  const { register, handleSubmit, formState } =
     useForm<LocationFormProps>();
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" || event.keyCode === 27) {
@@ -23,13 +24,26 @@ export const LocationModal = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
   if (type !== "LOCATION" || isOpen === false) {
     return null;
   }
 
-  const isLoading = formState.isSubmitting;
+  const isLoading = formState.isSubmitting
 
   const onSubmit = async (data: LocationFormProps) => {
+    try {
+      // Simulate an async operation with delay
+      await new Promise((resolve) => setTimeout(resolve, 10000));
+  
+      console.log("Data submitted:", data);
+    } catch (error) {
+      console.log("Location Modal Submit Error:", error);
+    } finally {
+      console.log("Loading state set to false");
+    }
+  };
+  
     // await fetch("http://ip-api.com/json")
     //   .then((res) => {
     //     return res.json();
@@ -37,8 +51,6 @@ export const LocationModal = () => {
     //   .then((data) => {
     //     return console.log(data);
     //   });
-    console.log(data);
-  };
   return (
     <>
       <aside className="fixed top-0 left-0 z-40 h-full bg-white w-96 shadow-lg transform transition-transform duration-300">
@@ -92,14 +104,16 @@ export const LocationModal = () => {
                   className={clsx(
                     "p-[10px] border-[1px] border-[rgb(136, 136, 136)] rounded-sm w-full outline-none focus:bg-white focus:border-[2px]",
                     formState.errors.zipCode?.message &&
-                      "border-red-600 bg-amber-100 focus:bg-amber-100"
+                      "border-red-600 bg-amber-100 focus:bg-amber-100",
+                      isLoading && "bg-blue-400 focus:bg-blue-600"
                   )}
-                  disabled={isLoading}
+                  disabled={formState.isSubmitting}
                 />
               </form>
-              <p className="text-xs text-red-600">
+              <p className="text-xs text-red-600 w-full -mt-2">
                 {formState.errors.zipCode?.message}
               </p>
+              <div className="bg-blue-700 w-full">Location</div>
             </div>
             <div className="">button</div>
           </div>
