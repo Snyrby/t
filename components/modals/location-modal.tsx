@@ -4,6 +4,8 @@ import { X, MapPin } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { setLocationCookie } from "@/lib/set-location-cookie";
+
 
 type LocationFormProps = {
   zipCode: number;
@@ -33,8 +35,9 @@ export const LocationModal = () => {
 
   const onSubmit = async (data: LocationFormProps) => {
     try {
+      setLocationCookie(data.zipCode);
       // Simulate an async operation with delay
-      await new Promise((resolve) => setTimeout(resolve, 10000));
+      // await new Promise((resolve) => setTimeout(resolve, 10000));
 
       console.log("Data submitted:", data);
     } catch (error) {
@@ -66,68 +69,63 @@ export const LocationModal = () => {
               />
             </div>
           </div>
-          <div className="flex flex-col justify-between h-full mx-4">
-            <div className="flex justify-start gap-y-4 items-center flex-col h-full">
-              <p className="text-sm my-2">
-                Item availability and shipping options will change based on
-                location.
-              </p>
-              <form
-                className="relative w-full"
-                onSubmit={handleSubmit(onSubmit)}
-                noValidate
-              >
-                <label
-                  htmlFor="zipCode"
-                  className={clsx(
-                    "absolute -top-2 left-3 text-xs z-10",
-                    formState.errors.zipCode?.message
-                      ? "text-red-600 bg-amber-100"
-                      : "text-black bg-white"
-                  )}
-                >
-                  Zip code
-                </label>
-                <input
-                  type="text"
-                  id="zipCode"
-                  {...register("zipCode", {
-                    required: {
-                      value: true,
-                      message: "Zipcode is required",
-                    },
-                    pattern: {
-                      value: /^[0-9]{5}$/,
-                      message: "Invalid zipcode",
-                    },
-                  })}
-                  className={clsx(
-                    "p-[10px] border-[1px] border-[rgb(136, 136, 136)] rounded-sm w-full outline-none focus:bg-white focus:border-[2px]",
-                    formState.errors.zipCode?.message &&
-                      "border-red-600 bg-amber-100 focus:bg-amber-100",
-                  )}
-                  disabled={formState.isSubmitting}
-                />
+          <form className="h-full flex flex-col justify-between mx-4" onSubmit={handleSubmit(onSubmit)} noValidate>
+              <div className="flex justify-start gap-y-4 items-center flex-col">
+                <p className="text-sm my-2">
+                  Item availability and shipping options will change based on
+                  location.
+                </p>
+                <div className="w-full relative">
+                  <label
+                    htmlFor="zipCode"
+                    className={clsx(
+                      "absolute -top-2 left-3 text-xs z-10",
+                      formState.errors.zipCode?.message
+                        ? "text-red-600 bg-amber-100"
+                        : "text-black bg-white"
+                    )}
+                  >
+                    Zip code
+                  </label>
+                  <input
+                    type="text"
+                    id="zipCode"
+                    {...register("zipCode", {
+                      required: {
+                        value: true,
+                        message: "Zipcode is required",
+                      },
+                      pattern: {
+                        value: /^[0-9]{5}$/,
+                        message: "Invalid zipcode",
+                      },
+                    })}
+                    className={clsx(
+                      "p-[10px] border-[1px] border-[rgb(136, 136, 136)] rounded-sm w-full outline-none focus:bg-white focus:border-[2px]",
+                      formState.errors.zipCode?.message &&
+                        "border-red-600 bg-amber-100 focus:bg-amber-100"
+                    )}
+                    disabled={formState.isSubmitting}
+                  />
+                </div>
                 <p className="text-xs text-red-600 w-full">
                   {formState.errors.zipCode?.message}
                 </p>
-              <Button
-                secondary
-                type="button"
-                className="gap-x-2 pl-6"
-                fullWidth
-                start
-                disabled={isLoading}
-              >
-                {/* w-full flex items-center justify-start gap-x-2 cursor-pointer pl-6 focus-visible: */}
-                <MapPin size={26} color="red" strokeWidth={2} />
-                <p className="underline text-base text-gray-600">
-                  Use my current location
-                </p>
-              </Button>
-              </form>
-            </div>
-          </div>
+                <Button
+                  secondary
+                  type="button"
+                  className="gap-x-2 pl-6"
+                  fullWidth
+                  start
+                  disabled={isLoading}
+                >
+                  {/* w-full flex items-center justify-start gap-x-2 cursor-pointer pl-6 focus-visible: */}
+                  <MapPin size={26} color="red" strokeWidth={2} />
+                  <p className="underline text-base text-gray-600">
+                    Use my current location
+                  </p>
+                </Button>
+              </div>
             <div className="border-t flex items-center justify-center h-20">
               <Button
                 type="submit"
@@ -140,6 +138,7 @@ export const LocationModal = () => {
                 {isLoading ? "Updating" : "Update"}
               </Button>
             </div>
+          </form>
         </div>
       </aside>
       <button
