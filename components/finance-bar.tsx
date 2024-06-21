@@ -3,16 +3,23 @@ import { FinanceBarLinks } from "@/constants";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
 
-export const FinanceBar = () => {
+type FinanceBarProps = {
+  zipCode?: string;
+}
+
+export const FinanceBar = ({
+  zipCode
+}: FinanceBarProps) => {
   const router = useRouter();
   const { onOpen, onClose } = useModal();
+  
   return (
     <div className="h-[50px] target-red w-full">
       <div className="flex justify-between items-center mx-auto my-0 h-full max-w-[1400px]">
         <div className="h-full flex items-center justify-start gap-x-4">
           <div className="hover:cursor-pointer">
-            <button type="button" onClick={() => onOpen("LOCATION")}>
-              Location
+            <button type="button" onClick={() => onOpen("LOCATION", { zipCode })}>
+              {zipCode ? `${zipCode}` : "Location"}
             </button>
           </div>
           <div className="hover:cursor-pointer" onClick={() => onClose()}>Store</div>

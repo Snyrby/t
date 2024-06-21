@@ -1,22 +1,23 @@
+"use client";
 import { useModal } from "@/hooks/use-modal-store";
 import clsx from "clsx";
 import { X, MapPin } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { onUseLocation, setLocationCookie } from "@/lib/set-location-cookie";
-import { useLocationCookie } from "@/hooks/use-location-cookie";
+import { retrieveLocation, setLocationCookie } from "@/lib/set-location-cookie";
 
 
 type LocationFormProps = {
-  zipCode: number;
+  zipCode: string;
 };
 
 export const LocationModal = () => {
-  const { isOpen, onClose, onOpen, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
   const { register, handleSubmit, formState, setValue } = useForm<LocationFormProps>();
-  const zipCode = useLocationCookie()
+  // const zipCode = useLocationCookie()
 
+  
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" || event.keyCode === 27) {
@@ -29,10 +30,16 @@ export const LocationModal = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (data.zipCode) {
+      setValue("zipCode", data.zipCode)
+    }
+  }, [data])
+
   if (type !== "LOCATION" || isOpen === false) {
     return null;
   }
-
+  
   const isLoading = formState.isSubmitting;
 
   const onSubmit = async (data: LocationFormProps) => {
@@ -48,6 +55,11 @@ export const LocationModal = () => {
       console.log("Loading state set to false");
     }
   };
+
+  const onUseLocation = () => {
+    retrieveLocation();
+    onClose();
+  }
 
   return (
     <>
@@ -113,7 +125,7 @@ export const LocationModal = () => {
                   fullWidth
                   start
                   disabled={isLoading}
-                  onClick={() => onUseLocation()}
+                  onClick={onUseLocation}
                 >
                   <MapPin size={26} color="red" strokeWidth={2} />
                   <p className="underline text-base text-gray-500">
