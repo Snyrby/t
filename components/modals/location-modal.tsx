@@ -4,7 +4,8 @@ import { X, MapPin } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { setLocationCookie } from "@/lib/set-location-cookie";
+import { onUseLocation, setLocationCookie } from "@/lib/set-location-cookie";
+import { useLocationCookie } from "@/hooks/use-location-cookie";
 
 
 type LocationFormProps = {
@@ -13,7 +14,8 @@ type LocationFormProps = {
 
 export const LocationModal = () => {
   const { isOpen, onClose, onOpen, type } = useModal();
-  const { register, handleSubmit, formState } = useForm<LocationFormProps>();
+  const { register, handleSubmit, formState, setValue } = useForm<LocationFormProps>();
+  const zipCode = useLocationCookie()
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -47,18 +49,11 @@ export const LocationModal = () => {
     }
   };
 
-  // await fetch("http://ip-api.com/json")
-  //   .then((res) => {
-  //     return res.json();
-  //   })
-  //   .then((data) => {
-  //     return console.log(data);
-  //   });
   return (
     <>
-      <aside className="fixed top-0 left-0 z-40 h-full bg-white w-[30rem] shadow-lg transform transition-transform duration-300">
+      <aside className="fixed top-0 left-0 z-40 h-full bg-white w-[25rem] shadow-lg transform transition-transform duration-300">
         <div className="flex flex-col h-full">
-          <div className="flex my-3 justify-between items-center border-b h-16">
+          <div className="flexBetween my-3 border-b h-16">
             <p className="text-2xl font-bold ml-5">Update shipping location</p>
             <div className="bg-gray-100 opacity-50 rounded-full transition hover:opacity-100 size-7 flexCenter mr-5">
               <X
@@ -70,7 +65,7 @@ export const LocationModal = () => {
             </div>
           </div>
           <form className="h-full flex flex-col justify-between mx-4" onSubmit={handleSubmit(onSubmit)} noValidate>
-              <div className="flex justify-start gap-y-4 items-center flex-col">
+              <div className="flexStart gap-y-4 flex-col">
                 <p className="text-sm my-2">
                   Item availability and shipping options will change based on
                   location.
@@ -105,7 +100,7 @@ export const LocationModal = () => {
                       formState.errors.zipCode?.message &&
                         "border-red-600 bg-amber-100 focus:bg-amber-100"
                     )}
-                    disabled={formState.isSubmitting}
+                    disabled={isLoading}
                   />
                 </div>
                 <p className="text-xs text-red-600 w-full">
@@ -118,19 +113,18 @@ export const LocationModal = () => {
                   fullWidth
                   start
                   disabled={isLoading}
+                  onClick={() => onUseLocation()}
                 >
-                  {/* w-full flex items-center justify-start gap-x-2 cursor-pointer pl-6 focus-visible: */}
                   <MapPin size={26} color="red" strokeWidth={2} />
-                  <p className="underline text-base text-gray-600">
+                  <p className="underline text-base text-gray-500">
                     Use my current location
                   </p>
                 </Button>
               </div>
-            <div className="border-t flex items-center justify-center h-20">
+            <div className="border-t flexCenter h-20">
               <Button
                 type="submit"
-                fullWidth={true}
-                danger={false}
+                fullWidth
                 disabled={isLoading}
                 center
                 className="mx-4 h-12 text-xl"
