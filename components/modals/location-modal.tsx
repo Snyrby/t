@@ -45,6 +45,7 @@ export const LocationModal = () => {
   const onSubmit = async (data: LocationFormProps) => {
     try {
       setLocationCookie(data.zipCode);
+      onClose();
       // Simulate an async operation with delay
       // await new Promise((resolve) => setTimeout(resolve, 10000));
 

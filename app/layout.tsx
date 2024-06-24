@@ -5,7 +5,7 @@ import { ModalProvider } from "@/providers/modal-context";
 import { ModalProviderGroup } from "@/providers/modal-provider";
 import { useLocationCookie } from "@/hooks/use-location-cookie";
 import { FinanceBar } from "@/components/finance-bar";
-import { NavigationBar } from "@/components/navigation-bar";
+import { NavigationBar } from "@/components/navigation/navigation-bar";
 
 const inter = Reddit_Mono({ subsets: ["latin"] });
 
