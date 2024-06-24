@@ -25,6 +25,7 @@ export const FinanceBar = ({ zipCode }: FinanceBarProps) => {
             <MapPin size={16}/>
             {zipCode ? `Ship to ${zipCode}` : "Use Your Location"}
           </Button>
+          {/* TODO: Fix this and add a few stores */}
           <Button
             type="button"
             onClick={() => onOpen("LOCATION", { zipCode })}

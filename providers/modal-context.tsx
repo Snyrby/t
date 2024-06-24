@@ -18,15 +18,14 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const onClose = () => {
     dispatch({ data: {}, type: "CLOSE"});
   };
-  const memo = useMemo(() => {
-    const value = {
+  const value = useMemo(() => {
+    return {
       isOpen: state.isOpen,
       type: state.type,
       data: state.data,
       onOpen: onOpen,
       onClose: onClose,
     };
-    return value;
   }, [state.isOpen, state.type]);
-  return <ModalContext.Provider value={memo}>{children}</ModalContext.Provider>;
+  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 };

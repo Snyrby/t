@@ -41,8 +41,8 @@ export const Button = ({
             disabled && "opacity-50 cursor-default",
             fullWidth && "w-full",
             secondary ? "text-gray-900" : "text-white",
-        //     danger &&
-        //   "bg-black hover:bg-black focus-visible:outline-black",
+            danger &&
+          "bg-black hover:bg-black focus-visible:outline-black",
           !secondary &&
           !danger &&
           "target-red hover:target-red focus-visible:target-red focus-visible:target-red"

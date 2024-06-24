@@ -15,7 +15,6 @@ type LocationFormProps = {
 export const LocationModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const { register, handleSubmit, formState, setValue } = useForm<LocationFormProps>();
-  // const zipCode = useLocationCookie()
 
   
   useEffect(() => {

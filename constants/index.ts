@@ -1,5 +1,3 @@
-import { text } from "stream/consumers";
-
 export const FinanceBarLinks = [
   { href: "/", key: "Target Circle", text: "Target Circle" },
   { href: "/", key: "Target Circle Card", text: "Target Circle Card" },
@@ -15,3 +13,11 @@ export const NavBarLinks = [
   { key: "New & featured", text: "New & featured"},
   { key: "Pickup & delivery", text: "Pickup & delivery"},
 ]
+
+export const DropDownLinks = [
+  { id: "Cateories", text: "Back to School"},
+  { id: "Cateories", text: "College"},
+  { id: "Cateories", text: "Grocery"},
+  { id: "Deals", text: "Top Deals"},
+  { id: "Deals", text: "Target Circle Deals"},
+];
