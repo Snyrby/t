@@ -20,27 +20,29 @@ const NavigationLink = ({ text, onClick, isSelected, id }: NavigationLink) => {
   }, [isSelected]);
 
   return (
-    <Button
-      type="button"
-      center
-      secondary
-      className="relative"
-      onClick={onClick}
-    >
-      {text}
-      {isSelected === id && (
+    <div className="relative">
+      <Button
+        type="button"
+        center
+        secondary
+        className="relative z-30 bg-blue-400"
+        onClick={onClick}
+      >
+        {text}
+      </Button>
+      {/* {isSelected === id && (
         <div
           className={cn(
-            "absolute top-8 bg-white",
-            isSelected ? "animate-slideDown" : "animate-slideUp"
+            "absolute mt-2 bg-white z-20 overflow-hidden transition-all",
+            isSelected !== "" ? "animate-slideDown" : "animate-slideUp"
           )}
         >
           {links.map((link) => (
             <p>{link.text}</p>
           ))}
         </div>
-      )}
-    </Button>
+      )} */}
+    </div>
   );
 };
 

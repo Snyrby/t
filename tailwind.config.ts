@@ -24,8 +24,8 @@ const config: Config = {
         },
       },
       animation: {
-        slideDown: "slideDown 0.5s ease-in-out forwards",
-        slideUp: "slideUp 0.5s ease-in-out forwards",
+        slideDown: "slideDown 1s forwards",
+        slideUp: "slideUp 1s ease-in-out forwards",
       },
     },
   },
