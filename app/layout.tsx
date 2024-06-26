@@ -27,7 +27,6 @@ export default async function RootLayout({
           <ModalProviderGroup />
             <FinanceBar zipCode={zipCode} />
             <NavigationBar />
-            {/* <button className="absolute bg-black/55 h-full w-full" /> */}
             {children}
         </ModalProvider>
       </body>

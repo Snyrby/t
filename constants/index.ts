@@ -15,9 +15,9 @@ export const NavBarLinks = [
 ]
 
 export const DropDownLinks = [
-  { id: "Cateories", text: "Back to School"},
-  { id: "Cateories", text: "College"},
-  { id: "Cateories", text: "Grocery"},
+  { id: "Categories", text: "Back to School"},
+  { id: "Categories", text: "College"},
+  { id: "Categories", text: "Grocery"},
   { id: "Deals", text: "Top Deals"},
   { id: "Deals", text: "Target Circle Deals"},
 ];

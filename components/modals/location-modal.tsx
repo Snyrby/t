@@ -1,11 +1,11 @@
 "use client";
 import { useModal } from "@/hooks/use-modal-store";
-import clsx from "clsx";
 import { X, MapPin } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { retrieveLocation, setLocationCookie } from "@/lib/set-location-cookie";
+import { cn } from "@/lib/utils";
 
 
 type LocationFormProps = {
@@ -85,7 +85,7 @@ export const LocationModal = () => {
                 <div className="w-full relative">
                   <label
                     htmlFor="zipCode"
-                    className={clsx(
+                    className={cn(
                       "absolute -top-2 left-3 text-xs z-10",
                       formState.errors.zipCode?.message
                         ? "text-red-600 bg-amber-100"
@@ -107,7 +107,7 @@ export const LocationModal = () => {
                         message: "Invalid zipcode",
                       },
                     })}
-                    className={clsx(
+                    className={cn(
                       "p-[10px] border-[1px] border-[rgb(136, 136, 136)] rounded-sm w-full outline-none focus:bg-white focus:border-[2px]",
                       formState.errors.zipCode?.message &&
                         "border-red-600 bg-amber-100 focus:bg-amber-100"

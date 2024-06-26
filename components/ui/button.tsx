@@ -1,6 +1,6 @@
 "use client";
 
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 type ButtonProps = {
   type: "button" | "submit" | "reset" | undefined;
@@ -29,7 +29,7 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <button onClick={onClick} type={type} disabled={disabled} 
-        className={clsx(
+        className={cn(
             `
             flex items-center rounded-md px-3 py-2 text-sm font-semibold
             focus-visible:outline-dotted
