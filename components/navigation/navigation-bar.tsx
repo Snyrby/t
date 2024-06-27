@@ -2,14 +2,15 @@
 import { NavBarLinks } from "@/constants";
 import Image from "next/image";
 import NavigationLink from "./navigation-link";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useModal } from "@/hooks/use-modal-store";
+import { Button } from "@/components/ui/button";
 
 export const NavigationBar = () => {
   const [isDropDown, setIsDropDown] = useState("");
   const [rect, setRect] = useState<string>("");
-  const dropDownRef = useRef<HTMLButtonElement>(null);
+  const refs = useRef<React.RefObject<HTMLButtonElement>[]>([]);
   const { isOpen } = useModal();
   useEffect(() => {
     isOpen && setIsDropDown("");
@@ -18,23 +19,28 @@ export const NavigationBar = () => {
   const handleClick = (key: string) => {
     isDropDown === key ? setIsDropDown("") : setIsDropDown(key);
   };
+   // Initialize the refs array if it hasn't been initialized yet
+   if (refs.current.length !== 4) {
+    refs.current = Array(4).fill(null).map((_, i) => refs.current[i] || React.createRef<HTMLButtonElement>());
+  }
 
-  const updatePosition = (): void => {
-    if (dropDownRef.current) {
-      const rect = dropDownRef.current.getBoundingClientRect();
-      rect.left.toFixed(2);
-      setRect(rect.left.toFixed(2));
-    }
-  };
+  // const updatePosition = (): void => {
+  //   if (dropDownRef.current) {
+  //     const rect = dropDownRef.current.getBoundingClientRect();
+  //     rect.left.toFixed(2);
+  //     setRect(rect.left.toFixed(2));
+  //   }
+  // };
+  
 
-  useEffect(() => {
-    window.addEventListener("resize", updatePosition);
-    updatePosition(); // Initial call to get position
+  // useEffect(() => {
+  //   window.addEventListener("resize", updatePosition);
+  //   updatePosition(); // Initial call to get position
 
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", updatePosition);
+  //   };
+  // }, []);
 
   return (
     <>
@@ -51,16 +57,36 @@ export const NavigationBar = () => {
             width={40}
             height={40}
           />
-          {NavBarLinks.map((link) => (
+          {NavBarLinks.map((link, index) => (
             <NavigationLink
               key={link.key}
               text={link.text}
               id={link.key}
               onClick={() => handleClick(link.key)}
               isSelected={isDropDown}
-              dropDownRef={dropDownRef}
+              dropDownRef={refs.current[index]}
             />
           ))}
+          {/* <Button
+            type="button"
+            center
+            secondary
+            className="relative z-30 bg-blue-400"
+            onClick={() => handleClick("Categories")}
+            refObject={dropDownRef}
+          >
+            Categories
+          </Button>
+          <Button
+            type="button"
+            center
+            secondary
+            className="relative z-30 bg-blue-400"
+            onClick={() => handleClick("Categories")}
+            refObject={dropDownRef}
+          >
+            Categories
+          </Button> */}
           <p className="">searchbar</p>
           <p>sign in</p>
           <p>Cart</p>
