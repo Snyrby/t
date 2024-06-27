@@ -8,7 +8,8 @@ import { useModal } from "@/hooks/use-modal-store";
 
 export const NavigationBar = () => {
   const [isDropDown, setIsDropDown] = useState("");
-  const dropDownRef = useRef(null);
+  const [rect, setRect] = useState<string>("");
+  const dropDownRef = useRef<HTMLButtonElement>(null);
   const { isOpen } = useModal();
   useEffect(() => {
     isOpen && setIsDropDown("");
@@ -17,14 +18,24 @@ export const NavigationBar = () => {
   const handleClick = (key: string) => {
     isDropDown === key ? setIsDropDown("") : setIsDropDown(key);
   };
-  useEffect(() => {
+
+  const updatePosition = (): void => {
     if (dropDownRef.current) {
-        const rect = dropDownRef.current.getBoundingClientRect();
-        console.log("Element's position: ", rect);
-        // rect.top, rect.left, rect.bottom, rect.right
-        // rect.width, rect.height
+      const rect = dropDownRef.current.getBoundingClientRect();
+      rect.left.toFixed(2);
+      setRect(rect.left.toFixed(2));
     }
-}, []);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updatePosition);
+    updatePosition(); // Initial call to get position
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+    };
+  }, []);
+
   return (
     <>
       <nav
@@ -39,7 +50,6 @@ export const NavigationBar = () => {
             alt="target"
             width={40}
             height={40}
-        
           />
           {NavBarLinks.map((link) => (
             <NavigationLink
@@ -48,6 +58,7 @@ export const NavigationBar = () => {
               id={link.key}
               onClick={() => handleClick(link.key)}
               isSelected={isDropDown}
+              dropDownRef={dropDownRef}
             />
           ))}
           <p className="">searchbar</p>
@@ -59,9 +70,10 @@ export const NavigationBar = () => {
         <>
           <div
             className={cn(
-              "absolute left-44 bg-white z-[35] overflow-hidden transition-all",
+              "absolute bg-white z-[35] overflow-hidden transition-all",
               isDropDown !== "" ? "animate-slideDown" : "animate-slideUp"
             )}
+            style={{ left: `${rect}px` }}
           >
             test
           </div>
