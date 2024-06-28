@@ -63,7 +63,7 @@ export const LocationModal = () => {
 
   return (
     <>
-      <aside className="fixed top-0 left-0 z-40 h-full bg-white w-[25rem] shadow-lg transform transition-transform duration-300">
+      <aside className="fixed top-0 left-0 z-50 h-full bg-white w-[25rem] shadow-lg transform transition-transform duration-300">
         <div className="flex flex-col h-full">
           <div className="flexBetween my-3 border-b h-16">
             <p className="text-2xl font-bold ml-5">Update shipping location</p>
@@ -148,7 +148,7 @@ export const LocationModal = () => {
         </div>
       </aside>
       <button
-        className="bg-black fixed inset-0 bg-opacity-50 backdrop-blur-sm z-30"
+        className="bg-black fixed inset-0 bg-opacity-50 backdrop-blur-sm z-[49]"
         onClick={() => onClose()}
       />
     </>

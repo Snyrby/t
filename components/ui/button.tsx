@@ -10,6 +10,7 @@ type ButtonProps = {
   onClick?: () => void;
   secondary?: boolean;
   danger?: boolean;
+  flex?: boolean;
   disabled?: boolean;
   className?: string;
   center?: boolean;
@@ -29,6 +30,7 @@ export const Button = ({
   center,
   start,
   refObject,
+  flex,
 }: ButtonProps) => {
   return (
     <button
@@ -43,6 +45,7 @@ export const Button = ({
             focus-visible:outline-2
             focus-visible:outline-slate-500
             ${className}`,
+        flex ? "flex" : "block",
         center && "justify-center",
         start && "justify-start",
         disabled && "opacity-50 cursor-default",

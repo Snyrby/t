@@ -14,11 +14,12 @@ export const FinanceBar = ({ zipCode }: FinanceBarProps) => {
   const { onOpen } = useModal();
 
   return (
-    <div className="h-[50px] target-red w-full">
+    <div className="h-[50px] target-red w-full relative z-[48]">
       <div className="flex justify-between items-center mx-auto my-0 h-full max-w-[1400px]">
         <div className="h-full flex items-center justify-start gap-x-4">
           <Button
             type="button"
+            flex
             onClick={() => onOpen("LOCATION", { zipCode })}
             className="hover:bg-slate-600/20 gap-x-4"
           >
