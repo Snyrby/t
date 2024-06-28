@@ -22,9 +22,9 @@ const NavigationLink = ({
 }: NavigationLink) => {
   // console.log(id);
   // console.log(isSelected);
-  const links = useMemo(() => {
-    return DropDownLinks.filter((link) => link.id === id);
-  }, [isSelected]);
+  // const links = useMemo(() => {
+  //   return DropDownLinks.filter((link) => link.id === id);
+  // }, [isSelected]);
   console.log(dropDownRef);
 
   return (

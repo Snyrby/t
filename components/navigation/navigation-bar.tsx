@@ -1,29 +1,40 @@
 "use client";
-import { NavBarLinks } from "@/constants";
+import { DropDownLinks, NavBarLinks } from "@/constants";
 import Image from "next/image";
 import NavigationLink from "./navigation-link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useModal } from "@/hooks/use-modal-store";
 import { Button } from "@/components/ui/button";
 
 export const NavigationBar = () => {
-  const [isDropDown, setIsDropDown] = useState("");
-  const [rect, setRect] = useState<string>("");
+  // const [isDropDown, setIsDropDown] = useState("");
   const refs = useRef<React.RefObject<HTMLButtonElement>[]>([]);
+  const [ref, setRef] = useState<HTMLButtonElement | null>(null);
+  const refPosition = ref?.getBoundingClientRect().left.toFixed(2);
+  // const links = useMemo(() => {
+  //   return DropDownLinks.filter((link) => link.id === isDropDown);
+  // }, [isDropDown]);
+  const index = NavBarLinks.findIndex((link) => link.text === ref?.innerHTML);
+
   const { isOpen } = useModal();
+
   useEffect(() => {
-    isOpen && setIsDropDown("");
+    isOpen && setRef(null);
   }, [isOpen]);
 
-  const handleClick = (key: string) => {
-    isDropDown === key ? setIsDropDown("") : setIsDropDown(key);
-  };
-   // Initialize the refs array if it hasn't been initialized yet
-   if (refs.current.length !== 4) {
-    refs.current = Array(4).fill(null).map((_, i) => refs.current[i] || React.createRef<HTMLButtonElement>());
+  // Initialize the refs array if it hasn't been initialized yet
+  if (refs.current.length !== NavBarLinks.length) {
+    refs.current = Array(NavBarLinks.length)
+      .fill(null)
+      .map((_, i) => refs.current[i] || React.createRef<HTMLButtonElement>());
   }
 
+  const handleClick = (buttonRef: HTMLButtonElement) => {
+    ref?.innerHTML === buttonRef.innerHTML ? setRef(null) : setRef(buttonRef);
+    // const rect = refs.current[index].current?.getBoundingClientRect();
+    // setRect(rect?.left.toFixed(2) as string);
+  };
   // const updatePosition = (): void => {
   //   if (dropDownRef.current) {
   //     const rect = dropDownRef.current.getBoundingClientRect();
@@ -31,7 +42,6 @@ export const NavigationBar = () => {
   //     setRect(rect.left.toFixed(2));
   //   }
   // };
-  
 
   // useEffect(() => {
   //   window.addEventListener("resize", updatePosition);
@@ -62,8 +72,10 @@ export const NavigationBar = () => {
               key={link.key}
               text={link.text}
               id={link.key}
-              onClick={() => handleClick(link.key)}
-              isSelected={isDropDown}
+              onClick={() =>
+                handleClick(refs.current[index].current as HTMLButtonElement)
+              }
+              // isSelected={isDropDown}
               dropDownRef={refs.current[index]}
             />
           ))}
@@ -92,20 +104,20 @@ export const NavigationBar = () => {
           <p>Cart</p>
         </div>
       </nav>
-      {isDropDown !== "" && !isOpen && (
+      {ref && !isOpen && (
         <>
           <div
             className={cn(
               "absolute bg-white z-[35] overflow-hidden transition-all",
-              isDropDown !== "" ? "animate-slideDown" : "animate-slideUp"
+              ref ? "animate-slideDown" : "animate-slideUp"
             )}
-            style={{ left: `${rect}px` }}
+            style={{ left: `${refPosition}px` }}
           >
             test
           </div>
           <button
             className="bg-black fixed left-0 right-0 bottom-0 w-full h-[calc(100vh-75px)] bg-opacity-50 backdrop-blur-sm z-30"
-            onClick={() => setIsDropDown("")}
+            onClick={() => setRef(null)}
           />
         </>
       )}
