@@ -5,7 +5,6 @@ import NavigationLink from "./navigation-link";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useModal } from "@/hooks/use-modal-store";
-import { Button } from "@/components/ui/button";
 import DropDownItem from "./dropdown-item";
 
 export const NavigationBar = () => {
@@ -27,16 +26,15 @@ export const NavigationBar = () => {
   if (refs.current.length !== NavBarLinks.length) {
     refs.current = Array(NavBarLinks.length)
       .fill(null)
-      .map((i) => refs.current[i] || React.createRef<HTMLButtonElement>());
+      .map((_, i) => refs.current[i] || React.createRef<HTMLButtonElement>());
   }
 
   const handleClick = (buttonRef: HTMLButtonElement) => {
-    // ref?.innerHTML === buttonRef.innerHTML ? setRef(null) : setRef(buttonRef);
     if (ref?.innerHTML === buttonRef.innerHTML) {
       setIsClosing(true);
       setTimeout(() => {
-        setRef(null);
         setIsClosing(false);
+        setRef(null);
       }, 5000);
     } else {
       setIsClosing(true);
@@ -45,25 +43,29 @@ export const NavigationBar = () => {
         setRef(buttonRef);
       }, 5000);
     }
-    // const rect = refs.current[index].current?.getBoundingClientRect();
-    // setRect(rect?.left.toFixed(2) as string);
   };
-  // const updatePosition = (): void => {
-  //   if (dropDownRef.current) {
-  //     const rect = dropDownRef.current.getBoundingClientRect();
-  //     rect.left.toFixed(2);
-  //     setRect(rect.left.toFixed(2));
-  //   }
-  // };
 
-  // useEffect(() => {
-  //   window.addEventListener("resize", updatePosition);
-  //   updatePosition(); // Initial call to get position
+  useEffect(() => {
+    if (ref) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [ref]);
 
-  //   return () => {
-  //     window.removeEventListener("resize", updatePosition);
-  //   };
-  // }, []);
+  // Update the ref position on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (ref) {
+        setRef(ref);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [ref]);
 
   return (
     <>
