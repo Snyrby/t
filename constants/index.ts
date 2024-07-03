@@ -20,4 +20,6 @@ export const DropDownLinks = [
   { id: "Categories", text: "Grocery"},
   { id: "Deals", text: "Top Deals"},
   { id: "Deals", text: "Target Circle Deals"},
+  { id: "New & featured", text: "Target New Arrivals"},
+  { id: "Pickup & delivery", text: "Shop Order Pickup"},
 ];

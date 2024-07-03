@@ -11,37 +11,50 @@ export const NavigationBar = () => {
   const [isClosing, setIsClosing] = useState(false);
   const refs = useRef<React.RefObject<HTMLButtonElement>[]>([]);
   const [ref, setRef] = useState<HTMLButtonElement | null>(null);
+  const [dropdown, setDropdown] = useState("");
   const refPosition = ref?.getBoundingClientRect().left.toFixed(2);
   const links = useMemo(() => {
-    return DropDownLinks.filter((link) => link.id === ref?.innerHTML);
-  }, [ref]);
+    return DropDownLinks.filter((link) => link.id === dropdown);
+  }, [dropdown]);
 
   const { isOpen } = useModal();
 
+  // useEffect(() => {
+  //   isOpen && setRef(null);
+  // }, [isOpen]);
+
   useEffect(() => {
-    isOpen && setRef(null);
+    isOpen && setDropdown("");
   }, [isOpen]);
+  
+  // // Initialize the refs array if it hasn't been initialized yet
+  // if (refs.current.length !== NavBarLinks.length) {
+  //   refs.current = Array(NavBarLinks.length)
+  //     .fill(null)
+  //     .map((_, i) => refs.current[i] || React.createRef<HTMLButtonElement>());
+  // }
 
-  // Initialize the refs array if it hasn't been initialized yet
-  if (refs.current.length !== NavBarLinks.length) {
-    refs.current = Array(NavBarLinks.length)
-      .fill(null)
-      .map((_, i) => refs.current[i] || React.createRef<HTMLButtonElement>());
-  }
+  // const handleClick = (buttonRef: HTMLButtonElement) => {
+  //   if (ref?.innerHTML === buttonRef.innerHTML) {
+  //     setIsClosing(true);
+  //     setTimeout(() => {
+  //       setIsClosing(false);
+  //       setRef(null);
+  //     }, 5000);
+  //   } else {
+  //     setIsClosing(true);
+  //     setTimeout(() => {
+  //       setIsClosing(false);
+  //       setRef(buttonRef);
+  //     }, 5000);
+  //   }
+  // };
 
-  const handleClick = (buttonRef: HTMLButtonElement) => {
-    if (ref?.innerHTML === buttonRef.innerHTML) {
-      setIsClosing(true);
-      setTimeout(() => {
-        setIsClosing(false);
-        setRef(null);
-      }, 5000);
+  const handleClick = (label: string) => {
+    if (label === dropdown) {
+      setDropdown("");
     } else {
-      setIsClosing(true);
-      setTimeout(() => {
-        setIsClosing(false);
-        setRef(buttonRef);
-      }, 5000);
+      setDropdown(label);
     }
   };
 
@@ -51,20 +64,6 @@ export const NavigationBar = () => {
     } else {
       document.body.style.overflow = "";
     }
-  }, [ref]);
-
-  // Update the ref position on window resize
-  useEffect(() => {
-    const handleResize = () => {
-      if (ref) {
-        setRef(ref);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, [ref]);
 
   return (
@@ -87,11 +86,13 @@ export const NavigationBar = () => {
               key={link.key}
               text={link.text}
               id={link.key}
-              onClick={() =>
-                handleClick(refs.current[index].current as HTMLButtonElement)
-              }
-              // isSelected={isDropDown}
-              dropDownRef={refs.current[index]}
+              links={links}
+              // onClick={() =>
+              //   handleClick(refs.current[index].current as HTMLButtonElement)
+              // }
+              onClick={() => handleClick(link.text)}
+              isSelected={dropdown}
+              // dropDownRef={refs.current[index]}
             />
           ))}
           {/* <Button
@@ -119,25 +120,26 @@ export const NavigationBar = () => {
           <p>Cart</p>
         </div>
       </nav>
-      {ref && !isOpen && (
-        <div>
-          <div
-            className={cn(
-              "absolute bg-white z-[35] overflow-hidden transition-all",
-              ref && !isClosing && "animate-slideDown",
-              isClosing && "animate-slideUp"
-            )}
-            style={{ left: `${refPosition}px` }}
-          >
-            {links.map((link) => (
-              <DropDownItem key={link.text} text={link.text} />
-            ))}
-          </div>
-          <button
-            className="bg-black fixed left-0 right-0 bottom-0 w-full h-[calc(100vh-75px)] bg-opacity-50 backdrop-blur-sm z-30"
-            onClick={() => setRef(null)}
-          />
-        </div>
+      {dropdown !== "" && !isOpen && (
+        // <div>
+        //   <div
+        //     className={cn(
+        //       "absolute bg-white z-[35] overflow-hidden transition-all",
+        //       ref && !isClosing && "animate-slideDown",
+        //       isClosing && "animate-slideUp"
+        //     )}
+        //     style={{ left: `${refPosition}px` }}
+        //   >
+        //     {links.map((link) => (
+        //       <DropDownItem key={link.text} text={link.text} />
+        //     ))}
+        //   </div>
+        <button
+          className="bg-black fixed left-0 right-0 bottom-0 w-full h-[calc(100vh-75px)] bg-opacity-50 backdrop-blur-sm z-30"
+          // onClick={() => setRef(null)}
+          onClick={() => setDropdown("")}
+        />
+        // </div>
       )}
     </>
   );
