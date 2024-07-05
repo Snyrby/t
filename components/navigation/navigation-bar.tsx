@@ -26,7 +26,7 @@ export const NavigationBar = () => {
   useEffect(() => {
     isOpen && setDropdown("");
   }, [isOpen]);
-  
+
   // // Initialize the refs array if it hasn't been initialized yet
   // if (refs.current.length !== NavBarLinks.length) {
   //   refs.current = Array(NavBarLinks.length)
@@ -52,19 +52,27 @@ export const NavigationBar = () => {
 
   const handleClick = (label: string) => {
     if (label === dropdown) {
-      setDropdown("");
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsClosing(false);
+        setDropdown("");
+      }, 1000);
     } else {
-      setDropdown(label);
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsClosing(false);
+        setDropdown(label);
+      }, 1000);
     }
   };
 
   useEffect(() => {
-    if (ref) {
+    if (dropdown !== "") {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
-  }, [ref]);
+  }, [dropdown]);
 
   return (
     <>
@@ -92,6 +100,7 @@ export const NavigationBar = () => {
               // }
               onClick={() => handleClick(link.text)}
               isSelected={dropdown}
+              isClosing={isClosing}
               // dropDownRef={refs.current[index]}
             />
           ))}

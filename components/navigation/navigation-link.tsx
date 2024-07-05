@@ -11,6 +11,7 @@ type NavigationLink = {
   isSelected?: string;
   id: string;
   links: { text: string; id: string }[];
+  isClosing?: boolean;
   // dropDownRef: RefObject<HTMLButtonElement>;
 };
 
@@ -20,6 +21,7 @@ const NavigationLink = ({
   isSelected,
   id,
   links,
+  isClosing
 }: // dropDownRef,
 NavigationLink) => {
   // console.log(id);
@@ -29,7 +31,7 @@ NavigationLink) => {
   // }, [isSelected]);
 
   return (
-    <div className="relative">
+    <div className="relative z-[48]">
       <Button
         type="button"
         center
@@ -41,7 +43,10 @@ NavigationLink) => {
         {text}
       </Button>
       {isSelected === text && (
-        <div className="absolute left-0 mt-2 bg-white text-black rounded shadow-lg w-full md:w-auto">
+        <div className={cn("absolute left-0 mt-2 bg-white text-black rounded shadow-lg w-full md:w-auto z-10 -top-10",
+          isSelected !== "" && !isClosing && "animate-slideDown",
+              isClosing && "animate-slideUp"
+        )}>
           <ul className="py-2">
             {links.map((link) => (
               <li key={link.id} className="px-4 py-2 hover:bg-gray-200">
