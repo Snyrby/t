@@ -31,22 +31,23 @@ NavigationLink) => {
   // }, [isSelected]);
 
   return (
-    <div className="relative z-[48]">
+    <div className="relative">
       <Button
         type="button"
         center
         secondary
-        className="relative z-30 bg-blue-400"
+        className="bg-blue-400"
         onClick={onClick}
         // refObject={dropDownRef}
       >
         {text}
       </Button>
       {isSelected === text && (
-        <div className={cn("absolute left-0 mt-2 bg-white text-black rounded shadow-lg w-full md:w-auto z-10 -top-10",
+        <div className={cn("absolute left-0 mt-2 bg-white text-black rounded shadow-lg w-full md:w-auto z-10",
           isSelected !== "" && !isClosing && "animate-slideDown",
               isClosing && "animate-slideUp"
-        )}>
+        )}
+        role="dialog">
           <ul className="py-2">
             {links.map((link) => (
               <li key={link.id} className="px-4 py-2 hover:bg-gray-200">

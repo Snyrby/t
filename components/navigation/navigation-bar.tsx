@@ -79,10 +79,10 @@ export const NavigationBar = () => {
       <nav
         className={cn(
           "top-0 bg-white w-full shadow-md h-[75px] sticky flex border-b",
-          isOpen ? "z-0" : "z-[48]"
+          isOpen ? "z-0" : "z-[47]"
         )}
       >
-        <div className="max-w-[1400px] mx-auto h-full flexCenter gap-x-4">
+        <div className="max-w-[1400px] mx-auto h-full flexCenter gap-x-4 bg-red-600">
           <Image
             src="/Target_Bullseye-Logo_Red.jpg"
             alt="target"
