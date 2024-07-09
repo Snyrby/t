@@ -78,11 +78,11 @@ export const NavigationBar = () => {
     <>
       <nav
         className={cn(
-          "top-0 bg-white w-full shadow-md h-[75px] sticky flex border-b",
+          "top-0 bg-white w-full shadow-md h-[75px] sticky flexCenter gap-x-4 border-b max-w-[2000px] mx-auto",
           isOpen ? "z-0" : "z-[47]"
         )}
       >
-        <div className="max-w-[1400px] mx-auto h-full flexCenter gap-x-4 bg-red-600">
+        {/* <div className="max-w-[1400px] mx-auto h-full flexCenter gap-x-4 bg-red-600"> */}
           <Image
             src="/Target_Bullseye-Logo_Red.jpg"
             alt="target"
@@ -127,7 +127,7 @@ export const NavigationBar = () => {
           <p className="">searchbar</p>
           <p>sign in</p>
           <p>Cart</p>
-        </div>
+        {/* </div> */}
       </nav>
       {dropdown !== "" && !isOpen && (
         // <div>
