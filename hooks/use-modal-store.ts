@@ -32,7 +32,7 @@ export const modalReducer = (state: TModalState, action: { data: TModalData, typ
 export const useModal = () => {
   const context = useContext(ModalContext)
   if (context === undefined) {
-    throw new Error("useShop must be used within ShopContext")
+    throw new Error("usemodal must be used within modalContext")
   }
   return context
 }

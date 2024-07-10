@@ -1,7 +1,8 @@
-export type TModalActions = "ACCOUNT" | "LOCATION" | "CLOSE";
+export type TModalActions = "ACCOUNT" | "LOCATION" | "CLOSE" | "DROPDOWN";
 
 export type TModalData = {
   zipCode?: string;
+  refPosition?: string;
 }
 
 export type TModalState = {

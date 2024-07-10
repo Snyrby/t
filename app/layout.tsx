@@ -25,9 +25,9 @@ export default async function RootLayout({
       <body className={inter.className}>
         <ModalProvider>
           <ModalProviderGroup />
-            <FinanceBar zipCode={zipCode} />
-            <NavigationBar />
-            {children}
+          <FinanceBar zipCode={zipCode} />
+          <NavigationBar />
+          {children}
         </ModalProvider>
       </body>
     </html>
