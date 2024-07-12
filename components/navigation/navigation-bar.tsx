@@ -2,7 +2,7 @@
 import { DropDownLinks, NavBarLinks } from "@/constants";
 import Image from "next/image";
 import NavigationLink from "./navigation-link";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useModal } from "@/hooks/use-modal-store";
 import DropDownItem from "./dropdown-item";
@@ -12,27 +12,35 @@ export const NavigationBar = () => {
   const refs = useRef<React.RefObject<HTMLButtonElement>[]>([]);
   const [ref, setRef] = useState<HTMLButtonElement | null>(null);
   const [dropdown, setDropdown] = useState("");
-  const refPosition = ref?.getBoundingClientRect().left.toFixed(2);
+  // const refPosition = ref?.getBoundingClientRect().left.toFixed(2);
   const links = useMemo(() => {
     return DropDownLinks.filter((link) => link.id === dropdown);
   }, [dropdown]);
 
-  const { isOpen } = useModal();
+  const { isOpen, onOpen, data, isAnimating } = useModal();
+  const { refPosition } = data;
+  console.log(isOpen);
+
+  console.log(refPosition);
 
   // useEffect(() => {
   //   isOpen && setRef(null);
   // }, [isOpen]);
 
-  useEffect(() => {
-    isOpen && setDropdown("");
-  }, [isOpen]);
+  // useEffect(() => {
+  //   isOpen && setDropdown("");
+  // }, [isOpen]);
 
-  // // Initialize the refs array if it hasn't been initialized yet
-  // if (refs.current.length !== NavBarLinks.length) {
-  //   refs.current = Array(NavBarLinks.length)
-  //     .fill(null)
-  //     .map((_, i) => refs.current[i] || React.createRef<HTMLButtonElement>());
-  // }
+  // Initialize the refs array if it hasn't been initialized yet
+  if (refs.current.length !== NavBarLinks.length) {
+    refs.current = Array(NavBarLinks.length)
+      .fill(null)
+      .map((_, i) => refs.current[i] || React.createRef<HTMLButtonElement>());
+  }
+
+  const handleClick = (buttonRef: HTMLButtonElement) => {
+    onOpen("DROPDOWN", { refPosition: buttonRef });
+  };
 
   // const handleClick = (buttonRef: HTMLButtonElement) => {
   //   if (ref?.innerHTML === buttonRef.innerHTML) {
@@ -50,21 +58,21 @@ export const NavigationBar = () => {
   //   }
   // };
 
-  const handleClick = (label: string) => {
-    if (label === dropdown) {
-      setIsClosing(true);
-      setTimeout(() => {
-        setIsClosing(false);
-        setDropdown("");
-      }, 1000);
-    } else {
-      setIsClosing(true);
-      setTimeout(() => {
-        setIsClosing(false);
-        setDropdown(label);
-      }, 1000);
-    }
-  };
+  // const handleClick = (label: string) => {
+  //   if (label === dropdown) {
+  //     setIsClosing(true);
+  //     setTimeout(() => {
+  //       setIsClosing(false);
+  //       setDropdown("");
+  //     }, 1000);
+  //   } else {
+  //     setIsClosing(true);
+  //     setTimeout(() => {
+  //       setIsClosing(false);
+  //       setDropdown(label);
+  //     }, 1000);
+  //   }
+  // };
 
   useEffect(() => {
     if (dropdown !== "") {
@@ -83,28 +91,28 @@ export const NavigationBar = () => {
         )}
       >
         {/* <div className="max-w-[1400px] mx-auto h-full flexCenter gap-x-4 bg-red-600"> */}
-          <Image
-            src="/Target_Bullseye-Logo_Red.jpg"
-            alt="target"
-            width={40}
-            height={40}
+        <Image
+          src="/Target_Bullseye-Logo_Red.jpg"
+          alt="target"
+          width={40}
+          height={40}
+        />
+        {NavBarLinks.map((link, index) => (
+          <NavigationLink
+            key={link.key}
+            text={link.text}
+            id={link.key}
+            links={links}
+            onClick={() =>
+              handleClick(refs.current[index].current as HTMLButtonElement)
+            }
+            // onClick={() => handleClick(link.text)}
+            isSelected={dropdown}
+            isClosing={isClosing}
+            // dropDownRef={refs.current[index]}
           />
-          {NavBarLinks.map((link, index) => (
-            <NavigationLink
-              key={link.key}
-              text={link.text}
-              id={link.key}
-              links={links}
-              // onClick={() =>
-              //   handleClick(refs.current[index].current as HTMLButtonElement)
-              // }
-              onClick={() => handleClick(link.text)}
-              isSelected={dropdown}
-              isClosing={isClosing}
-              // dropDownRef={refs.current[index]}
-            />
-          ))}
-          {/* <Button
+        ))}
+        {/* <Button
             type="button"
             center
             secondary
@@ -124,9 +132,9 @@ export const NavigationBar = () => {
           >
             Categories
           </Button> */}
-          <p className="">searchbar</p>
-          <p>sign in</p>
-          <p>Cart</p>
+        <p className="">searchbar</p>
+        <p>sign in</p>
+        <p>Cart</p>
         {/* </div> */}
       </nav>
       {dropdown !== "" && !isOpen && (

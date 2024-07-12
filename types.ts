@@ -2,13 +2,14 @@ export type TModalActions = "ACCOUNT" | "LOCATION" | "CLOSE" | "DROPDOWN";
 
 export type TModalData = {
   zipCode?: string;
-  refPosition?: string;
+  refPosition?: HTMLButtonElement;
 }
 
 export type TModalState = {
     type: TModalActions | null;
     data: TModalData;
     isOpen: boolean;
+    isAnimating: boolean; 
   };
 
 export type TModalContext = TModalState & {
