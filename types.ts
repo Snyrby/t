@@ -9,7 +9,6 @@ export type TModalState = {
     type: TModalActions | null;
     data: TModalData;
     isOpen: boolean;
-    isAnimating: boolean; 
   };
 
 export type TModalContext = TModalState & {

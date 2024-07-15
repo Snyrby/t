@@ -5,7 +5,7 @@ import NavigationLink from "./navigation-link";
 import React, { RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useModal } from "@/hooks/use-modal-store";
-import DropDownItem from "./dropdown-item";
+// import DropDownItem from "./dropdown-item";
 
 export const NavigationBar = () => {
   const [isClosing, setIsClosing] = useState(false);
@@ -17,11 +17,7 @@ export const NavigationBar = () => {
     return DropDownLinks.filter((link) => link.id === dropdown);
   }, [dropdown]);
 
-  const { isOpen, onOpen, data, isAnimating } = useModal();
-  const { refPosition } = data;
-  console.log(isOpen);
-
-  console.log(refPosition);
+  const { isOpen, onOpen, data } = useModal();
 
   // useEffect(() => {
   //   isOpen && setRef(null);
@@ -86,7 +82,7 @@ export const NavigationBar = () => {
     <>
       <nav
         className={cn(
-          "top-0 bg-white w-full shadow-md h-[75px] sticky flexCenter gap-x-4 border-b max-w-[2000px] mx-auto",
+          "top-0 bg-white w-full shadow-md h-[75px] sticky flexCenter gap-x-4 border-b max-w-full mx-auto",
           isOpen ? "z-0" : "z-[47]"
         )}
       >

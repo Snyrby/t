@@ -4,7 +4,6 @@ import { createContext, useContext } from "react";
 const initContext: TModalContext = {
   type: "CLOSE",
   isOpen: false,
-  isAnimating: false,
   data: {},
   onOpen: (type, data) => {},
   onClose: () => {},
@@ -17,35 +16,18 @@ export const modalReducer = (
   action: { data: TModalData; type: TModalActions }
 ): TModalState => {
   if (action.type !== "CLOSE") {
-    state.isAnimating = true;
-    state.type = action.type;
-    console.log(state.isOpen);
-    setTimeout(() => {
-      state.isAnimating = false;
-      state.data = action.data;
-      state.isOpen = true;
-
-      
-
-      // return {
-      //   type: action.type,
-      //   isOpen: true,
-      //   isAnimating: false,
-      //   data: action.data,
-      // };
-      return state;
-    }, 1000);
+    return {
+      type: action.type,
+      isOpen: true,
+      data: action.data,
+    };
   }
   if (action.type === "CLOSE") {
-    // state.isAnimating = true;
-    // setTimeout(() => {
-      return {
-        type: "CLOSE",
-        isOpen: false,
-        isAnimating: false,
-        data: action.data,
-      };
-    // }, 5000);
+    return {
+      type: "CLOSE",
+      isOpen: false,
+      data: action.data,
+    };
   }
   return state;
 };

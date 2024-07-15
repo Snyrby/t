@@ -9,7 +9,6 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     type: "CLOSE",
     data: {},
     isOpen: false,
-    isAnimating: false,
   };
 
   const [state, dispatch] = useReducer(modalReducer, initState);
@@ -22,7 +21,6 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const value = useMemo(() => {
     return {
       isOpen: state.isOpen,
-      isAnimating: state.isAnimating,
       type: state.type,
       data: state.data,
       onOpen: onOpen,
