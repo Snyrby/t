@@ -1,8 +1,10 @@
+import { RefObject } from "react";
+
 export type TModalActions = "ACCOUNT" | "LOCATION" | "CLOSE" | "DROPDOWN";
 
 export type TModalData = {
   zipCode?: string;
-  refPosition?: HTMLButtonElement;
+  refPosition?: RefObject<HTMLButtonElement>;
 }
 
 export type TModalState = {

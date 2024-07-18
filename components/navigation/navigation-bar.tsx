@@ -34,7 +34,7 @@ export const NavigationBar = () => {
       .map((_, i) => refs.current[i] || React.createRef<HTMLButtonElement>());
   }
 
-  const handleClick = (buttonRef: HTMLButtonElement) => {
+  const handleClick = (buttonRef: RefObject<HTMLButtonElement>) => {
     onOpen("DROPDOWN", { refPosition: buttonRef });
   };
 
@@ -99,9 +99,7 @@ export const NavigationBar = () => {
             text={link.text}
             id={link.key}
             links={links}
-            onClick={() =>
-              handleClick(refs.current[index].current as HTMLButtonElement)
-            }
+            onClick={() => handleClick(refs.current[index])}
             // onClick={() => handleClick(link.text)}
             isSelected={dropdown}
             isClosing={isClosing}

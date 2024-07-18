@@ -6,20 +6,21 @@ import { useModal } from "@/hooks/use-modal-store";
 import { cn } from "@/lib/utils";
 import { useMemo, useState } from "react";
 
-type DropDownListProps = {
-  text: string;
-};
-
-const DropDownList = ({ text }: DropDownListProps) => {
+export const DropDownModal = () => {
   const [isAnimating, setIsAnimating] = useState(true);
   const { isOpen, onClose, type, data } = useModal();
   const { refPosition } = data;
   const links = useMemo(() => {
-    return DropDownLinks.filter((link) => link.id === refPosition?.innerHTML);
+    return DropDownLinks.filter(
+      (link) => link.id === refPosition?.current?.innerHTML
+    );
   }, [refPosition]);
   if (type !== "DROPDOWN" || isOpen === false) {
     return null;
   }
+
+  console.log(refPosition);
+  console.log(data);
 
   return (
     <div
@@ -39,5 +40,3 @@ const DropDownList = ({ text }: DropDownListProps) => {
     </div>
   );
 };
-
-export default DropDownList;
