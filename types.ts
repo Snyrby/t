@@ -4,7 +4,7 @@ export type TModalActions = "ACCOUNT" | "LOCATION" | "CLOSE" | "DROPDOWN";
 
 export type TModalData = {
   zipCode?: string;
-  refPosition?: RefObject<HTMLButtonElement>;
+  refPosition?: string;
 }
 
 export type TModalState = {

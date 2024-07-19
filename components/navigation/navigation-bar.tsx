@@ -17,7 +17,7 @@ export const NavigationBar = () => {
     return DropDownLinks.filter((link) => link.id === dropdown);
   }, [dropdown]);
 
-  const { isOpen, onOpen, data } = useModal();
+  const { isOpen, onOpen, data, onClose } = useModal();
 
   // useEffect(() => {
   //   isOpen && setRef(null);
@@ -35,7 +35,15 @@ export const NavigationBar = () => {
   }
 
   const handleClick = (buttonRef: RefObject<HTMLButtonElement>) => {
-    onOpen("DROPDOWN", { refPosition: buttonRef });
+    if (isOpen) {
+      onClose();
+    } else {
+      const refPosition = buttonRef?.current
+        ?.getBoundingClientRect()
+        .left.toFixed(2);
+
+      onOpen("DROPDOWN", { refPosition });
+    }
   };
 
   // const handleClick = (buttonRef: HTMLButtonElement) => {
@@ -80,12 +88,7 @@ export const NavigationBar = () => {
 
   return (
     <>
-      <nav
-        className={cn(
-          "top-0 bg-white w-full shadow-md h-[75px] sticky flexCenter gap-x-4 border-b max-w-full mx-auto",
-          isOpen ? "z-0" : "z-[47]"
-        )}
-      >
+      <nav className="top-0 bg-white w-full shadow-md h-[75px] sticky flexCenter gap-x-4 border-b max-w-full mx-auto z-[47]">
         {/* <div className="max-w-[1400px] mx-auto h-full flexCenter gap-x-4 bg-red-600"> */}
         <Image
           src="/Target_Bullseye-Logo_Red.jpg"
@@ -103,7 +106,7 @@ export const NavigationBar = () => {
             // onClick={() => handleClick(link.text)}
             isSelected={dropdown}
             isClosing={isClosing}
-            // dropDownRef={refs.current[index]}
+            dropDownRef={refs.current[index]}
           />
         ))}
         {/* <Button

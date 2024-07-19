@@ -12,7 +12,7 @@ type NavigationLink = {
   id: string;
   links: { text: string; id: string }[];
   isClosing?: boolean;
-  // dropDownRef: RefObject<HTMLButtonElement>;
+  dropDownRef: RefObject<HTMLButtonElement>;
 };
 
 const NavigationLink = ({
@@ -22,6 +22,7 @@ const NavigationLink = ({
   id,
   links,
   isClosing,
+  dropDownRef,
 }: // dropDownRef,
 NavigationLink) => {
   // console.log(id);
@@ -38,7 +39,7 @@ NavigationLink) => {
         secondary
         className="bg-blue-400"
         onClick={onClick}
-        // refObject={dropDownRef}
+        refObject={dropDownRef}
       >
         {text}
       </Button>
