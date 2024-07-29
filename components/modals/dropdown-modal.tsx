@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { DropDownLinks } from "@/constants";
 import { useModal } from "@/hooks/use-modal-store";
 import { cn } from "@/lib/utils";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export const DropDownModal = () => {
   const [isAnimating, setIsAnimating] = useState(true);
@@ -15,6 +15,15 @@ export const DropDownModal = () => {
       (link) => link.id === refPosition?.current?.innerHTML
     );
   }, [refPosition]);
+
+  useEffect(() => {
+    if (refPosition) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [refPosition]);
+  
   if (type !== "DROPDOWN" || isOpen === false) {
     return null;
   }
@@ -33,10 +42,15 @@ export const DropDownModal = () => {
     <>
       <div
         className={cn(
-          "absolute left-0 mt-2 bg-white text-black rounded shadow-lg w-full md:w-auto z-50"
+          "absolute mt-[125px] bg-white text-black rounded shadow-lg w-full md:w-auto z-50"
           // isSelected !== "" && !isClosing && "animate-slideDown",
           // isClosing && "animate-slideUp"
         )}
+        style={{
+          left: `${refPosition?.current
+            ?.getBoundingClientRect()
+            ?.left?.toFixed(2)}px`,
+        }}
       >
         <ul className="py-2">
           {links.map((link) => (

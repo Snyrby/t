@@ -38,11 +38,11 @@ export const NavigationBar = () => {
     if (isOpen) {
       onClose();
     } else {
-      const refPosition = buttonRef?.current
-        ?.getBoundingClientRect()
-        .left.toFixed(2);
+      // const refPosition = buttonRef?.current
+      //   ?.getBoundingClientRect()
+      //   .left.toFixed(2);
 
-      onOpen("DROPDOWN", { refPosition });
+      onOpen("DROPDOWN", { refPosition: buttonRef });
     }
   };
 
