@@ -10,7 +10,7 @@ import { useModal } from "@/hooks/use-modal-store";
 export const NavigationBar = () => {
   const [isClosing, setIsClosing] = useState(false);
   const refs = useRef<React.RefObject<HTMLButtonElement>[]>([]);
-  const [ref, setRef] = useState<HTMLButtonElement | null>(null);
+  const [ref, setRef] = useState<RefObject<HTMLButtonElement> | null>(null);
   const [dropdown, setDropdown] = useState("");
   // const refPosition = ref?.getBoundingClientRect().left.toFixed(2);
   const links = useMemo(() => {
@@ -18,6 +18,9 @@ export const NavigationBar = () => {
   }, [dropdown]);
 
   const { isOpen, onOpen, data, onClose } = useModal();
+
+  console.log("nav",data);
+  
 
   // useEffect(() => {
   //   isOpen && setRef(null);
@@ -45,6 +48,31 @@ export const NavigationBar = () => {
       onOpen("DROPDOWN", { refPosition: buttonRef });
     }
   };
+
+  const handleResize = () => {
+    refs.current.map((r, i) => {
+      console.log(r);
+      console.log("Data", data.refPosition?.current?.innerHTML);
+
+      if (r.current?.innerHTML === data.refPosition?.current?.innerHTML) {
+        console.log(refs.current[i]);
+        // onOpen("DROPDOWN", { refPosition: refs.current[i] });
+      }
+    });
+  };
+
+  useEffect(() => {
+    // Handler to call on window resize
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Empty array ensures that effect is only run on mount
 
   // const handleClick = (buttonRef: HTMLButtonElement) => {
   //   if (ref?.innerHTML === buttonRef.innerHTML) {

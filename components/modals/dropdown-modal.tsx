@@ -28,7 +28,7 @@ export const DropDownModal = () => {
     return null;
   }
 
-  console.log(refPosition);
+  console.log("refposition", refPosition);
   console.log(data);
 
   const onCloseClick = () => {
