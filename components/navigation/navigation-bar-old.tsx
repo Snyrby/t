@@ -1,7 +1,7 @@
 "use client";
 import { DropDownLinks, NavBarLinks } from "@/constants";
 import Image from "next/image";
-import NavigationLink from "./navigation-link";
+import NavigationLink from "./navigation-link-old";
 import React, { RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useModal } from "@/hooks/use-modal-store";

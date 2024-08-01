@@ -8,9 +8,29 @@ import { RefObject, useMemo } from "react";
 type NavigationLink = {
   text: string;
   onClick: () => void;
+  isSelected?: string;
+  id: string;
+  links: { text: string; id: string }[];
+  isClosing?: boolean;
+  dropDownRef: RefObject<HTMLButtonElement>;
 };
 
-export const NavigationLink = ({ text, onClick }: NavigationLink) => {
+const NavigationLinkOld = ({
+  text,
+  onClick,
+  isSelected,
+  id,
+  links,
+  isClosing,
+  dropDownRef,
+}: // dropDownRef,
+NavigationLink) => {
+  // console.log(id);
+  // console.log(isSelected);
+  // const links = useMemo(() => {
+  //   return DropDownLinks.filter((link) => link.id === id);
+  // }, [isSelected]);
+
   return (
     // <div className="relative">
     <>
@@ -18,15 +38,35 @@ export const NavigationLink = ({ text, onClick }: NavigationLink) => {
         type="button"
         center
         secondary
-        className="bg-blue-400 z-[5]"
+        className="bg-blue-400"
         onClick={onClick}
-      >
+        refObject={dropDownRef}
+        >
         {text}
       </Button>
-    </>
+      {isSelected === text && (
+        <div
+        className={cn(
+            "absolute left-0 mt-2 bg-white text-black rounded shadow-lg w-full md:w-auto z-10",
+            isSelected !== "" && !isClosing && "animate-slideDown",
+            isClosing && "animate-slideUp"
+          )}
+          >
+          <ul className="py-2">
+            {links.map((link) => (
+              <li key={link.id} className="px-4 py-2 hover:bg-gray-200">
+                {link.text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      </>
     // </div>
   );
 };
+
+export default NavigationLinkOld;
 
 {
   /* <nav className="bg-gray-800 p-4">
