@@ -15,12 +15,12 @@ const config: Config = {
       },
       keyframes: {
         slideDown: {
-          "0%": { transform: "translateY(-100%)" },
-          "100%": { transform: "translateY(0)" },
+          "0%": { transform: "scaleY(0)" },
+          "100%": { transform: "scaleY(1)" },
         },
         slideUp: {
-          "0%": { transform: "translateY(0)" },
-          "100%": { transform: "translateY(-100%)" },
+          "0%": { transform: "scaleY(1)" },
+          "100%": { transform: "scaleY(0)" },
         },
         slideOut: {
           "0%": { transform: "translateX(-100%)" },
