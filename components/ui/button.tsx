@@ -10,12 +10,10 @@ type ButtonProps = {
   onClick?: () => void;
   secondary?: boolean;
   danger?: boolean;
-  flex?: boolean;
   disabled?: boolean;
   className?: string;
   center?: boolean;
   start?: boolean;
-  refObject?: RefObject<HTMLButtonElement>;
 };
 
 export const Button = ({
@@ -29,15 +27,12 @@ export const Button = ({
   className,
   center,
   start,
-  refObject,
-  flex,
 }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
       type={type}
       disabled={disabled}
-      ref={refObject}
       className={cn(
         `
             flex items-center rounded-md px-3 py-2 text-sm font-semibold
@@ -45,7 +40,6 @@ export const Button = ({
             focus-visible:outline-2
             focus-visible:outline-slate-500
             ${className}`,
-        flex ? "flex" : "block",
         center && "justify-center",
         start && "justify-start",
         disabled && "opacity-50 cursor-default",

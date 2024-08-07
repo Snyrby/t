@@ -2,7 +2,7 @@
 
 import { useModal } from "@/hooks/use-modal-store";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavigationLink } from "./navigation-link";
 import { NavBarLinks } from "@/constants";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 
 export const NavigationBar = () => {
   const [isClosing, setIsClosing] = useState(false);
+  const [isHovered, setIsHovered] = useState<number | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState<number | null>(null);
   const { isOpen } = useModal();
   // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -32,6 +33,22 @@ export const NavigationBar = () => {
     }
   };
 
+  const handleDropDownClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      setIsDropdownOpen(null);
+    }, 250);
+  };
+
+  useEffect(() => {
+    // Add event listener
+    window.addEventListener("resize", handleDropDownClose);
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleDropDownClose);
+  }, []); // Empty array ensures that effect is only run on mount
+
   return (
     <>
       <nav className="top-0 bg-white w-full shadow-md h-[75px] sticky flexCenter gap-x-4 border-b max-w-full mx-auto z-[47]">
@@ -42,15 +59,31 @@ export const NavigationBar = () => {
           width={40}
           height={40}
         />
-        <div className="flexBetween">
+        <div className="flexBetween gap-x-2">
           {NavBarLinks.map((link, i) => (
-            <div className="relative" key={link.key}>
+            <div
+              className="relative w-auto"
+              key={link.key}
+              onMouseEnter={() => setIsHovered(i)}
+              onMouseLeave={() => setIsHovered(null)}
+            >
               <Button
                 type="button"
                 secondary
+                start
                 onClick={() => handleNavLinkClick(i)}
+                className="hover:bg-gray-200/30 ml-2"
+                fullWidth
               >
-                {link.text}
+                <p className="text-base pr-2">{link.text}</p>
+                {isHovered === i && (
+                  <ChevronDown
+                    size={16}
+                    strokeWidth={1.25}
+                    className="absolute top-[0.8rem] right-0"
+                  />
+                )}
+                {/* <ChevronDown size={16} strokeWidth={1.25} /> */}
               </Button>
               {link.children && isDropdownOpen === i && (
                 <div
@@ -75,15 +108,10 @@ export const NavigationBar = () => {
         <p>Cart</p>
       </nav>
       {isDropdownOpen !== null && (
-        <>
-          <div className="absolute left-0 top-40 mt-2 bg-white text-black rounded shadow-lg w-full md:w-auto animate-slideDown z-[47]">
-            test
-          </div>
-          <button
-            className="bg-black fixed inset-0 bg-opacity-50 backdrop-blur-sm z-[46]"
-            onClick={() => setIsDropdownOpen(null)}
-          />
-        </>
+        <button
+          className="bg-black fixed inset-0 bg-opacity-50 backdrop-blur-sm z-[46]"
+          onClick={handleDropDownClose}
+        />
       )}
     </>
   );

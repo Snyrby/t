@@ -19,7 +19,6 @@ export const FinanceBar = ({ zipCode }: FinanceBarProps) => {
         <div className="h-full flex items-center justify-start gap-x-4">
           <Button
             type="button"
-            flex
             onClick={() => onOpen("LOCATION", { zipCode })}
             className="hover:bg-slate-600/20 gap-x-4"
           >
