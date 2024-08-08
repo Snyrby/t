@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 
 export const NavigationBar = () => {
   const [isClosing, setIsClosing] = useState(false);
-  const [isHovered, setIsHovered] = useState<number | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState<number | null>(null);
   const { isOpen } = useModal();
   // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -61,28 +60,34 @@ export const NavigationBar = () => {
         />
         <div className="flexBetween gap-x-2">
           {NavBarLinks.map((link, i) => (
-            <div
-              className="relative w-auto"
-              key={link.key}
-              onMouseEnter={() => setIsHovered(i)}
-              onMouseLeave={() => setIsHovered(null)}
-            >
+            <div className="relative w-auto group" key={link.key}>
               <Button
                 type="button"
                 secondary
                 start
                 onClick={() => handleNavLinkClick(i)}
-                className="hover:bg-gray-200/30 ml-2"
+                className="group-hover:bg-gray-200/30 ml-2"
                 fullWidth
               >
                 <p className="text-base pr-2">{link.text}</p>
-                {isHovered === i && (
+                {isDropdownOpen === null && (
                   <ChevronDown
                     size={16}
                     strokeWidth={1.25}
-                    className="absolute top-[0.8rem] right-0"
+                    className={cn(
+                      "hidden group-hover:block absolute top-[0.8rem] right-0 animate-slideDown origin-top",
+                      isDropdownOpen === i &&
+                        "rotate-180 ease-in transition-all block"
+                    )}
                   />
                 )}
+                {/* {isDropdownOpen == i && (
+                  <ChevronUp
+                    size={16}
+                    strokeWidth={1.25}
+                    className="absolute top-[0.8rem] right-0 transition-all"
+                  />
+                )} */}
                 {/* <ChevronDown size={16} strokeWidth={1.25} /> */}
               </Button>
               {link.children && isDropdownOpen === i && (
