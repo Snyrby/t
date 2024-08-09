@@ -70,17 +70,26 @@ export const NavigationBar = () => {
                 fullWidth
               >
                 <p className="text-base pr-2">{link.text}</p>
-                {isDropdownOpen === null && (
-                  <ChevronDown
-                    size={16}
-                    strokeWidth={1.25}
-                    className={cn(
-                      "hidden group-hover:block absolute top-[0.8rem] right-0 animate-slideDown origin-top",
-                      isDropdownOpen === i &&
-                        "rotate-180 ease-in transition-all block"
-                    )}
-                  />
-                )}
+                {/* {isDropdownOpen === null && ( */}
+                <ChevronUp
+                  size={16}
+                  strokeWidth={1.25}
+                  className={cn(
+                    "transform group-hover:scale-100 scale-0 origin-center transition-all duration-[250] rotate-180 ease-in absolute top-[0.8rem] right-0",
+                    isDropdownOpen === i && "rotate-0 scale-100"
+                  )}
+                />
+                {/* <ChevronDown
+                  size={16}
+                  strokeWidth={1.25}
+                  className={cn(
+                    isDropdownOpen === null &&
+                      "group-hover:animate-slideDown group-hover:origin-top group-hover:rotate-0",
+                    "hidden group-hover:block absolute top-[0.8rem] right-0",
+                    isDropdownOpen === i && "rotate-180 transition-all block"
+                  )}
+                /> */}
+                {/* )} */}
                 {/* {isDropdownOpen == i && (
                   <ChevronUp
                     size={16}
@@ -95,7 +104,7 @@ export const NavigationBar = () => {
                   className={cn(
                     isDropdownOpen === i && "animate-slideDown origin-top",
                     isClosing === true && "animate-slideUp",
-                    "absolute bg-white top-14 flex flex-col w-auto"
+                    "absolute bg-white top-[3.631rem] flex flex-col w-auto shadow-md border-t"
                   )}
                 >
                   {link.children.map((sublink, i) => (
@@ -114,7 +123,7 @@ export const NavigationBar = () => {
       </nav>
       {isDropdownOpen !== null && (
         <button
-          className="bg-black fixed inset-0 bg-opacity-50 backdrop-blur-sm z-[46]"
+          className="bg-black fixed inset-0 bg-opacity-50 backdrop-blur-sm z-[40]"
           onClick={handleDropDownClose}
         />
       )}
