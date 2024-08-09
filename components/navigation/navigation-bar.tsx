@@ -50,8 +50,7 @@ export const NavigationBar = () => {
 
   return (
     <>
-      <nav className="top-0 bg-white w-full shadow-md h-[75px] sticky flexCenter gap-x-4 border-b max-w-full mx-auto z-[47]">
-        {/* <div className="max-w-[1400px] mx-auto h-full flexCenter gap-x-4 bg-red-600"> */}
+      <nav className="top-0 bg-white w-full shadow-md h-[75px] sticky flexCenter gap-x-4 max-w-full mx-auto z-[47]">
         <Image
           src="/Target_Bullseye-Logo_Red.jpg"
           alt="target"
@@ -66,11 +65,10 @@ export const NavigationBar = () => {
                 secondary
                 start
                 onClick={() => handleNavLinkClick(i)}
-                className="group-hover:bg-gray-200/30 ml-2"
+                className="group-hover:bg-gray-200/30"
                 fullWidth
               >
                 <p className="text-base pr-2">{link.text}</p>
-                {/* {isDropdownOpen === null && ( */}
                 <ChevronUp
                   size={16}
                   strokeWidth={1.25}
@@ -79,34 +77,20 @@ export const NavigationBar = () => {
                     isDropdownOpen === i && "rotate-0 scale-100"
                   )}
                 />
-                {/* <ChevronDown
-                  size={16}
-                  strokeWidth={1.25}
-                  className={cn(
-                    isDropdownOpen === null &&
-                      "group-hover:animate-slideDown group-hover:origin-top group-hover:rotate-0",
-                    "hidden group-hover:block absolute top-[0.8rem] right-0",
-                    isDropdownOpen === i && "rotate-180 transition-all block"
-                  )}
-                /> */}
-                {/* )} */}
-                {/* {isDropdownOpen == i && (
-                  <ChevronUp
-                    size={16}
-                    strokeWidth={1.25}
-                    className="absolute top-[0.8rem] right-0 transition-all"
-                  />
-                )} */}
-                {/* <ChevronDown size={16} strokeWidth={1.25} /> */}
               </Button>
               {link.children && isDropdownOpen === i && (
                 <div
                   className={cn(
                     isDropdownOpen === i && "animate-slideDown origin-top",
                     isClosing === true && "animate-slideUp",
-                    "absolute bg-white top-[3.631rem] flex flex-col w-auto shadow-md border-t"
+                    "absolute bg-white top-[3.605rem] flex flex-col w-56 border-t px-4 max-h-96 overflow-y-scroll"
                   )}
                 >
+                  {i === 0 && (
+                    <div className="h-28 border-b flexStart">
+                      <h3 className="">All Categories</h3>
+                    </div>
+                  )}
                   {link.children.map((sublink, i) => (
                     <Link key={i} href={sublink.href}>
                       {sublink.text}
@@ -130,41 +114,3 @@ export const NavigationBar = () => {
     </>
   );
 };
-
-{
-  /* <div className="hidden md:flex items-center gap-4 transition-all">
-    {NavBarLinks.map((link, index) => (
-      <Link
-        key={link.key}
-        href={"/"}
-        className="relative group transition-all"
-        onMouseEnter={() => setIsHovered(index)}
-        onMouseLeave={() => setIsHovered(null)}
-      >
-        <p className="flex cursor-pointer items-center gap-2 text-black">
-          {link.text}
-          {isHovered === index && (
-            <ChevronDown size={16} strokeWidth={1} />
-          )}
-        </p>
-
-        {link.children && (
-          <div className="absolute   right-0   -top-10 hidden w-auto  flex-col gap-1   rounded-lg bg-white py-3 shadow-md  transition-all group-hover:flex ">
-            {link.children.map((ch, i) => (
-              <Link
-                key={i}
-                href={ch.href ?? "#"}
-                className=" flex cursor-pointer items-center  py-1 pl-6 pr-8  text-neutral-400 hover:text-black"
-              >
-                {/* item */
-}
-//               <span className="whitespace-nowrap   pl-3 ">
-//                 {ch.text}
-//               </span>
-//             </Link>
-//           ))}
-//         </div>
-//       )}
-//     </Link>
-//   ))}
-// </div> */}
