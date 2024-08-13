@@ -83,17 +83,21 @@ export const NavigationBar = () => {
                   className={cn(
                     isDropdownOpen === i && "animate-slideDown origin-top",
                     isClosing === true && "animate-slideUp",
-                    "absolute bg-white top-[3.605rem] flex flex-col w-56 border-t px-4 max-h-96 overflow-y-scroll"
+                    "absolute bg-white top-[3.605rem] flex flex-col w-80 border-t px-4 max-h-[36rem] overflow-y-auto rounded-br-md rounded-bl-md"
                   )}
                 >
                   {i === 0 && (
-                    <div className="h-28 border-b flexStart">
-                      <h3 className="">All Categories</h3>
+                    <div className="min-h-16 border-b flexStart">
+                      <h3 className="text-lg base font-semibold">
+                        All Categories
+                      </h3>
                     </div>
                   )}
                   {link.children.map((sublink, i) => (
                     <Link key={i} href={sublink.href}>
-                      {sublink.text}
+                      <div className="w-full h-10 border-b flexStart">
+                        <p className="text-base whitespace-nowrap">{sublink.text}</p>
+                      </div>
                     </Link>
                   ))}
                 </div>
