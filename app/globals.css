@@ -39,22 +39,18 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: #000 !important;
 }
 
-* Apply to the entire page */ body::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 12px;
+  scroll-behavior: smooth;
 }
 
-/* Track */
-body::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Light gray background */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: none;
 }
 
-/* Handle */
-body::-webkit-scrollbar-thumb {
-  background: #888; /* Darker gray for the scrollbar handle */
-  border-radius: 10px; /* Rounded corners for the handle */
-}
-
-/* Handle on hover */
-body::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Darker gray on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgb(183, 186, 182);
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
 }

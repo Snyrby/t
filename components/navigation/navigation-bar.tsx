@@ -83,7 +83,7 @@ export const NavigationBar = () => {
                   className={cn(
                     isDropdownOpen === i && "animate-slideDown origin-top",
                     isClosing === true && "animate-slideUp",
-                    "absolute bg-white top-[3.605rem] flex flex-col w-80 border-t px-4 max-h-[36rem] overflow-y-auto rounded-br-md rounded-bl-md"
+                    "absolute bg-white top-[3.605rem] flex flex-col w-80 border-t px-4 max-h-[36rem] overflow-y-auto rounded-br-md rounded-bl-md custom-scrollbar"
                   )}
                 >
                   {i === 0 && (
