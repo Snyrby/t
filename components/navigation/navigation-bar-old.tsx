@@ -1,5 +1,5 @@
 "use client";
-import { DropDownLinks, NavBarLinks } from "@/constants";
+import { DropDownLinks, NavBarLinks } from "@/lib/constants";
 import Image from "next/image";
 import NavigationLink from "./navigation-link-old";
 import React, { RefObject, useEffect, useMemo, useRef, useState } from "react";

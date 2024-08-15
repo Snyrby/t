@@ -4,17 +4,16 @@ import { useModal } from "@/hooks/use-modal-store";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { NavigationLink } from "./navigation-link";
-import { NavBarLinks } from "@/constants";
+import { NavBarLinks } from "@/lib/constants";
 import Link from "next/link";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export const NavigationBar = () => {
   const [isClosing, setIsClosing] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState<number | null>(null);
   const { isOpen } = useModal();
-  // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleNavLinkClick = (index: number) => {
     if (isDropdownOpen === null) {
@@ -31,6 +30,10 @@ export const NavigationBar = () => {
       }, 250);
     }
   };
+
+  useEffect(() => {
+    isOpen && setIsDropdownOpen(null);
+  }, [isOpen]);
 
   const handleDropDownClose = () => {
     setIsClosing(true);
@@ -96,7 +99,9 @@ export const NavigationBar = () => {
                   {link.children.map((sublink, i) => (
                     <Link key={i} href={sublink.href}>
                       <div className="w-full h-10 border-b flexStart">
-                        <p className="text-base whitespace-nowrap">{sublink.text}</p>
+                        <p className="text-base whitespace-nowrap">
+                          {sublink.text}
+                        </p>
                       </div>
                     </Link>
                   ))}

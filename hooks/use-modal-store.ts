@@ -1,4 +1,4 @@
-import { TModalActions, TModalContext, TModalData, TModalState } from "@/types";
+import { TModalActions, TModalContext, TModalData, TModalState } from "@/lib/types";
 import { createContext, useContext } from "react";
 
 const initContext: TModalContext = {

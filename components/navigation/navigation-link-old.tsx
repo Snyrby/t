@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { DropDownLinks } from "@/constants";
+import { DropDownLinks } from "@/lib";
 import { cn } from "@/lib/utils";
 import { RefObject, useMemo } from "react";
 

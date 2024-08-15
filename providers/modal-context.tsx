@@ -1,7 +1,7 @@
 "use client";
 
 import { ModalContext, modalReducer } from "@/hooks/use-modal-store";
-import { TModalActions, TModalData, TModalState } from "@/types";
+import { TModalActions, TModalData, TModalState } from "@/lib/types";
 import { useReducer, useMemo } from "react";
 
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {

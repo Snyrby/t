@@ -1,5 +1,5 @@
 "use client";
-import { FinanceBarLinks } from "@/constants";
+import { FinanceBarLinks } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
 import { MapPin } from "lucide-react";
