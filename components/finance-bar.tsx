@@ -22,7 +22,7 @@ export const FinanceBar = ({ zipCode }: FinanceBarProps) => {
             onClick={() => onOpen("LOCATION", { zipCode })}
             className="hover:bg-slate-600/20 gap-x-4"
           >
-            <MapPin size={16}/>
+            <MapPin size={16} />
             {zipCode ? `Ship to ${zipCode}` : "Use Your Location"}
           </Button>
           {/* TODO: Fix this and add a few stores */}
@@ -34,7 +34,7 @@ export const FinanceBar = ({ zipCode }: FinanceBarProps) => {
             Store
           </Button>
         </div>
-        <div className="flex justify-end items-center text-sm text-white gap-x-5">
+        <div className="justify-end items-center text-sm text-white gap-x-5 hidden lg:flex">
           {FinanceBarLinks.map((link) => (
             <button
               key={link.key}

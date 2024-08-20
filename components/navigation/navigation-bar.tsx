@@ -3,13 +3,11 @@
 import { useModal } from "@/hooks/use-modal-store";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { NavigationLink } from "./navigation-link";
 import { NavBarLinks } from "@/lib/constants";
-import Link from "next/link";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { Menu } from "lucide-react";
+import { DropDown } from "@/components/ui/dropdown/drop-down";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { DropDown } from "../ui/dropdown/drop-down";
+import { SearchBar } from "@/components/ui/search-bar";
 
 export const NavigationBar = () => {
   const [isClosing, setIsClosing] = useState(false);
@@ -73,7 +71,15 @@ export const NavigationBar = () => {
             />
           ))}
         </div>
-        <p className="">searchbar</p>
+        <Button
+          type="button"
+          center
+          secondary
+          className="hover:bg-gray-200/30 xl:hidden"
+        >
+          <Menu strokeWidth={1.25} />
+        </Button>
+        <SearchBar />
         <p>sign in</p>
         <p>Cart</p>
       </nav>
