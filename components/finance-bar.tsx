@@ -20,7 +20,7 @@ export const FinanceBar = ({ zipCode }: FinanceBarProps) => {
           <Button
             type="button"
             onClick={() => onOpen("LOCATION", { zipCode })}
-            className="hover:bg-slate-600/20 gap-x-4"
+            className="hover:bg-slate-600/20 focus-visible:outline-white focus:underline gap-x-4"
           >
             <MapPin size={16} />
             {zipCode ? `Ship to ${zipCode}` : "Use Your Location"}
@@ -29,7 +29,7 @@ export const FinanceBar = ({ zipCode }: FinanceBarProps) => {
           <Button
             type="button"
             onClick={() => onOpen("LOCATION", { zipCode })}
-            className="hover:bg-slate-600/20 gap-x-4"
+            className="hover:bg-slate-600/20 gap-x-4 focus:underline focus-visible:outline-white"
           >
             Store
           </Button>
@@ -39,7 +39,9 @@ export const FinanceBar = ({ zipCode }: FinanceBarProps) => {
             <button
               key={link.key}
               type="button"
-              className="hover:underline hover:cursor-pointer"
+              className="hover:underline hover:cursor-pointer focus-visible:outline-dotted
+            focus-visible:outline-2
+            focus-visible:outline-white hover:focus:outline-0"
               onClick={() => router.push("/test")}
             >
               {link.text}

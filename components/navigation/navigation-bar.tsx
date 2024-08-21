@@ -8,11 +8,13 @@ import { Menu } from "lucide-react";
 import { DropDown } from "@/components/ui/dropdown/drop-down";
 import { Button } from "@/components/ui/button";
 import { SearchBar } from "@/components/ui/search-bar";
+import { useRouter } from "next/navigation";
 
 export const NavigationBar = () => {
   const [isClosing, setIsClosing] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState<number | null>(null);
   const { isOpen } = useModal();
+  const router = useRouter();
 
   const handleNavLinkClick = (index: number) => {
     if (isDropdownOpen === null) {
@@ -53,12 +55,21 @@ export const NavigationBar = () => {
   return (
     <>
       <nav className="top-0 bg-white w-full shadow-md h-[75px] sticky flexCenter gap-x-4 max-w-full mx-auto z-[47]">
-        <Image
-          src="/Target_Bullseye-Logo_Red.jpg"
-          alt="target"
-          width={40}
-          height={40}
-        />
+        <Button
+          type="button"
+          center
+          secondary
+          onClick={() => router.push("/")}
+          className="rounded-full"
+        >
+          <Image
+            src="/Target_Bullseye-Logo_Red.jpg"
+            alt="target"
+            width={40}
+            height={40}
+          />
+        </Button>
+
         <div className="hidden xl:flex items-center justify-between gap-x-2">
           {NavBarLinks.map((link, i) => (
             <DropDown
