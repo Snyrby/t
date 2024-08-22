@@ -54,13 +54,13 @@ export const NavigationBar = () => {
 
   return (
     <>
-      <nav className="top-0 bg-white w-full shadow-md h-[75px] sticky flexCenter gap-x-4 max-w-full mx-auto z-[47]">
+      <nav className="top-0 bg-white w-full shadow-sm h-[75px] sticky flexCenter gap-x-4 max-w-full mx-auto z-[47]">
         <Button
           type="button"
           center
           secondary
           onClick={() => router.push("/")}
-          className="rounded-full"
+          className="rounded-full sticky min-w-[80px]"
         >
           <Image
             src="/Target_Bullseye-Logo_Red.jpg"
@@ -86,7 +86,7 @@ export const NavigationBar = () => {
           type="button"
           center
           secondary
-          className="hover:bg-gray-200/30 xl:hidden"
+          className="hover:bg-gray-300/30 xl:hidden"
         >
           <Menu strokeWidth={1.25} />
         </Button>
