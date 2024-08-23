@@ -36,7 +36,7 @@ export const DropDown = ({
         className="group-hover:bg-gray-300/30"
         fullWidth
       >
-        <p className="text-base pr-2">{link.text}</p>
+        <p className="text-base pr-2 whitespace-nowrap">{link.text}</p>
         <ChevronUp
           size={16}
           strokeWidth={1.25}

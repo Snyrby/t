@@ -4,11 +4,12 @@ import { useModal } from "@/hooks/use-modal-store";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { NavBarLinks } from "@/lib/constants";
-import { Menu } from "lucide-react";
+import { ChevronUp, CircleUser, Menu, ShoppingCart } from "lucide-react";
 import { DropDown } from "@/components/ui/dropdown/drop-down";
 import { Button } from "@/components/ui/button";
 import { SearchBar } from "@/components/ui/search-bar";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export const NavigationBar = () => {
   const [isClosing, setIsClosing] = useState(false);
@@ -55,6 +56,7 @@ export const NavigationBar = () => {
   return (
     <>
       <nav className="top-0 bg-white w-full shadow-sm h-[75px] sticky flexCenter gap-x-4 max-w-full mx-auto z-[47]">
+        {/* Image Button */}
         <Button
           type="button"
           center
@@ -69,6 +71,8 @@ export const NavigationBar = () => {
             height={40}
           />
         </Button>
+
+        {/* DropDown Buttons */}
 
         <div className="hidden xl:flex items-center justify-between gap-x-2">
           {NavBarLinks.map((link, i) => (
@@ -90,9 +94,42 @@ export const NavigationBar = () => {
         >
           <Menu strokeWidth={1.25} />
         </Button>
+
+        {/* Search Bar */}
+
         <SearchBar />
-        <p>sign in</p>
-        <p>Cart</p>
+
+        {/* Sign in Button  */}
+        <div className="group relative">
+          <Button
+            type="button"
+            secondary
+            start
+            onClick={() => {}}
+            className="group-hover:bg-gray-300/30 w-30 gap-x-2"
+          >
+            <CircleUser size={20} strokeWidth={1.25} />
+            <p className="text-base text-black font-light pr-2 whitespace-nowrap tracking-tight">
+              Sign in
+            </p>
+            <ChevronUp
+              size={16}
+              strokeWidth={1.25}
+              className={cn(
+                "transform group-hover:scale-100 scale-0 origin-center transition-all duration-[250] rotate-180 ease-in absolute top-[0.8rem] right-0",
+                isOpen && "rotate-0 scale-100"
+              )}
+            />
+          </Button>
+        </div>
+        <Button
+          type="button"
+          center
+          secondary
+          className="hover:bg-gray-300/30 sticky"
+        >
+          <ShoppingCart size={24} strokeWidth={1.25} />
+        </Button>
       </nav>
       {isDropdownOpen !== null && (
         <button
