@@ -1,8 +1,20 @@
+import { cn } from "@/lib/utils";
 import { Mic, Search } from "lucide-react";
 
-export const SearchBar = () => {
+type SearchBarProps = {
+  mobile?: boolean;
+};
+
+export const SearchBar = ({ mobile }: SearchBarProps) => {
   return (
-    <div className="xl:w-[34rem] w-full rounded-lg h-10 bg-gray-300/30">
+    <div
+      className={cn(
+        "xl:w-[34rem] w-full h-10",
+        mobile
+          ? "bg-gray-50 w-full mr-12 rounded-full"
+          : "bg-gray-300/30 rounded-lg"
+      )}
+    >
       <div className="flex items-center w-full h-full px-4 py-2">
         <input
           type="search"
@@ -13,7 +25,9 @@ export const SearchBar = () => {
           autoCapitalize="off"
         />
         <div className="flex items-center justify-between gap-3">
-          <Mic size={20} className="text-gray-600 cursor-pointer" />
+          {!mobile && (
+            <Mic size={20} className="text-gray-600 cursor-pointer" />
+          )}
           <Search size={20} className="text-gray-600 cursor-pointer" />
         </div>
       </div>

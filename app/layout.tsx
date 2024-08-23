@@ -6,6 +6,7 @@ import { ModalProviderGroup } from "@/providers/modal-provider";
 import { useLocationCookie } from "@/hooks/use-location-cookie";
 import { FinanceBar } from "@/components/finance-bar";
 import { NavigationBar } from "@/components/navigation/navigation-bar";
+import { MobileNavBar } from "@/components/navigation/mobile-navigation-bar";
 
 const inter = Reddit_Mono({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
           <ModalProviderGroup />
           <FinanceBar zipCode={zipCode} />
           <NavigationBar />
+          <MobileNavBar />
           {children}
         </ModalProvider>
       </body>

@@ -55,7 +55,7 @@ export const NavigationBar = () => {
 
   return (
     <>
-      <nav className="top-0 bg-white w-full shadow-sm h-[75px] sticky flexCenter gap-x-4 max-w-full mx-auto z-[47]">
+      <nav className="top-0 bg-white w-full shadow-sm h-[75px] sticky gap-x-4 max-w-full mx-auto z-[47] hidden md:flex items-center justify-center">
         {/* Image Button */}
         <Button
           type="button"
