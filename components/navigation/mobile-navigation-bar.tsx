@@ -8,8 +8,8 @@ import { CircleUser, Menu, ShoppingCart } from "lucide-react";
 export const MobileNavBar = () => {
   const router = useRouter();
   return (
-    <div className="md:hidden target-red h-[110px] w-full">
-      <div className="flex-col h-full w-full">
+    <nav className="md:hidden block target-red h-[115px]">
+      <div className="flex-col h-full">
         <div className="flexBetween">
           <Button
             type="button"
@@ -58,6 +58,6 @@ export const MobileNavBar = () => {
 
         <SearchBar mobile />
       </div>
-    </div>
+    </nav>
   );
 };
