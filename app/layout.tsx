@@ -4,7 +4,7 @@ import "./globals.css";
 import { ModalProvider } from "@/providers/modal-context";
 import { ModalProviderGroup } from "@/providers/modal-provider";
 import { useLocationCookie } from "@/hooks/use-location-cookie";
-import { FinanceBar } from "@/components/finance-bar";
+import { FinanceBar } from "@/components/finance/finance-bar";
 import { NavigationBar } from "@/components/navigation/navigation-bar";
 import { MobileNavBar } from "@/components/navigation/mobile-navigation-bar";
 

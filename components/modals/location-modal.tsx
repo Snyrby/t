@@ -17,10 +17,18 @@ export const LocationModal = () => {
   const { register, handleSubmit, formState, setValue } =
     useForm<LocationFormProps>();
 
+  const onCloseClick = () => {
+    setIsAnimating(false);
+    setTimeout(() => {
+      onClose();
+      setIsAnimating(true);
+    }, 250);
+  };
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" || event.keyCode === 27) {
-        onClose();
+        onCloseClick();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -44,9 +52,7 @@ export const LocationModal = () => {
   const onSubmit = async (data: LocationFormProps) => {
     try {
       setLocationCookie(data.zipCode);
-      onClose();
-      // Simulate an async operation with delay
-      // await new Promise((resolve) => setTimeout(resolve, 10000));
+      onCloseClick();
 
       console.log("Data submitted:", data);
     } catch (error) {
@@ -59,13 +65,6 @@ export const LocationModal = () => {
   const onUseLocation = () => {
     retrieveLocation();
     onClose();
-  };
-
-  const onCloseClick = () => {
-    setIsAnimating(false);
-    setTimeout(() => {
-      onClose();
-    }, 250);
   };
 
   return (
@@ -81,7 +80,7 @@ export const LocationModal = () => {
             <p className="text-2xl font-bold ml-5">Update shipping location</p>
             <div className="bg-gray-100 opacity-50 rounded-full transition hover:opacity-100 size-7 flexCenter mr-5">
               <X
-                onClick={() => onClose()}
+                onClick={onCloseClick}
                 className="cursor-pointer opacity-100"
                 size={28}
                 color="black"

@@ -77,3 +77,7 @@ export const NavBarLinks = [
     ],
   },
 ];
+
+export const MobileNavBarLinks = [
+  { href: "/", text: "Home", image: "/target_home.jpeg" },
+]

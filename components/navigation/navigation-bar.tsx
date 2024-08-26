@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 export const NavigationBar = () => {
   const [isClosing, setIsClosing] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState<number | null>(null);
-  const { isOpen } = useModal();
+  const { isOpen, onOpen } = useModal();
   const router = useRouter();
 
   const handleNavLinkClick = (index: number) => {
@@ -92,7 +92,10 @@ export const NavigationBar = () => {
           secondary
           className="hover:bg-gray-300/30 xl:hidden"
         >
-          <Menu strokeWidth={1.25} />
+          <Menu
+            strokeWidth={1.25}
+            onClick={() => onOpen("MOBILESIDEBAR", {})}
+          />
         </Button>
 
         {/* Search Bar */}
