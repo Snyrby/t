@@ -14,20 +14,20 @@ export const NavBarLinks = [
     children: [
       { href: "/", text: "Back to School" },
       { href: "/", text: "College" },
-      { href: "/", text: "Grocery" },
-      { href: "/", text: "Clothing, Shoes & Accessories" },
-      { href: "/", text: "Home" },
+      { href: "/", text: "Grocery", index: 5 },
+      { href: "/", text: "Clothing, Shoes & Accessories", index: 3 },
+      { href: "/", text: "Home", index: 1 },
       { href: "/", text: "Outdoor Living & Garden" },
-      { href: "/", text: "Furniture" },
+      { href: "/", text: "Furniture", index: 6 },
       { href: "/", text: "Kitchen & Dining" },
-      { href: "/", text: "Electronics" },
+      { href: "/", text: "Electronics", index: 8 },
       { href: "/", text: "Video Games" },
-      { href: "/", text: "Toys" },
+      { href: "/", text: "Toys", index: 2 },
       { href: "/", text: "Sports & Outdoors" },
       { href: "/", text: "Movies, Music & Books" },
-      { href: "/", text: "Baby" },
+      { href: "/", text: "Baby", index: 7 },
       { href: "/", text: "Household Essentials" },
-      { href: "/", text: "Beauty" },
+      { href: "/", text: "Beauty", index: 4 },
       { href: "/", text: "Ulta Beauty at Target" },
       { href: "/", text: "Personal Care" },
       { href: "/", text: "Health" },
@@ -80,4 +80,4 @@ export const NavBarLinks = [
 
 export const MobileNavBarLinks = [
   { href: "/", text: "Home", image: "/target_home.jpeg" },
-]
+];

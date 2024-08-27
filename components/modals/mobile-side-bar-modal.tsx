@@ -2,10 +2,9 @@
 import { useModal } from "@/hooks/use-modal-store";
 import { X, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { NavBarLinks } from "@/lib/constants";
-import Image from "next/image";
+import { MobileDropDownList } from "../ui/dropdown/mobile-drop-down-list";
 
 type LocationFormProps = {
   zipCode: string;
@@ -79,6 +78,7 @@ export const MobileSideBarModal = () => {
               ) : (
                 <h1 className=" text-xl font-bold">{link.text}</h1>
               )}
+              <MobileDropDownList index={i} links={link.children} />
             </div>
           ))}
         </div>
