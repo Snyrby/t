@@ -8,6 +8,7 @@ type MobileDropDownListProps = {
   links: {
     href: string;
     text: string;
+    imageURL?: string;
   }[];
 };
 
@@ -23,25 +24,34 @@ export const MobileDropDownList = ({
     [NavBarLinks]
   );
   return (
-    <div className="flex justify-center flex-wrap gap-y-4 my-4 gap-x-6 w-full">
+    <div className="flex justify-between flex-wrap gap-y-4 my-4 gap-x-0 w-full">
       {index !== 0 ? (
         <>
           {links.map((link) => (
-            <p className="">{link.text}</p>
+            <Link href={link.href} key={link.text} className="flex flex-col justify-start mr-2 items-center text-wrap w-[70px] group">
+            <Image
+              alt={link.text}
+              src={link?.imageURL as string}
+              width={70}
+              height={70}
+              className="rounded-full"
+            />
+            <p className="text-xs text-center pt-3 group-hover:underline">{link.text}</p>
+          </Link>
           ))}
         </>
       ) : (
         <>
           {sortedLinks?.map((link) => (
-            <Link href={link.href} key={link.text} className="flex flex-col justify-start items-center mb-4 text-wrap w-[70px]">
+            <Link href={link.href} key={link.text} className="flex flex-col justify-start mr-2 items-center text-wrap w-[70px] group">
               <Image
                 alt={link.text}
-                src={link.imageURL as string}
+                src={link?.imageURL as string}
                 width={70}
                 height={70}
                 className="rounded-full"
               />
-              <p className="text-xs text-center">{link.text}</p>
+              <p className="text-xs text-center pt-3 group-hover:underline">{link.text}</p>
             </Link>
           ))}
         </>

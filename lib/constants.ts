@@ -48,10 +48,10 @@ export const NavBarLinks = [
     key: "Deals",
     text: "Deals",
     children: [
-      { href: "/", text: "Top Deals" },
-      { href: "/", text: "Target Circle Deals" },
-      { href: "/", text: "Weekly Ad" },
-      { href: "/", text: "Clearance" },
+      { href: "/", text: "Top Deals", imageURL: "/target_top_deals.svg" },
+      { href: "/", text: "Target Circle Deals", imageURL: "/target_circle_deals.svg" },
+      { href: "/", text: "Weekly Ad", imageURL: "/target_weekly_ad.svg" },
+      { href: "/", text: "Clearance", imageURL: "/target_clearance.svg" },
     ],
   },
   {

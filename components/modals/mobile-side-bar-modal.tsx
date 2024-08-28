@@ -54,7 +54,7 @@ export const MobileSideBarModal = () => {
           isAnimating ? "animate-slideOut" : "animate-slideIn"
         )}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full overflow-y-scroll">
           <div className="flexBetween my-3 border-b h-16">
             <p className="text-2xl font-bold ml-5 text-slate-800">Menu</p>
             <div className="bg-gray-100 opacity-50 rounded-full transition hover:opacity-100 size-7 flexCenter mr-5">
