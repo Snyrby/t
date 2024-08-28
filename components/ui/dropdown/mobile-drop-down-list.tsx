@@ -1,6 +1,7 @@
 import { NavBarLinks } from "@/lib/constants";
 import { useMemo } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 type MobileDropDownListProps = {
   index: number;
@@ -22,7 +23,7 @@ export const MobileDropDownList = ({
     [NavBarLinks]
   );
   return (
-    <div className="grid grid-cols-4">
+    <div className="flex justify-center flex-wrap gap-y-4 my-4 gap-x-6 w-full">
       {index !== 0 ? (
         <>
           {links.map((link) => (
@@ -31,8 +32,17 @@ export const MobileDropDownList = ({
         </>
       ) : (
         <>
-          {sortedLinks.map((link) => (
-            <p className="">{link.text}</p>
+          {sortedLinks?.map((link) => (
+            <Link href={link.href} key={link.text} className="flex flex-col justify-start items-center mb-4 text-wrap w-[70px]">
+              <Image
+                alt={link.text}
+                src={link.imageURL as string}
+                width={70}
+                height={70}
+                className="rounded-full"
+              />
+              <p className="text-xs text-center">{link.text}</p>
+            </Link>
           ))}
         </>
       )}

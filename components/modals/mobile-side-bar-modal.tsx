@@ -56,7 +56,7 @@ export const MobileSideBarModal = () => {
       >
         <div className="flex flex-col h-full">
           <div className="flexBetween my-3 border-b h-16">
-            <p className="text-2xl font-bold ml-5">Menu</p>
+            <p className="text-2xl font-bold ml-5 text-slate-800">Menu</p>
             <div className="bg-gray-100 opacity-50 rounded-full transition hover:opacity-100 size-7 flexCenter mr-5">
               <X
                 onClick={onCloseClick}
@@ -67,13 +67,13 @@ export const MobileSideBarModal = () => {
             </div>
           </div>
           {NavBarLinks.map((link, i) => (
-            <div key={link.key} className="flex flex-col">
+            <div key={link.key} className="flex flex-col mx-4">
               {i === 0 ? (
-                <div className="flexBetween cursor-pointer">
-                  <h1 className="hover:underline text-xl font-bold">
+                <div className="flexBetween cursor-pointer h-14">
+                  <h1 className="hover:underline text-xl font-bold text-slate-800">
                     {link.text}
                   </h1>
-                  <ChevronRight size={28} />
+                  <ChevronRight size={48} strokeWidth={1} />
                 </div>
               ) : (
                 <h1 className=" text-xl font-bold">{link.text}</h1>
