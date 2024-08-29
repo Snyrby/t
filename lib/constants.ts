@@ -14,13 +14,33 @@ export const NavBarLinks = [
     children: [
       { href: "/", text: "Back to School" },
       { href: "/", text: "College" },
-      { href: "/", text: "Grocery", index: 5, imageURL: "/target_grocery.avif" },
-      { href: "/", text: "Clothing, Shoes & Accessories", index: 3, imageURL: "/target_clothes.avif" },
+      {
+        href: "/",
+        text: "Grocery",
+        index: 5,
+        imageURL: "/target_grocery.avif",
+      },
+      {
+        href: "/",
+        text: "Clothing, Shoes & Accessories",
+        index: 3,
+        imageURL: "/target_clothes.avif",
+      },
       { href: "/", text: "Home", index: 1, imageURL: "/target_home.jpeg" },
       { href: "/", text: "Outdoor Living & Garden" },
-      { href: "/", text: "Furniture", index: 6, imageURL: "/target_furniture.avif" },
+      {
+        href: "/",
+        text: "Furniture",
+        index: 6,
+        imageURL: "/target_furniture.avif",
+      },
       { href: "/", text: "Kitchen & Dining" },
-      { href: "/", text: "Electronics", index: 8, imageURL: "/target_electronics.avif" },
+      {
+        href: "/",
+        text: "Electronics",
+        index: 8,
+        imageURL: "/target_electronics.avif",
+      },
       { href: "/", text: "Video Games" },
       { href: "/", text: "Toys", index: 2, imageURL: "/target_toys.avif" },
       { href: "/", text: "Sports & Outdoors" },
@@ -49,7 +69,11 @@ export const NavBarLinks = [
     text: "Deals",
     children: [
       { href: "/", text: "Top Deals", imageURL: "/target_top_deals.svg" },
-      { href: "/", text: "Target Circle Deals", imageURL: "/target_circle_deals.svg" },
+      {
+        href: "/",
+        text: "Target Circle Deals",
+        imageURL: "/target_circle_deals.svg",
+      },
       { href: "/", text: "Weekly Ad", imageURL: "/target_weekly_ad.svg" },
       { href: "/", text: "Clearance", imageURL: "/target_clearance.svg" },
     ],
@@ -58,26 +82,48 @@ export const NavBarLinks = [
     key: "New & featured",
     text: "New & featured",
     children: [
-      { href: "/", text: "Target New Arrivals" },
-      { href: "/", text: "Target Finds" },
-      { href: "/", text: "#TargetStyle" },
-      { href: "/", text: "Black Beyond Measure" },
-      { href: "/", text: "Más Que" },
-      { href: "/", text: "Women-Owned Brands at Target" },
-      { href: "/", text: "Asian-Owned Brands at Target" },
-      { href: "/", text: "LGBTQIA+ Shop" },
+      {
+        href: "/",
+        text: "Target New Arrivals",
+        imageURL: "/target_new_arrivals.avif",
+      },
+      { href: "/", text: "Target Finds", imageURL: "/target_finds.avif" },
+      { href: "/", text: "#TargetStyle", imageURL: "/target_style.avif" },
+      {
+        href: "/",
+        text: "Black Beyond Measure",
+        imageURL: "/target_black_beyond_measure.jpg",
+      },
+      { href: "/", text: "Más Que", imageURL: "/target_mas_que.jpg" },
+      {
+        href: "/",
+        text: "Women-Owned Brands at Target",
+        imageURL: "/target_women_owned.avif",
+      },
+      {
+        href: "/",
+        text: "Asian-Owned Brands at Target",
+        imageURL: "/target_asian_owned.avif",
+      },
+      { href: "/", text: "LGBTQIA+ Shop", imageURL: "/target_lgbtqia+.avif" },
     ],
   },
   {
     key: "Pickup & delivery",
     text: "Pickup & delivery",
     children: [
-      { href: "/", text: "Shop Order Pickup" },
-      { href: "/", text: "Shop Same Day Delivery" },
+      {
+        href: "/",
+        text: "Shop Order Pickup",
+        title: "Pickup",
+        mobileText: "Order ahead & pickup in-store",
+      },
+      {
+        href: "/",
+        text: "Shop Same Day Delivery",
+        title: "Delivery",
+        mobileText: "Brought to your door by Shipt",
+      },
     ],
   },
-];
-
-export const MobileNavBarLinks = [
-  { href: "/", text: "Home", image: "/target_home.jpeg" },
 ];

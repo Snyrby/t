@@ -4,7 +4,8 @@ import { X, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { NavBarLinks } from "@/lib/constants";
-import { MobileDropDownList } from "../ui/dropdown/mobile-drop-down-list";
+import { MobileDropDownList } from "@/components/ui/dropdown/mobile-drop-down-list";
+import { MobilePickupDelivery } from "@/components/ui/mobile/mobile-pickup-delivery";
 
 type LocationFormProps = {
   zipCode: string;
@@ -55,7 +56,7 @@ export const MobileSideBarModal = () => {
         )}
       >
         <div className="flex flex-col h-full overflow-y-scroll">
-          <div className="flexBetween my-3 border-b h-16">
+          <div className="flexBetween my-3 pb-3 border-b h-16">
             <p className="text-2xl font-bold ml-5 text-slate-800">Menu</p>
             <div className="bg-gray-100 opacity-50 rounded-full transition hover:opacity-100 size-7 flexCenter mr-5">
               <X
@@ -67,7 +68,7 @@ export const MobileSideBarModal = () => {
             </div>
           </div>
           {NavBarLinks.map((link, i) => (
-            <div key={link.key} className="flex flex-col mx-4">
+            <div key={link.key} className="flex flex-col mx-4 border-b-2">
               {i === 0 ? (
                 <div className="flexBetween cursor-pointer h-14">
                   <h1 className="hover:underline text-xl font-bold text-slate-800">
@@ -76,9 +77,15 @@ export const MobileSideBarModal = () => {
                   <ChevronRight size={48} strokeWidth={1} />
                 </div>
               ) : (
-                <h1 className=" text-xl font-bold">{link.text}</h1>
+                <h1 className="pt-3 text-xl font-bold text-slate-800">
+                  {link.text}
+                </h1>
               )}
-              <MobileDropDownList index={i} links={link.children} />
+              {i < 3 ? (
+                <MobileDropDownList index={i} links={link.children} />
+              ) : (
+                <MobilePickupDelivery links={link.children} />
+              )}
             </div>
           ))}
         </div>
