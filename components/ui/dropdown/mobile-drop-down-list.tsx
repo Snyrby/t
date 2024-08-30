@@ -19,7 +19,9 @@ export const MobileDropDownList = ({
   const sortedLinks = useMemo(
     () =>
       NavBarLinks.at(0)
-        ?.children.filter((link) => link?.index !== undefined)
+        ?.children.filter(
+          (link) => "index" in link && typeof link.index === "number"
+        )
         .sort((a, b) => a.index - b.index),
     [NavBarLinks]
   );
@@ -28,22 +30,11 @@ export const MobileDropDownList = ({
       {index !== 0 ? (
         <>
           {links.map((link) => (
-            <Link href={link.href} key={link.text} className="flex flex-col justify-start mr-2 items-center text-wrap w-[70px] group">
-            <Image
-              alt={link.text}
-              src={link?.imageURL as string}
-              width={70}
-              height={70}
-              className="rounded-full"
-            />
-            <p className="text-xs text-center pt-3 group-hover:underline">{link.text}</p>
-          </Link>
-          ))}
-        </>
-      ) : (
-        <>
-          {sortedLinks?.map((link) => (
-            <Link href={link.href} key={link.text} className="flex flex-col justify-start mr-2 items-center text-wrap w-[70px] group">
+            <Link
+              href={link.href}
+              key={link.text}
+              className="flex flex-col justify-start mr-2 items-center text-wrap w-[70px] group"
+            >
               <Image
                 alt={link.text}
                 src={link?.imageURL as string}
@@ -51,7 +42,30 @@ export const MobileDropDownList = ({
                 height={70}
                 className="rounded-full"
               />
-              <p className="text-xs text-center pt-3 group-hover:underline">{link.text}</p>
+              <p className="text-xs text-center pt-3 group-hover:underline">
+                {link.text}
+              </p>
+            </Link>
+          ))}
+        </>
+      ) : (
+        <>
+          {sortedLinks?.map((link) => (
+            <Link
+              href={link.href}
+              key={link.text}
+              className="flex flex-col justify-start mr-2 items-center text-wrap w-[70px] group"
+            >
+              <Image
+                alt={link.text}
+                src={link?.imageURL as string}
+                width={70}
+                height={70}
+                className="rounded-full"
+              />
+              <p className="text-xs text-center pt-3 group-hover:underline">
+                {link.text}
+              </p>
             </Link>
           ))}
         </>

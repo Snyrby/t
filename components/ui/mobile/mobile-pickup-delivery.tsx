@@ -4,7 +4,9 @@ import { MobilePickupDeliveryItem } from "./mobile-pickup-delivery-item";
 type MobilePickupDeliveryProps = {
   links: {
     href: string;
-    imageURL?: string;
+    imageURL: string;
+    title: string;
+    mobileText: string;
   }[];
 };
 
