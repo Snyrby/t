@@ -53,6 +53,14 @@ export const NavigationBar = () => {
     return () => window.removeEventListener("resize", handleDropDownClose);
   }, []); // Empty array ensures that effect is only run on mount
 
+  useEffect(() => {
+    if (isDropdownOpen !== null) {
+      document.body.classList.add("hidden-scrollbar");
+    } else {
+      document.body.classList.remove("hidden-scrollbar");
+    }
+  }, [isDropdownOpen]);
+
   return (
     <>
       <nav className="top-0 bg-white w-full shadow-sm h-[75px] sticky gap-x-4 max-w-full mx-auto z-[47] hidden md:flex items-center justify-center">

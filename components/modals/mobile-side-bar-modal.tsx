@@ -3,17 +3,21 @@ import { useModal } from "@/hooks/use-modal-store";
 import { X, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { NavBarLinks } from "@/lib/constants";
+import { FinanceBarLinks, NavBarLinks } from "@/lib/constants";
 import { MobileDropDownList } from "@/components/ui/dropdown/mobile-drop-down-list";
 import { MobilePickupDelivery } from "@/components/ui/mobile/mobile-pickup-delivery";
-
-type LocationFormProps = {
-  zipCode: string;
-};
+import { MobileFinanceBarLink } from "@/components/ui/mobile/mobile-finance-bar-link";
 
 export const MobileSideBarModal = () => {
   const [isAnimating, setIsAnimating] = useState(true);
   const { isOpen, onClose, type } = useModal();
+
+  const pickupDeliveryLinks = NavBarLinks.at(3)?.children as {
+    href: string;
+    imageURL: string;
+    title: string;
+    mobileText: string;
+  }[];
 
   const onCloseClick = () => {
     setIsAnimating(false);
@@ -44,7 +48,10 @@ export const MobileSideBarModal = () => {
   }, []); // Empty array ensures that effect is only run on mount
 
   if (type !== "MOBILESIDEBAR" || !isOpen) {
+    document.body.style.overflow = "scroll";
     return null;
+  } else {
+    document.body.style.overflow = "hidden";
   }
 
   return (
@@ -81,12 +88,19 @@ export const MobileSideBarModal = () => {
                   {link.text}
                 </h1>
               )}
-              {i < 3 ? (
+              {i < NavBarLinks.length - 1 ? (
                 <MobileDropDownList index={i} links={link.children} />
               ) : (
-                <MobilePickupDelivery links={link.children} />
+                <MobilePickupDelivery links={pickupDeliveryLinks} />
               )}
             </div>
+          ))}
+          {FinanceBarLinks.map((link, i) => (
+            <>
+              {i < FinanceBarLinks.length - 1 && (
+                <MobileFinanceBarLink link={link} key={link.key} />
+              )}
+            </>
           ))}
         </div>
       </aside>

@@ -44,7 +44,10 @@ export const LocationModal = () => {
   }, [data]);
 
   if (type !== "LOCATION" || isOpen === false) {
+    document.body.style.overflow = "scroll";
     return null;
+  } else {
+    document.body.style.overflow = "hidden";
   }
 
   const isLoading = formState.isSubmitting;

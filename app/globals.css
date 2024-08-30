@@ -54,3 +54,20 @@ input:-webkit-autofill:active {
   border-radius: 10px;
   border: 2px solid #f1f1f1;
 }
+
+/* Custom Scrollbar */
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 17px;
+  scroll-behavior: smooth;
+}
+
+.hidden-scrollbar::-webkit-scrollbar-track {
+  background: none;
+}
+
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+  display: none;
+}
+.hidden-scrollbar {
+  overflow-y: hidden;
+}
