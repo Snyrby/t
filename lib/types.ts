@@ -1,4 +1,4 @@
-export type TModalActions = "ACCOUNT" | "LOCATION" | "CLOSE" | "MOBILESIDEBAR";
+export type TModalActions = "ACCOUNT" | "LOCATION" | "CLOSE" | "MOBILESIDEBAR" | "CATEGORY";
 
 export type TModalData = {
   zipCode?: string;

@@ -4,9 +4,12 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { CircleUser, Menu, ShoppingCart } from "lucide-react";
+import { useModal } from "@/hooks/use-modal-store";
 
 export const MobileNavBar = () => {
   const router = useRouter();
+  const { onOpen } = useModal();
+
   return (
     <nav className="md:hidden block target-red h-[115px]">
       <div className="flex-col h-full">
@@ -17,7 +20,7 @@ export const MobileNavBar = () => {
             secondary
             className="hover:bg-gray-300/30"
           >
-            <Menu color="white" />
+            <Menu color="white" onClick={() => onOpen("MOBILESIDEBAR", {})} />
           </Button>
           {/* Image Button */}
           <Button

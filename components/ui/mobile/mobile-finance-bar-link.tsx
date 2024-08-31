@@ -11,10 +11,10 @@ type MobileFinanceBarLinkProps = {
 export const MobileFinanceBarLink = ({ link }: MobileFinanceBarLinkProps) => {
   return (
     <Link
-      className="flex flex-col mx-4 border-b-2 hover:underline"
+      className="flex flex-col mx-4 border-b-2 hover:underline focus:underline focus-visible:outline-none"
       href={link.href}
     >
-      <p className="my-2 text-sm">{link.text}</p>
+      <p className="my-2 text-sm ">{link.text}</p>
     </Link>
   );
 };
