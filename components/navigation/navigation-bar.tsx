@@ -99,11 +99,9 @@ export const NavigationBar = () => {
           center
           secondary
           className="hover:bg-gray-300/30 xl:hidden"
+          onClick={() => onOpen("MOBILESIDEBAR", {})}
         >
-          <Menu
-            strokeWidth={1.25}
-            onClick={() => onOpen("MOBILESIDEBAR", {})}
-          />
+          <Menu strokeWidth={1.25} />
         </Button>
 
         {/* Search Bar */}
@@ -116,7 +114,7 @@ export const NavigationBar = () => {
             type="button"
             secondary
             start
-            onClick={() => {}}
+            onClick={() => onOpen("ACCOUNT", {})}
             className="group-hover:bg-gray-300/30 w-30 gap-x-2"
           >
             <CircleUser size={20} strokeWidth={1.25} />

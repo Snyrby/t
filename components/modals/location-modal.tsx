@@ -7,10 +7,9 @@ import { Button } from "@/components/ui/button";
 import { retrieveLocation, setLocationCookie } from "@/lib/set-location-cookie";
 import { cn } from "@/lib/utils";
 import { ModalHeader } from "./modal-header";
-import { ModalLayout } from "./modal-layout";
 
 type LocationFormProps = {
-  zipCode: string;
+  zipCode?: string;
   onCloseClick: () => void;
 };
 
@@ -36,7 +35,7 @@ export const LocationModal = ({ onCloseClick }: LocationFormProps) => {
 
   const onSubmit = async (data: LocationFormProps) => {
     try {
-      setLocationCookie(data.zipCode);
+      setLocationCookie(data.zipCode as string);
       onCloseClick();
 
       console.log("Data submitted:", data);
@@ -53,7 +52,7 @@ export const LocationModal = ({ onCloseClick }: LocationFormProps) => {
   };
 
   return (
-    <ModalLayout>
+    <>
       <ModalHeader title="Update shipping location" onClose={onCloseClick} />
       <form
         className="h-full flex flex-col justify-between mx-4"
@@ -128,6 +127,6 @@ export const LocationModal = ({ onCloseClick }: LocationFormProps) => {
           </Button>
         </div>
       </form>
-    </ModalLayout>
+    </>
   );
 };

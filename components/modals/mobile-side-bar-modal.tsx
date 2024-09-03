@@ -5,17 +5,13 @@ import { FinanceBarLinks, NavBarLinks } from "@/lib/constants";
 import { MobileDropDownList } from "@/components/ui/dropdown/mobile-drop-down-list";
 import { MobilePickupDelivery } from "@/components/ui/mobile/mobile-pickup-delivery";
 import { MobileFinanceBarLink } from "@/components/ui/mobile/mobile-finance-bar-link";
-import { Button } from "../ui/button";
-import { ModalHeader } from "./modal-header";
-import { ModalLayout } from "./modal-layout";
+import { Button } from "@/components/ui/button";
 
 type MobileSideBarModalProps = {
-  onCloseClick: () => void;
+  children?: React.ReactNode;
 };
 
-export const MobileSideBarModal = ({
-  onCloseClick,
-}: MobileSideBarModalProps) => {
+export const MobileSideBarModal = ({ children }: MobileSideBarModalProps) => {
   const { isOpen, type, onOpen } = useModal();
 
   const pickupDeliveryLinks = NavBarLinks.at(3)?.children as {
@@ -33,8 +29,8 @@ export const MobileSideBarModal = ({
   }
 
   return (
-    <ModalLayout>
-      <ModalHeader title="Menu" onClose={onCloseClick} />
+    <>
+      {children}
       {NavBarLinks.map((link, i) => (
         <div key={link.key} className="flex flex-col mx-4 border-b-2">
           {i === 0 ? (
@@ -42,7 +38,7 @@ export const MobileSideBarModal = ({
               type="button"
               secondary
               onClick={() => onOpen("CATEGORY", {})}
-              className="flexBetween cursor-pointer h-14 hover:underline"
+              className="flexBetween cursor-pointer h-14 hover:underline px-0"
             >
               <h1 className="text-xl font-bold text-slate-800">{link.text}</h1>
               <ChevronRight size={48} strokeWidth={1} />
@@ -62,6 +58,6 @@ export const MobileSideBarModal = ({
       {FinanceBarLinks.map((link, i) => (
         <MobileFinanceBarLink link={link} key={link.key} />
       ))}
-    </ModalLayout>
+    </>
   );
 };

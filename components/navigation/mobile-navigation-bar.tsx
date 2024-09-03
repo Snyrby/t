@@ -19,8 +19,9 @@ export const MobileNavBar = () => {
             center
             secondary
             className="hover:bg-gray-300/30"
+            onClick={() => onOpen("MOBILESIDEBAR", {})}
           >
-            <Menu color="white" onClick={() => onOpen("MOBILESIDEBAR", {})} />
+            <Menu color="white" />
           </Button>
           {/* Image Button */}
           <Button

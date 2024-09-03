@@ -30,12 +30,22 @@ const config: Config = {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-100%)" },
         },
+        slideOutFromRight: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        slideInFromRight: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       animation: {
         slideDown: "slideDown 0.25s ease-in forwards",
         slideUp: "slideUp 0.25s ease-in forwards",
         slideOut: "slideOut 0.25s ease-in-out forwards",
         slideIn: "slideIn 0.25s ease-in-out forwards",
+        slideOutFromRight: "slideOutFromRight 0.25s ease-in-out forwards",
+        slideInFromRight: "slideInFromRight 0.25s ease-in-out forwards",
       },
     },
   },

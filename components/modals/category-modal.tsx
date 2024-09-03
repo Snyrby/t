@@ -6,10 +6,10 @@ import Link from "next/link";
 import { ModalLayout } from "./modal-layout";
 
 type CategoryModalProps = {
-  onCloseClick: () => void;
+  children?: React.ReactNode;
 };
 
-export const CategoryModal = ({ onCloseClick }: CategoryModalProps) => {
+export const CategoryModal = ({ children }: CategoryModalProps) => {
   const { isOpen, type } = useModal();
 
   if (type !== "CATEGORY" || isOpen === false) {
@@ -20,8 +20,8 @@ export const CategoryModal = ({ onCloseClick }: CategoryModalProps) => {
   }
 
   return (
-    <ModalLayout>
-      <ModalHeader title="Categories" onClose={onCloseClick} category />
+    <>
+      {children}
       <div className="mx-2 h-full">
         <div className="border-b flex items-center justify-start h-12 w-full">
           <h1 className="pb-3 text-lg font-bold">All categories</h1>
@@ -40,6 +40,6 @@ export const CategoryModal = ({ onCloseClick }: CategoryModalProps) => {
           </div>
         ))}
       </div>
-    </ModalLayout>
+    </>
   );
 };
