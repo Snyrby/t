@@ -26,19 +26,21 @@ export const CategoryModal = ({ children }: CategoryModalProps) => {
         <div className="border-b flex items-center justify-start h-12 w-full">
           <h1 className="pb-3 text-lg font-bold">All categories</h1>
         </div>
-        {NavBarLinks.at(0)?.children.map((category) => (
-          <div
-            className="border-b flex items-center justify-start h-10 w-full"
-            key={category.text}
-          >
-            <Link
-              className="w-full hover:underline focus:underline focus-visible:outline-none"
-              href={category.href}
+        <ul className="list-none">
+          {NavBarLinks.at(0)?.children.map((category) => (
+            <li
+              className="border-b flex items-center justify-start h-10 w-full"
+              key={category.text}
             >
-              {category.text}
-            </Link>
-          </div>
-        ))}
+              <Link
+                className="w-full hover:underline focus:underline focus-visible:outline-none"
+                href={category.href}
+              >
+                {category.text}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );

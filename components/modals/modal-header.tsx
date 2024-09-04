@@ -12,7 +12,7 @@ export const ModalHeader = ({ title, onClose, category }: ModalHeaderProps) => {
   const { onOpen } = useModal();
 
   return (
-    <div className="flexBetween my-3 pb-3 border-b h-16">
+    <section className="flexBetween my-3 pb-3 border-b h-16">
       {category ? (
         <div className="flexCenter ml-2">
           <Button
@@ -43,6 +43,6 @@ export const ModalHeader = ({ title, onClose, category }: ModalHeaderProps) => {
           color="black"
         />
       </Button>
-    </div>
+    </section>
   );
 };

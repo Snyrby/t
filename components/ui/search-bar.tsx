@@ -15,7 +15,7 @@ export const SearchBar = ({ mobile }: SearchBarProps) => {
           : "bg-gray-300/30 rounded-lg"
       )}
     >
-      <div className="flex items-center w-full h-full px-4 py-2">
+      <search className="flex items-center w-full h-full px-4 py-2">
         <input
           type="search"
           className="w-full px-0 py-2 focus:outline-none bg-transparent placeholder:text-gray-600 text-base"
@@ -30,7 +30,7 @@ export const SearchBar = ({ mobile }: SearchBarProps) => {
           )}
           <Search size={20} className="text-gray-600 cursor-pointer" />
         </div>
-      </div>
+      </search>
     </div>
   );
 };
