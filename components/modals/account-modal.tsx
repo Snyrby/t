@@ -20,16 +20,27 @@ export const AccountModal = ({ children }: AccountModalProps) => {
   return (
     <>
       {children}
-      <div className="flex flex-col ml-4">
-        <Link href="/">Sign in</Link>
-        <Link href="/">Create account</Link>
-        <div className="">
-          <Link href="/"></Link>
-        </div>
-        <p>signin</p>
-        <p>signin</p>
-        <p>signin</p>
-        <p>signin</p>
+      <div className="flex flex-col mx-4">
+        <ul className="">
+          <li className="border-b noHoverOnFocusUnderline focus-within:list-outside focus-within:list-disc">
+            <Link href="/" className="focus-visible:outline-none">
+              Sign in
+            </Link>
+          </li>
+          <li className="border-b">
+            <Link href="/">Create account</Link>
+          </li>
+          <li className="border-b">
+            <Link href="/" className="flexBetween">
+              <span className="">Orders</span>
+              <span className="">Track + manage</span>
+            </Link>
+          </li>
+          <p>signin</p>
+          <p>signin</p>
+          <p>signin</p>
+          <p>signin</p>
+        </ul>
       </div>
     </>
   );

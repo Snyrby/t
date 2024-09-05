@@ -71,3 +71,7 @@ input:-webkit-autofill:active {
 .hidden-scrollbar {
   overflow-y: hidden;
 }
+
+.noHoverOnFocusUnderline:hover:not(:focus-within) {
+  text-decoration: underline;
+}

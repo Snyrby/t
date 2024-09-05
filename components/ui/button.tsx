@@ -48,7 +48,7 @@ export const Button = ({
         danger && "bg-black hover:bg-black focus-visible:outline-black",
         !secondary &&
           !danger &&
-          "target-red hover:target-red focus-visible:target-red focus-visible:target-red"
+          "target-red hover:target-red focus-visible:target-red"
       )}
     >
       {children}
