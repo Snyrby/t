@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { RefObject } from "react";
 
 type ButtonProps = {
   type: "button" | "submit" | "reset" | undefined;
