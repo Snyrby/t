@@ -10,10 +10,10 @@ type ListItemProps = {
 
 export const ListItem = ({ children, href, text, imageURL }: ListItemProps) => {
   return (
-    <li className="border-b noHoverOnFocusUnderline focus-within:list-outside focus-within:list-disc h-10">
+    <li className="no-hover-on-focus-underline focus-within:list-outside focus-within:list-disc h-10 underline-divider">
       {!children && !imageURL && (
-        <Link href={href as string} className="focus-visible:outline-none h-full flexStart">
-          {text}
+        <Link href={href as string} className="focus-visible:outline-none h-full flexStart px-4 py-3 list-dot">
+          <span>{text}</span>
         </Link>
       )}
       {!children && imageURL && (

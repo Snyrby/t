@@ -20,7 +20,7 @@ export const AccountModal = ({ children }: AccountModalProps) => {
   return (
     <>
       {children}
-      <div className="flex flex-col mx-4">
+      <div className="flex flex-col">
         <ul className="-mt-3">
           <ListItem text="Sign in" href="/"/>
           <ListItem href="/" text="Create account"/>
