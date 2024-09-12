@@ -37,7 +37,7 @@ export const AccountModal = ({ children }: AccountModalProps) => {
           <ListItem text="Sign in" href="/" className="h-32">
             <Link
               href="/"
-              className="flex flex-col focus-visible:outline-none pl-10 pr-4 py-3 h-full list-dot"
+              className="flex flex-col justify-center items-start focus-visible:outline-none pl-8 pr-4 py-3 h-full list-dot"
             >
               <h3 className="text-lg font-bold">
                 Target Circle<span className="text-xs align-top">™</span>
@@ -49,20 +49,24 @@ export const AccountModal = ({ children }: AccountModalProps) => {
               </p>
             </Link>
           </ListItem>
-          <ListItem text="Sign in" href="/" className="h-32">
+          <ListItem text="Sign in" href="/" className="h-36">
             <Link
               href="/"
-              className="flex flex-col focus-visible:outline-none pl-10 pr-4 py-3 h-full list-dot"
+              className="flex flex-col justify-center items-start focus-visible:outline-none pl-8 pr-4 py-3 h-full list-dot"
             >
               <h3 className="text-lg font-bold">
                 Target Circle<span className="text-xs align-top">™</span> Card
               </h3>
               <p className="font-bold">
-                Save 5% <sup className="text-xs">1</sup> instantly, in-store &
-                online
+                Save 5%<sup className="text-xs pl-1">1</sup> instantly, in-store
+                & online
               </p>
               <p className="text-[#666666]">
                 Find the right card for you: Credit, debit, or reloadable.
+              </p>
+              <p className="text-xs text-[#666666] tracking-tighter">
+                <sup className="text-[0.625rem]">1</sup>Restrictions apply. See&nbsp;
+                <Link href="/" className="underline">Target.com/CircleCard</Link> for details.
               </p>
             </Link>
           </ListItem>
