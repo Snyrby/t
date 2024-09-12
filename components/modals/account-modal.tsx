@@ -22,17 +22,50 @@ export const AccountModal = ({ children }: AccountModalProps) => {
       {children}
       <div className="flex flex-col">
         <ul className="-mt-3">
-          <ListItem text="Sign in" href="/"/>
-          <ListItem href="/" text="Create account"/>
+          <ListItem text="Sign in" href="/" />
+          <ListItem href="/" text="Create account" />
           <ListItem>
-            <Link href="/" className="flexBetween w-full">
+            <Link
+              href="/"
+              className="flexBetween focus-visible:outline-none px-4 py-3 h-full list-dot"
+            >
               <span className="">Orders</span>
-              <span className="">Track + manage</span>
+              <span className="text-[#666666]">Track + manage</span>
             </Link>
           </ListItem>
           <ListItem href="/" imageURL="/target_account_modal.svg" />
-          <p>signin</p>
-          <p>signin</p>
+          <ListItem text="Sign in" href="/" className="h-32">
+            <Link
+              href="/"
+              className="flex flex-col focus-visible:outline-none pl-10 pr-4 py-3 h-full list-dot"
+            >
+              <h3 className="text-lg font-bold">
+                Target Circle<span className="text-xs align-top">™</span>
+              </h3>
+              <p className="font-bold">Get members-only deals</p>
+              <p className="text-[#666666]">
+                Join free and get access to automatic deals, personalized
+                bonuses & more.
+              </p>
+            </Link>
+          </ListItem>
+          <ListItem text="Sign in" href="/" className="h-32">
+            <Link
+              href="/"
+              className="flex flex-col focus-visible:outline-none pl-10 pr-4 py-3 h-full list-dot"
+            >
+              <h3 className="text-lg font-bold">
+                Target Circle<span className="text-xs align-top">™</span> Card
+              </h3>
+              <p className="font-bold">
+                Save 5% <sup className="text-xs">1</sup> instantly, in-store &
+                online
+              </p>
+              <p className="text-[#666666]">
+                Find the right card for you: Credit, debit, or reloadable.
+              </p>
+            </Link>
+          </ListItem>
           <p>signin</p>
         </ul>
       </div>

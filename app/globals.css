@@ -84,12 +84,13 @@ input:-webkit-autofill:active {
   margin: 0 20px;
 }
 
-.list-dot:focus-within::before {
+.list-dot:focus-within::after {
   content: '';
   background: black;
   position: absolute;
   display: block;
   left: 5px;
+  top: 50%;
   height: 5px;
   width: 5px;
   border-radius: 1000px;
