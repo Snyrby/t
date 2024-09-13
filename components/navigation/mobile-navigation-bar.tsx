@@ -43,7 +43,7 @@ export const MobileNavBar = () => {
               type="button"
               secondary
               center
-              onClick={() => {}}
+              onClick={() => onOpen("ACCOUNT", {})}
               className="hover:bg-gray-300/30"
             >
               <CircleUser color="white" strokeWidth={1.25} />
