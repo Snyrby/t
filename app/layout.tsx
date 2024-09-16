@@ -5,8 +5,7 @@ import { ModalProvider } from "@/providers/modal-context";
 import { ModalProviderGroup } from "@/providers/modal-provider";
 import { useLocationCookie } from "@/hooks/use-location-cookie";
 import { FinanceBar } from "@/components/finance/finance-bar";
-import { NavigationBar } from "@/components/navigation/navigation-bar";
-import { MobileNavBar } from "@/components/navigation/mobile-navigation-bar";
+import ConditionalRenderer from "./(landing)/conditonal-rendering";
 
 const inter = Reddit_Mono({ subsets: ["latin"] });
 
@@ -25,10 +24,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ModalProvider>
-          <ModalProviderGroup />
-          <FinanceBar zipCode={zipCode} />
-          <NavigationBar />
-          <MobileNavBar />
+          <ConditionalRenderer>
+            <ModalProviderGroup />
+            <FinanceBar zipCode={zipCode} />
+          </ConditionalRenderer>
           {children}
         </ModalProvider>
       </body>
