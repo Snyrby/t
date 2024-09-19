@@ -22,8 +22,8 @@ export const AccountModal = ({ children }: AccountModalProps) => {
       {children}
       <div className="flex flex-col">
         <ul className="-mt-3">
-          <ListItem text="Sign in" href="/login" />
-          <ListItem href="/" text="Create account" />
+          <ListItem text="Sign in" href="/login?actions=create_session_signin" />
+          <ListItem href="/login?actions=create_session_create_account" text="Create account" />
           <ListItem href="/" between>
             <span className="">Orders</span>
             <span className="text-[#666666]">Track + manage</span>
