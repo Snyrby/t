@@ -30,6 +30,7 @@ export const AuthForm = () => {
         type="email"
         label="Email address"
         id="email"
+        watch={watch("email")}
         register={register}
         errors={errors}
       />
@@ -37,6 +38,7 @@ export const AuthForm = () => {
         type="text"
         label="First Name"
         id="firstName"
+        watch={watch("firstName")}
         register={register}
         errors={errors}
       />
@@ -44,6 +46,7 @@ export const AuthForm = () => {
         type="text"
         label="Last Name"
         id="lastName"
+        watch={watch("lastName")}
         register={register}
         errors={errors}
       />
@@ -51,6 +54,7 @@ export const AuthForm = () => {
         type="tel"
         label="Mobile phone number (optional)"
         id="mobileNumber"
+        watch={watch("mobileNumber")}
         register={register}
         errors={errors}
       />
@@ -58,6 +62,7 @@ export const AuthForm = () => {
         type="password"
         label="Create password"
         id="password"
+        watch={watch("password")}
         register={register}
         errors={errors}
       />

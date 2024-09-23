@@ -11,6 +11,7 @@ interface InputProps {
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
   disabled?: boolean;
+  watch?: string;
 }
 
 const Input = ({
@@ -21,13 +22,20 @@ const Input = ({
   register,
   errors,
   disabled,
+  watch,
 }: InputProps) => {
+  console.log(watch);
+
   return (
-    <div className="relative w-full h-11 group">
+    <div className="relative w-full h-11 group mt-3">
       <label
-        className="absolute top-1.5 left-2 group-focus-within:-translate-y-[13px] 
-        group-focus-within:px-1 z-10 group-focus-within:text-xs bg-white transition-all 
-        text-sm font-medium leading-6 text-gray-900"
+        className={cn(
+          watch !== ""
+            ? "px-1 text-xs -translate-y-[21px] transition-none"
+            : "group-focus-within:-translate-y-[17px] group-focus-within:px-1 group-focus-within:text-xs text-sm transition-all",
+          "top-2.5 absolute left-2 z-0 bg-white",
+          "font-medium leading-6 text-gray-900"
+        )}
         htmlFor={id}
       >
         {label}
@@ -40,7 +48,7 @@ const Input = ({
         {...register(id, { required })}
         className={cn(
           `
-                form-input
+                h-11
                 block
                 w-full
                 border-none

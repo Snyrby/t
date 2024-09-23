@@ -14,7 +14,7 @@ export const AuthHeader = ({ action }: AuthHeaderProps) => {
         width={35}
         height={35}
       />
-      <h1 className="my-4 tracking-tighter font-bold text-2xl">{action === "create_session_signin" ? "Sign into your Target account" : "Create your Target account"}</h1>
+      <h1 className="mt-4 mb-2 tracking-tighter font-bold text-2xl">{action === "create_session_signin" ? "Sign into your Target account" : "Create your Target account"}</h1>
     </>
   );
 };
