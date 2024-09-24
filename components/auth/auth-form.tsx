@@ -5,6 +5,7 @@ type Variant = "LOGIN" | "REGISTER" | "";
 
 export const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>("");
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -59,13 +60,23 @@ export const AuthForm = () => {
         errors={errors}
       />
       <Input
-        type="password"
+        type={showPassword ? "text" : "password"}
         label="Create password"
         id="password"
         watch={watch("password")}
         register={register}
         errors={errors}
-      />
+      >
+        <div className="flex items-center absolute right-2 top-2.5 justify-end">
+          <button
+            type="button"
+            className="underline decoration-gray-400 underline-offset-1"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? "hide" : "show"}
+          </button>
+        </div>
+      </Input>
     </form>
   );
 };
