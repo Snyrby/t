@@ -66,6 +66,7 @@ export const AuthForm = () => {
         watch={watch("password")}
         register={register}
         errors={errors}
+        maxLength={20}
       >
         <div className="flex items-center absolute right-2 top-2.5 justify-end">
           <button
@@ -77,6 +78,7 @@ export const AuthForm = () => {
           </button>
         </div>
       </Input>
+      <button type="submit">btn</button>
     </form>
   );
 };

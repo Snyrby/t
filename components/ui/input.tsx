@@ -14,6 +14,7 @@ interface InputProps {
   disabled?: boolean;
   watch?: string;
   children?: React.ReactNode;
+  maxLength?: number;
 }
 
 const Input = ({
@@ -26,6 +27,7 @@ const Input = ({
   disabled,
   watch,
   children,
+  maxLength,
 }: InputProps) => {
   const [focus, setFocus] = useState<string | null>(null);
   return (
@@ -48,7 +50,16 @@ const Input = ({
         autoComplete="off"
         disabled={disabled}
         onClick={() => setFocus(id)}
-        {...register(id, { required, onBlur: () => setFocus(null) })}
+        {...register(id, {
+          required,
+          onBlur: () => setFocus(null),
+          ...(maxLength && {
+            maxLength: {
+              value: maxLength,
+              message: "Keep Below " + maxLength,
+            },
+          }),
+        })}
         className={cn(
           `
             h-11
