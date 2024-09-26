@@ -15,9 +15,10 @@ interface InputProps {
   watch?: string;
   children?: React.ReactNode;
   maxLength?: number;
+  minLength?: number;
 }
 
-const Input = ({
+export const Input = ({
   label,
   id,
   type,
@@ -28,6 +29,7 @@ const Input = ({
   watch,
   children,
   maxLength,
+  min
 }: InputProps) => {
   const [focus, setFocus] = useState<string | null>(null);
   return (
@@ -38,7 +40,8 @@ const Input = ({
           (watch !== "" || focus === id) && "-translate-y-[8px] px-1 text-xs",
           watch === "" &&
             focus === null &&
-            "top-2.5 text-sm underline underline-offset-4 decoration-gray-300"
+            "top-2.5 text-sm underline underline-offset-4 decoration-gray-300",
+            errors[id] && "text-red-600 bg-amber-100"
         )}
         htmlFor={id}
       >
@@ -51,7 +54,12 @@ const Input = ({
         disabled={disabled}
         onClick={() => setFocus(id)}
         {...register(id, {
-          required,
+          ...required && {
+            required: {
+              value: required,
+              message: `Please enter your ${label}`
+            }
+          },
           onBlur: () => setFocus(null),
           ...(maxLength && {
             maxLength: {
@@ -80,7 +88,7 @@ const Input = ({
             sm:text-sm
             sm:leading-6
           `,
-          errors[id] && "focus: ring-rose-500",
+          errors[id] && "bg-amber-100 focus:bg-amber-100 ring-red-600",
           disabled && "opacity-50 cursor-default"
         )}
       />
@@ -88,5 +96,3 @@ const Input = ({
     </div>
   );
 };
-
-export default Input;
