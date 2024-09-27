@@ -16,6 +16,7 @@ interface InputProps {
   children?: React.ReactNode;
   maxLength?: number;
   minLength?: number;
+  pattern?: RegExp;
 }
 
 export const Input = ({
@@ -29,7 +30,8 @@ export const Input = ({
   watch,
   children,
   maxLength,
-  min
+  minLength,
+  pattern
 }: InputProps) => {
   const [focus, setFocus] = useState<string | null>(null);
   return (
@@ -64,9 +66,21 @@ export const Input = ({
           ...(maxLength && {
             maxLength: {
               value: maxLength,
-              message: "Keep Below " + maxLength,
+              message: `Needs to be less than ${maxLength} characters`,
             },
           }),
+          ...(minLength && {
+            minLength: {
+              value: minLength,
+              message: `Needs to be at least ${minLength} characters`,
+            },
+          }),
+          ...(pattern && {
+            pattern: {
+              value: pattern,
+              message: `Please enter a valid ${label.toLowerCase()}`
+            }
+          })
         })}
         className={cn(
           `

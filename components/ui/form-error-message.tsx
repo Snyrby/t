@@ -5,5 +5,6 @@ type FormErrorMessageProps = {
 };
 
 export const FormErrorMessage = ({ errorMessage }: FormErrorMessageProps) => {
-  return <p className="text-xs">{errorMessage}</p>;
+  const cleanedErrorMessage = errorMessage.replace("Create", "")
+  return <p className="text-xs">{cleanedErrorMessage}</p>;
 };
