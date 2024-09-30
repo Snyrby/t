@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { FormErrorMessage } from "@/components/ui/form-error-message";
+import { PasswordHint } from "./password-hint";
 type Variant = "LOGIN" | "REGISTER" | "";
 
 export const AuthForm = () => {
@@ -61,7 +62,7 @@ export const AuthForm = () => {
         id="email"
         required
         watch={watch("email")}
-        maxLength={254}
+        maxLength={40}
         register={register}
         errors={errors}
         pattern={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
@@ -135,6 +136,7 @@ export const AuthForm = () => {
       {typeof errors["password"]?.message == "string" && (
         <FormErrorMessage errorMessage={errors["password"]?.message} />
       )}
+      <PasswordHint />
       <button type="submit">btn</button>
     </form>
   );

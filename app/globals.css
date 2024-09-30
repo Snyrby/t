@@ -95,3 +95,10 @@ input:-webkit-autofill:active {
   width: 5px;
   border-radius: 1000px;
 }
+
+.list-item-checkmark::before {
+  content: "✓";
+  color: rgb(0, 131, 0);
+  font-weight: 700;
+  font-size: 12px;
+}
