@@ -101,4 +101,5 @@ input:-webkit-autofill:active {
   color: rgb(0, 131, 0);
   font-weight: 700;
   font-size: 12px;
+  padding-right: 0.25rem;
 }

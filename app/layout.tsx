@@ -6,6 +6,7 @@ import { ModalProviderGroup } from "@/providers/modal-provider";
 import { useLocationCookie } from "@/hooks/use-location-cookie";
 import { FinanceBar } from "@/components/finance/finance-bar";
 import ConditionalRenderer from "./(landing)/conditonal-rendering";
+import AuthProvider from "@/providers/auth-provider";
 
 const inter = Reddit_Mono({ subsets: ["latin"] });
 
@@ -23,13 +24,15 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ModalProvider>
-          <ConditionalRenderer>
-            <ModalProviderGroup />
-            <FinanceBar zipCode={zipCode} />
-          </ConditionalRenderer>
-          {children}
-        </ModalProvider>
+        <AuthProvider>
+          <ModalProvider>
+            <ConditionalRenderer>
+              <ModalProviderGroup />
+              <FinanceBar zipCode={zipCode} />
+            </ConditionalRenderer>
+            {children}
+          </ModalProvider>
+        </AuthProvider>
       </body>
     </html>
   );

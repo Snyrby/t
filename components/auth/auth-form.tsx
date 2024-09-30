@@ -1,18 +1,40 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { FormErrorMessage } from "@/components/ui/form-error-message";
 import { PasswordHint } from "./password-hint";
+import axios from "axios";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 type Variant = "LOGIN" | "REGISTER" | "";
 
 export const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>("");
+  const session = useSession();
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordCriteria, setPasswordCriteria] = useState({
+    length: false,
+    lowercase: false,
+    uppercase: false,
+    number: false,
+    specialChar: false,
+    minTwoCriteria: false,
+  });
+
+  useEffect(() => {
+    if (session?.status === "authenticated") {
+      router.push("/");
+    }
+  }, [session?.status, router]);
+  
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
     setValue,
   } = useForm<FieldValues>({
@@ -42,7 +64,44 @@ export const AuthForm = () => {
     }
   };
 
+  const validatePasswords = (password: string) => {
+    const lowercaseRegex = /[a-z]/;
+    const uppercaseRegex = /[A-Z]/;
+    const numberRegex = /[0-9]/;
+    const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.\/?]+/; // Excludes < and >
+
+    const length = password.length >= 8 && password.length <= 20;
+    const lowercase = lowercaseRegex.test(password);
+    const uppercase = uppercaseRegex.test(password);
+    const number = numberRegex.test(password);
+    const specialChar = specialCharRegex.test(password);
+
+    // Count how many criteria are met
+    const criteriaMet = [lowercase, uppercase, number, specialChar].filter(
+      Boolean
+    ).length;
+    const minTwoCriteria = criteriaMet >= 2;
+    setPasswordCriteria({
+      length,
+      lowercase,
+      uppercase,
+      number,
+      specialChar,
+      minTwoCriteria,
+    });
+    if (minTwoCriteria) {
+      return true;
+    } else {
+      return "Please enter a valid password"
+    }
+  };
+
   const phoneNumber = watch("mobileNumber", "");
+  const password = watch("password", "");
+
+  useEffect(() => {
+    validatePasswords(password);
+  }, [password]);
 
   useEffect(() => {
     const formattedNumber = formatPhoneNumber(phoneNumber as string);
@@ -53,6 +112,7 @@ export const AuthForm = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
+    axios.post("/api/register", data).then(() => signIn("credentials", data)).then(() => router.push("/"))
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
@@ -65,6 +125,7 @@ export const AuthForm = () => {
         maxLength={40}
         register={register}
         errors={errors}
+        disabled={isSubmitting}
         pattern={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
       />
       {typeof errors["email"]?.message == "string" && (
@@ -80,6 +141,7 @@ export const AuthForm = () => {
         minLength={2}
         register={register}
         errors={errors}
+        disabled={isSubmitting}
       />
       {typeof errors["firstName"]?.message == "string" && (
         <FormErrorMessage errorMessage={errors["firstName"]?.message} />
@@ -94,6 +156,7 @@ export const AuthForm = () => {
         minLength={2}
         register={register}
         errors={errors}
+        disabled={isSubmitting}
       />
       {typeof errors["lastName"]?.message == "string" && (
         <FormErrorMessage errorMessage={errors["lastName"]?.message} />
@@ -107,6 +170,7 @@ export const AuthForm = () => {
         errors={errors}
         maxLength={14}
         minLength={14}
+        disabled={isSubmitting}
         pattern={/^\(\d{3}\) \d{3}-\d{4}$/}
       />
       {typeof errors["mobileNumber"]?.message == "string" && (
@@ -122,6 +186,8 @@ export const AuthForm = () => {
         errors={errors}
         maxLength={20}
         minLength={8}
+        disabled={isSubmitting}
+        validate={validatePasswords}
       >
         <div className="flex items-center absolute right-2 top-2.5 justify-end">
           <button
@@ -136,8 +202,8 @@ export const AuthForm = () => {
       {typeof errors["password"]?.message == "string" && (
         <FormErrorMessage errorMessage={errors["password"]?.message} />
       )}
-      <PasswordHint />
-      <button type="submit">btn</button>
+      <PasswordHint passwordCriteria={passwordCriteria} />
+        <button type="submit" disabled={isSubmitting}>btn</button>
     </form>
   );
 };

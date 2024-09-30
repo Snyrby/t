@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
-interface InputProps {
+type InputProps = {
   label: string;
   id: string;
   type?: string;
@@ -17,6 +17,7 @@ interface InputProps {
   maxLength?: number;
   minLength?: number;
   pattern?: RegExp;
+  validate?: (password: string) => string | true
 }
 
 export const Input = ({
@@ -31,7 +32,8 @@ export const Input = ({
   children,
   maxLength,
   minLength,
-  pattern
+  pattern,
+  validate
 }: InputProps) => {
   const [focus, setFocus] = useState<string | null>(null);
   return (
@@ -80,6 +82,9 @@ export const Input = ({
               value: pattern,
               message: `Please enter a valid ${label.toLowerCase()}`
             }
+          }),
+          ...(validate && {
+            validate: validate
           })
         })}
         className={cn(
