@@ -17,8 +17,9 @@ type InputProps = {
   maxLength?: number;
   minLength?: number;
   pattern?: RegExp;
-  validate?: (password: string) => string | true
-}
+  validate?: (password: string) => string | true;
+  setShowPasswordCriteria?: (value: boolean) => void;
+};
 
 export const Input = ({
   label,
@@ -33,7 +34,8 @@ export const Input = ({
   maxLength,
   minLength,
   pattern,
-  validate
+  validate,
+  setShowPasswordCriteria,
 }: InputProps) => {
   const [focus, setFocus] = useState<string | null>(null);
   return (
@@ -45,7 +47,7 @@ export const Input = ({
           watch === "" &&
             focus === null &&
             "top-2.5 text-sm underline underline-offset-4 decoration-gray-300",
-            errors[id] && "text-red-600 bg-amber-100"
+          errors[id] && "text-red-600 bg-amber-100"
         )}
         htmlFor={id}
       >
@@ -56,14 +58,25 @@ export const Input = ({
         type={type}
         autoComplete="off"
         disabled={disabled}
-        onClick={() => setFocus(id)}
+        onClick={() => {
+          setFocus(id);
+          if (typeof setShowPasswordCriteria !== "undefined") {
+            setShowPasswordCriteria(true);
+          }
+        }}
+        onFocus={() => {
+          setFocus(id);
+          if (typeof setShowPasswordCriteria !== "undefined") {
+            setShowPasswordCriteria(true);
+          }
+        }}
         {...register(id, {
-          ...required && {
+          ...(required && {
             required: {
               value: required,
-              message: `Please enter your ${label}`
-            }
-          },
+              message: `Please enter your ${label}`,
+            },
+          }),
           onBlur: () => setFocus(null),
           ...(maxLength && {
             maxLength: {
@@ -80,12 +93,12 @@ export const Input = ({
           ...(pattern && {
             pattern: {
               value: pattern,
-              message: `Please enter a valid ${label.toLowerCase()}`
-            }
+              message: `Please enter a valid ${label.toLowerCase()}`,
+            },
           }),
           ...(validate && {
-            validate: validate
-          })
+            validate: validate,
+          }),
         })}
         className={cn(
           `

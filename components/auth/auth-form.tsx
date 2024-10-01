@@ -13,7 +13,7 @@ type Variant = "LOGIN" | "REGISTER" | "";
 export const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>("");
   const session = useSession();
-  const router = useRouter()
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [passwordCriteria, setPasswordCriteria] = useState({
     length: false,
@@ -23,13 +23,14 @@ export const AuthForm = () => {
     specialChar: false,
     minTwoCriteria: false,
   });
+  const [showPasswordCriteria, setShowPasswordCriteria] = useState(false);
 
   useEffect(() => {
     if (session?.status === "authenticated") {
       router.push("/");
     }
   }, [session?.status, router]);
-  
+
   const {
     register,
     handleSubmit,
@@ -92,7 +93,7 @@ export const AuthForm = () => {
     if (minTwoCriteria) {
       return true;
     } else {
-      return "Please enter a valid password"
+      return "Please enter a valid password";
     }
   };
 
@@ -112,7 +113,10 @@ export const AuthForm = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
-    axios.post("/api/register", data).then(() => signIn("credentials", data)).then(() => router.push("/"))
+    axios
+      .post("/api/register", data)
+      .then(() => signIn("credentials", data))
+      .then(() => router.push("/"));
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
@@ -188,6 +192,7 @@ export const AuthForm = () => {
         minLength={8}
         disabled={isSubmitting}
         validate={validatePasswords}
+        setShowPasswordCriteria={setShowPasswordCriteria}
       >
         <div className="flex items-center absolute right-2 top-2.5 justify-end">
           <button
@@ -202,8 +207,12 @@ export const AuthForm = () => {
       {typeof errors["password"]?.message == "string" && (
         <FormErrorMessage errorMessage={errors["password"]?.message} />
       )}
-      <PasswordHint passwordCriteria={passwordCriteria} />
-        <button type="submit" disabled={isSubmitting}>btn</button>
+      {showPasswordCriteria && (
+        <PasswordHint passwordCriteria={passwordCriteria} />
+      )}
+      <button type="submit" disabled={isSubmitting}>
+        btn
+      </button>
     </form>
   );
 };

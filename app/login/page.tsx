@@ -5,7 +5,7 @@ import { AuthHeader } from "@/components/auth/auth-header";
 import { AuthLegal } from "@/components/auth/auth-legal";
 import { useModal } from "@/hooks/use-modal-store";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function LoginPage() {
   const { isOpen, onClose } = useModal();
@@ -15,6 +15,14 @@ export default function LoginPage() {
   useEffect(() => {
     isOpen && onClose();
   }, []);
+
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  });
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col justify-start items-center w-full h-full">
