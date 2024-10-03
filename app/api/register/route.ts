@@ -1,7 +1,14 @@
 import bcrypt from "bcrypt";
 import prismadb from "@/lib/db";
 import { NextResponse } from "next/server";
-import { emailRegex, mobileNumberLength, mobileNumberRegex, nameMaxLength, nameMinLength } from "@/lib/constants";
+import {
+  emailRegex,
+  mobileNumberLength,
+  mobileNumberRegex,
+  nameMaxLength,
+  nameMinLength,
+} from "@/lib/constants";
+import { validatePasswords } from "@/lib/validate-password";
 
 export async function POST(request: Request) {
   try {
@@ -12,16 +19,19 @@ export async function POST(request: Request) {
       return new NextResponse("Please provide all info", { status: 400 });
     }
 
-    const testEmail = emailRegex.test(email);
-    if (!testEmail) {
+    if (!emailRegex.test(email)) {
       return new NextResponse("Please enter a valid email", { status: 400 });
     }
 
-    const testMobileNumber = mobileNumberRegex.test(mobileNumber);
-    if (!testMobileNumber) {
-      return new NextResponse("Please enter a valid phone number", {
-        status: 400,
-      });
+    if (mobileNumber !== "") {
+      if (
+        !mobileNumberRegex.test(mobileNumber) &&
+        mobileNumber.length !== mobileNumberLength
+      ) {
+        return new NextResponse("Please enter a valid phone number", {
+          status: 400,
+        });
+      }
     }
 
     const testFirstNameLength =
@@ -43,9 +53,9 @@ export async function POST(request: Request) {
       });
     }
 
-    const testMobileNumberLength = typeof mobileNumber === "string" && mobileNumber.length === mobileNumberLength
-    if (!testMobileNumberLength) {
-      return new NextResponse("The last name doesn't meet size requirements", {
+    const validatePassword = validatePasswords({ password });
+    if (!validatePassword) {
+      return new NextResponse("Password must meet complexity requirements", {
         status: 400,
       });
     }
@@ -82,6 +92,7 @@ export async function POST(request: Request) {
         firstName,
         lastName,
         hashedPassword,
+        mobileNumber,
       },
     });
 

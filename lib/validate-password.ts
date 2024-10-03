@@ -8,18 +8,18 @@ import {
   uppercaseRegex,
 } from "./constants";
 
+type PasswordCriteria = {
+  length: boolean;
+  lowercase: boolean;
+  uppercase: boolean;
+  number: boolean;
+  specialChar: boolean;
+  minTwoCriteria: boolean;
+};
+
 type validatePasswordProps = {
   password: string;
-  setPasswordCriteria?: (
-    value: SetStateAction<{
-      length: boolean;
-      lowercase: boolean;
-      uppercase: boolean;
-      number: boolean;
-      specialChar: boolean;
-      minTwoCriteria: boolean;
-    }>
-  ) => void;
+  setPasswordCriteria?: (value: SetStateAction<PasswordCriteria>) => void
 };
 
 export const validatePasswords = ({

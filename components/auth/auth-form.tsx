@@ -8,7 +8,20 @@ import { PasswordHint } from "./password-hint";
 import axios from "axios";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { emailRegex, lowercaseRegex, mobileNumberLength, mobileNumberRegex, nameMaxLength, nameMinLength, numberRegex, passwordMaxLength, passwordMinLength, specialCharRegex, uppercaseRegex } from "@/lib/constants";
+import {
+  emailRegex,
+  lowercaseRegex,
+  mobileNumberLength,
+  mobileNumberRegex,
+  nameMaxLength,
+  nameMinLength,
+  numberRegex,
+  passwordMaxLength,
+  passwordMinLength,
+  specialCharRegex,
+  uppercaseRegex,
+} from "@/lib/constants";
+import { validatePasswords } from "@/lib/validate-password";
 type Variant = "LOGIN" | "REGISTER" | "";
 
 export const AuthForm = () => {
@@ -66,38 +79,38 @@ export const AuthForm = () => {
     }
   };
 
-  const validatePasswords = (password: string) => {
-    const length = password.length >= passwordMinLength && password.length <= passwordMaxLength;
-    const lowercase = lowercaseRegex.test(password);
-    const uppercase = uppercaseRegex.test(password);
-    const number = numberRegex.test(password);
-    const specialChar = specialCharRegex.test(password);
+  // const validatePasswords = (password: string) => {
+  //   const length = password.length >= passwordMinLength && password.length <= passwordMaxLength;
+  //   const lowercase = lowercaseRegex.test(password);
+  //   const uppercase = uppercaseRegex.test(password);
+  //   const number = numberRegex.test(password);
+  //   const specialChar = specialCharRegex.test(password);
 
-    // Count how many criteria are met
-    const criteriaMet = [lowercase, uppercase, number, specialChar].filter(
-      Boolean
-    ).length;
-    const minTwoCriteria = criteriaMet >= 2;
-    setPasswordCriteria({
-      length,
-      lowercase,
-      uppercase,
-      number,
-      specialChar,
-      minTwoCriteria,
-    });
-    if (minTwoCriteria) {
-      return true;
-    } else {
-      return "Please enter a valid password";
-    }
-  };
+  //   // Count how many criteria are met
+  //   const criteriaMet = [lowercase, uppercase, number, specialChar].filter(
+  //     Boolean
+  //   ).length;
+  //   const minTwoCriteria = criteriaMet >= 2;
+  //   setPasswordCriteria({
+  //     length,
+  //     lowercase,
+  //     uppercase,
+  //     number,
+  //     specialChar,
+  //     minTwoCriteria,
+  //   });
+  //   if (minTwoCriteria) {
+  //     return true;
+  //   } else {
+  //     return "Please enter a valid password";
+  //   }
+  // };
 
   const phoneNumber = watch("mobileNumber", "");
   const password = watch("password", "");
 
   useEffect(() => {
-    validatePasswords(password);
+    validatePasswords({ password, setPasswordCriteria });
   }, [password]);
 
   useEffect(() => {
@@ -111,7 +124,8 @@ export const AuthForm = () => {
     axios
       .post("/api/register", data)
       .then(() => signIn("credentials", data))
-      .then(() => router.push("/"));
+      .then(() => router.push("/"))
+      .catch((error) => console.log("REGISTER ERROR: " + error));
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
@@ -186,7 +200,7 @@ export const AuthForm = () => {
         maxLength={passwordMaxLength}
         minLength={passwordMinLength}
         disabled={isSubmitting}
-        validate={validatePasswords}
+        validate={() => validatePasswords({ password })}
         setShowPasswordCriteria={setShowPasswordCriteria}
       >
         <div className="flex items-center absolute right-2 top-2.5 justify-end">
