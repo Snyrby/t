@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import prismadb from "@/lib/db";
 import { NextResponse } from "next/server";
+import { emailRegex, mobileNumberLength, mobileNumberRegex, nameMaxLength, nameMinLength } from "@/lib/constants";
 
 export async function POST(request: Request) {
   try {
@@ -9,6 +10,44 @@ export async function POST(request: Request) {
 
     if (!email || !firstName || !lastName || !password) {
       return new NextResponse("Please provide all info", { status: 400 });
+    }
+
+    const testEmail = emailRegex.test(email);
+    if (!testEmail) {
+      return new NextResponse("Please enter a valid email", { status: 400 });
+    }
+
+    const testMobileNumber = mobileNumberRegex.test(mobileNumber);
+    if (!testMobileNumber) {
+      return new NextResponse("Please enter a valid phone number", {
+        status: 400,
+      });
+    }
+
+    const testFirstNameLength =
+      typeof firstName === "string" &&
+      firstName.length >= nameMinLength &&
+      firstName.length <= nameMaxLength;
+    if (!testFirstNameLength) {
+      return new NextResponse("The first name doesn't meet size requirements", {
+        status: 400,
+      });
+    }
+    const testLastNameLength =
+      typeof lastName === "string" &&
+      lastName.length >= nameMinLength &&
+      lastName.length <= nameMaxLength;
+    if (!testLastNameLength) {
+      return new NextResponse("The last name doesn't meet size requirements", {
+        status: 400,
+      });
+    }
+
+    const testMobileNumberLength = typeof mobileNumber === "string" && mobileNumber.length === mobileNumberLength
+    if (!testMobileNumberLength) {
+      return new NextResponse("The last name doesn't meet size requirements", {
+        status: 400,
+      });
     }
 
     const isEmailUsed = await prismadb.user.findUnique({
@@ -28,8 +67,10 @@ export async function POST(request: Request) {
     });
 
     if (isMobileNumberUsed) {
-        return new NextResponse("That mobile number is already in use", { status: 400 });
-      }
+      return new NextResponse("That mobile number is already in use", {
+        status: 400,
+      });
+    }
 
     const hashedPassword = await bcrypt.hash(
       password,

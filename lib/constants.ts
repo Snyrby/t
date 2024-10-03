@@ -129,3 +129,15 @@ export const NavBarLinks = [
     ],
   },
 ];
+
+export const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+export const mobileNumberRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
+export const nameMinLength = 2;
+export const nameMaxLength = 40;
+export const mobileNumberLength = 14;
+export const passwordMinLength = 8;
+export const passwordMaxLength = 20;
+export const lowercaseRegex = /[a-z]/;
+export const uppercaseRegex = /[A-Z]/;
+export const numberRegex = /[0-9]/;
+export const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.\/?]+/;

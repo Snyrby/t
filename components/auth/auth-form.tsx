@@ -8,6 +8,7 @@ import { PasswordHint } from "./password-hint";
 import axios from "axios";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { emailRegex, lowercaseRegex, mobileNumberLength, mobileNumberRegex, nameMaxLength, nameMinLength, numberRegex, passwordMaxLength, passwordMinLength, specialCharRegex, uppercaseRegex } from "@/lib/constants";
 type Variant = "LOGIN" | "REGISTER" | "";
 
 export const AuthForm = () => {
@@ -66,12 +67,7 @@ export const AuthForm = () => {
   };
 
   const validatePasswords = (password: string) => {
-    const lowercaseRegex = /[a-z]/;
-    const uppercaseRegex = /[A-Z]/;
-    const numberRegex = /[0-9]/;
-    const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.\/?]+/; // Excludes < and >
-
-    const length = password.length >= 8 && password.length <= 20;
+    const length = password.length >= passwordMinLength && password.length <= passwordMaxLength;
     const lowercase = lowercaseRegex.test(password);
     const uppercase = uppercaseRegex.test(password);
     const number = numberRegex.test(password);
@@ -112,7 +108,6 @@ export const AuthForm = () => {
   }, [phoneNumber, setValue]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
     axios
       .post("/api/register", data)
       .then(() => signIn("credentials", data))
@@ -126,11 +121,11 @@ export const AuthForm = () => {
         id="email"
         required
         watch={watch("email")}
-        maxLength={40}
+        maxLength={nameMaxLength}
         register={register}
         errors={errors}
         disabled={isSubmitting}
-        pattern={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
+        pattern={emailRegex}
       />
       {typeof errors["email"]?.message == "string" && (
         <FormErrorMessage errorMessage={errors["email"]?.message} />
@@ -141,8 +136,8 @@ export const AuthForm = () => {
         id="firstName"
         required
         watch={watch("firstName")}
-        maxLength={40}
-        minLength={2}
+        maxLength={nameMaxLength}
+        minLength={nameMinLength}
         register={register}
         errors={errors}
         disabled={isSubmitting}
@@ -156,8 +151,8 @@ export const AuthForm = () => {
         id="lastName"
         required
         watch={watch("lastName")}
-        maxLength={40}
-        minLength={2}
+        maxLength={nameMaxLength}
+        minLength={nameMinLength}
         register={register}
         errors={errors}
         disabled={isSubmitting}
@@ -172,10 +167,10 @@ export const AuthForm = () => {
         watch={phoneNumber}
         register={register}
         errors={errors}
-        maxLength={14}
-        minLength={14}
+        maxLength={mobileNumberLength}
+        minLength={mobileNumberLength}
         disabled={isSubmitting}
-        pattern={/^\(\d{3}\) \d{3}-\d{4}$/}
+        pattern={mobileNumberRegex}
       />
       {typeof errors["mobileNumber"]?.message == "string" && (
         <FormErrorMessage errorMessage={errors["mobileNumber"]?.message} />
@@ -188,8 +183,8 @@ export const AuthForm = () => {
         watch={watch("password")}
         register={register}
         errors={errors}
-        maxLength={20}
-        minLength={8}
+        maxLength={passwordMaxLength}
+        minLength={passwordMinLength}
         disabled={isSubmitting}
         validate={validatePasswords}
         setShowPasswordCriteria={setShowPasswordCriteria}
