@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { FormErrorMessage } from "@/components/ui/form-error-message";
@@ -10,22 +10,20 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
   emailRegex,
-  lowercaseRegex,
   mobileNumberLength,
   mobileNumberRegex,
   nameMaxLength,
   nameMinLength,
-  numberRegex,
   passwordMaxLength,
   passwordMinLength,
-  specialCharRegex,
-  uppercaseRegex,
 } from "@/lib/constants";
 import { validatePasswords } from "@/lib/validate-password";
+import { KeepMeSignedIn } from "./keep-me-signed-in";
 type Variant = "LOGIN" | "REGISTER" | "";
 
 export const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>("");
+  const keepMeSignedInRef = useRef<HTMLInputElement>(null)
   const session = useSession();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -79,33 +77,6 @@ export const AuthForm = () => {
     }
   };
 
-  // const validatePasswords = (password: string) => {
-  //   const length = password.length >= passwordMinLength && password.length <= passwordMaxLength;
-  //   const lowercase = lowercaseRegex.test(password);
-  //   const uppercase = uppercaseRegex.test(password);
-  //   const number = numberRegex.test(password);
-  //   const specialChar = specialCharRegex.test(password);
-
-  //   // Count how many criteria are met
-  //   const criteriaMet = [lowercase, uppercase, number, specialChar].filter(
-  //     Boolean
-  //   ).length;
-  //   const minTwoCriteria = criteriaMet >= 2;
-  //   setPasswordCriteria({
-  //     length,
-  //     lowercase,
-  //     uppercase,
-  //     number,
-  //     specialChar,
-  //     minTwoCriteria,
-  //   });
-  //   if (minTwoCriteria) {
-  //     return true;
-  //   } else {
-  //     return "Please enter a valid password";
-  //   }
-  // };
-
   const phoneNumber = watch("mobileNumber", "");
   const password = watch("password", "");
 
@@ -124,8 +95,7 @@ export const AuthForm = () => {
     if (data.mobileNumber !== "") {
       axios
         .post("/api/register", data)
-        .then(() => signIn("credentials", data))
-        .then(() => router.push("/"))
+        .then(() => signIn("credentials", { data, callbackUrl: "/" }))
         .catch((error) => console.log("REGISTER ERROR: " + error));
     } else {
       axios
@@ -135,8 +105,7 @@ export const AuthForm = () => {
           lastName: data.lastName,
           password: data.password,
         })
-        .then(() => signIn("credentials", data))
-        .then(() => router.push("/"))
+        .then(() => signIn("credentials", { data, callbackUrl: "/" }))
         .catch((error) => console.log("REGISTER ERROR: " + error));
     }
   };
@@ -232,6 +201,7 @@ export const AuthForm = () => {
       {showPasswordCriteria && (
         <PasswordHint passwordCriteria={passwordCriteria} />
       )}
+      <KeepMeSignedIn ref={keepMeSignedInRef}/>
       <button type="submit" disabled={isSubmitting}>
         btn
       </button>
