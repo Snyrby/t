@@ -23,17 +23,6 @@ export async function POST(request: Request) {
       return new NextResponse("Please enter a valid email", { status: 400 });
     }
 
-    if (mobileNumber !== "") {
-      if (
-        !mobileNumberRegex.test(mobileNumber) &&
-        mobileNumber.length !== mobileNumberLength
-      ) {
-        return new NextResponse("Please enter a valid phone number", {
-          status: 400,
-        });
-      }
-    }
-
     const testFirstNameLength =
       typeof firstName === "string" &&
       firstName.length >= nameMinLength &&
@@ -70,16 +59,26 @@ export async function POST(request: Request) {
       return new NextResponse("That email is already in use", { status: 400 });
     }
 
-    const isMobileNumberUsed = await prismadb.user.findUnique({
-      where: {
-        mobileNumber,
-      },
-    });
-
-    if (isMobileNumberUsed) {
-      return new NextResponse("That mobile number is already in use", {
-        status: 400,
+    if (mobileNumber) {
+      if (
+        !mobileNumberRegex.test(mobileNumber) &&
+        mobileNumber.length !== mobileNumberLength
+      ) {
+        return new NextResponse("Please enter a valid phone number", {
+          status: 400,
+        });
+      }
+      const isMobileNumberUsed = await prismadb.user.findUnique({
+        where: {
+          mobileNumber,
+        },
       });
+
+      if (isMobileNumberUsed) {
+        return new NextResponse("That mobile number is already in use", {
+          status: 400,
+        });
+      }
     }
 
     const hashedPassword = await bcrypt.hash(

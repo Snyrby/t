@@ -121,11 +121,24 @@ export const AuthForm = () => {
   }, [phoneNumber, setValue]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    axios
-      .post("/api/register", data)
-      .then(() => signIn("credentials", data))
-      .then(() => router.push("/"))
-      .catch((error) => console.log("REGISTER ERROR: " + error));
+    if (data.mobileNumber !== "") {
+      axios
+        .post("/api/register", data)
+        .then(() => signIn("credentials", data))
+        .then(() => router.push("/"))
+        .catch((error) => console.log("REGISTER ERROR: " + error));
+    } else {
+      axios
+        .post("/api/register", {
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          password: data.password,
+        })
+        .then(() => signIn("credentials", data))
+        .then(() => router.push("/"))
+        .catch((error) => console.log("REGISTER ERROR: " + error));
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
