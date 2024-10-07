@@ -91,14 +91,14 @@ export const AuthForm = () => {
     }
   }, [phoneNumber, setValue]);
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (data.mobileNumber !== "") {
-      axios
+      await axios
         .post("/api/register", data)
         .then(() => signIn("credentials", { data, callbackUrl: "/" }))
         .catch((error) => console.log("REGISTER ERROR: " + error));
     } else {
-      axios
+      await axios
         .post("/api/register", {
           email: data.email,
           firstName: data.firstName,
@@ -201,7 +201,7 @@ export const AuthForm = () => {
       {showPasswordCriteria && (
         <PasswordHint passwordCriteria={passwordCriteria} />
       )}
-      <KeepMeSignedIn ref={keepMeSignedInRef}/>
+      <KeepMeSignedIn ref={keepMeSignedInRef} isLabelShown/>
       <button type="submit" disabled={isSubmitting}>
         btn
       </button>
