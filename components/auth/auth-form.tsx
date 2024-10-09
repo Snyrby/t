@@ -21,6 +21,9 @@ import { validatePasswords } from "@/lib/validate-password";
 import { KeepMeSignedIn } from "./keep-me-signed-in";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { formatPhoneNumber } from "@/lib/format-phone-number";
+import { validateEmailAndMobileNunber } from "@/lib/validate-email-phone-number";
+import { formatEmailAddress } from "@/lib/format-email-address";
 type Variant = "LOGIN" | "REGISTER" | "";
 
 type AuthFormProps = {
@@ -62,6 +65,7 @@ export const AuthForm = ({ action }: AuthFormProps) => {
     formState: { errors, isSubmitting },
     reset,
     setValue,
+    clearErrors,
   } = useForm<FieldValues>({
     defaultValues: {
       firstName: "",
@@ -72,25 +76,9 @@ export const AuthForm = ({ action }: AuthFormProps) => {
     },
   });
 
-  const formatPhoneNumber = (value: string) => {
-    // Remove all non-numeric characters
-    const cleaned = value.replace(/\D/g, "");
-
-    // Format the phone number based on the length of the input
-    if (cleaned.length <= 3) {
-      return cleaned;
-    } else if (cleaned.length <= 6) {
-      return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}`;
-    } else {
-      return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(
-        6,
-        10
-      )}`;
-    }
-  };
-
   const phoneNumber = watch("mobileNumber", "");
   const password = watch("password", "");
+  const emailAddress = watch("email", "");
   const registerForm = variant === "REGISTER";
 
   useEffect(() => {
@@ -104,47 +92,71 @@ export const AuthForm = ({ action }: AuthFormProps) => {
     }
   }, [phoneNumber, setValue]);
 
+  useEffect(() => {
+    const formattedEmail = formatEmailAddress(emailAddress as string);
+    if (formattedEmail !== emailAddress) {
+      setValue("email", formattedEmail);
+    }
+  }, [emailAddress, setValue]);
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    if (data.mobileNumber !== "") {
+    if (registerForm) {
+      if (data.mobileNumber !== "") {
+        data = {
+          ...data,
+          rememberMe: keepMeSignedInRef.current?.checked,
+        };
+      } else {
+        data = {
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          password: data.password,
+          rememberMe: keepMeSignedInRef.current?.checked,
+        };
+      }
+      await axios
+        .post("/api/register", data)
+        .then(() =>
+          signIn("credentials", {
+            ...data,
+            rememberMe: false,
+            callbackUrl: "/",
+          })
+        )
+        .catch((error) => console.log("REGISTER ERROR: " + error));
+    } else {
       data = {
         ...data,
         rememberMe: keepMeSignedInRef.current?.checked,
       };
-    } else {
-      data = {
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        password: data.password,
-        rememberMe: keepMeSignedInRef.current?.checked,
-      };
+      const formattedUsername = formatPhoneNumber(data.email);
+      if (formattedUsername !== "") {
+        data.email = formattedUsername;
+      }
+      console.log(data);
     }
-    await axios
-      .post("/api/register", data)
-      .then(() =>
-        signIn("credentials", { ...data, rememberMe: false, callbackUrl: "/" })
-      )
-      .catch((error) => console.log("REGISTER ERROR: " + error));
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
-      <Input
-        type="email"
-        label={registerForm ? "Email address" : "Email or mobile phone"}
-        id="email"
-        required
-        watch={watch("email")}
-        maxLength={nameMaxLength}
-        register={register}
-        errors={errors}
-        disabled={isSubmitting}
-        pattern={emailRegex}
-      />
-      {typeof errors["email"]?.message == "string" && (
-        <FormErrorMessage errorMessage={errors["email"]?.message} />
-      )}
-      {registerForm && (
+      {!registerForm && <KeepMeSignedIn ref={keepMeSignedInRef} />}
+      {registerForm ? (
         <>
+          <Input
+            type="email"
+            label="Email address"
+            id="email"
+            required
+            watch={emailAddress}
+            maxLength={nameMaxLength}
+            register={register}
+            errors={errors}
+            disabled={isSubmitting}
+            pattern={emailRegex}
+          />
+          {typeof errors["email"]?.message == "string" && (
+            <FormErrorMessage errorMessage={errors["email"]?.message} />
+          )}
           <Input
             type="text"
             label="First Name"
@@ -190,36 +202,78 @@ export const AuthForm = ({ action }: AuthFormProps) => {
           {typeof errors["mobileNumber"]?.message == "string" && (
             <FormErrorMessage errorMessage={errors["mobileNumber"]?.message} />
           )}
+          <Input
+            type={showPassword ? "text" : "password"}
+            label="Create password"
+            id="password"
+            required
+            watch={password}
+            register={register}
+            errors={errors}
+            maxLength={passwordMaxLength}
+            minLength={passwordMinLength}
+            disabled={isSubmitting}
+            validate={() => validatePasswords({ password })}
+            setShowPasswordCriteria={setShowPasswordCriteria}
+          >
+            <div className="flex items-center absolute right-2 top-2.5 justify-end">
+              <button
+                type="button"
+                className="underline decoration-gray-400 underline-offset-1"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "hide" : "show"}
+              </button>
+            </div>
+          </Input>
+          {typeof errors["password"]?.message == "string" && (
+            <FormErrorMessage errorMessage={errors["password"]?.message} />
+          )}
+        </>
+      ) : (
+        <>
+          <Input
+            type="email"
+            label="Email or mobile number"
+            id="email"
+            required
+            maxLength={nameMaxLength}
+            watch={emailAddress}
+            register={register}
+            errors={errors}
+            disabled={isSubmitting}
+            validate={() => validateEmailAndMobileNunber(emailAddress)}
+          />
+          {typeof errors["email"]?.message == "string" && (
+            <FormErrorMessage errorMessage={errors["email"]?.message} />
+          )}
+          <Input
+            type={showPassword ? "text" : "password"}
+            label="Password"
+            id="password"
+            required
+            watch={password}
+            register={register}
+            errors={errors}
+            validate={() => validatePasswords({ password })}
+            disabled={isSubmitting}
+          >
+            <div className="flex items-center absolute right-2 top-2.5 justify-end">
+              <button
+                type="button"
+                className="underline decoration-gray-400 underline-offset-1"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "hide" : "show"}
+              </button>
+            </div>
+          </Input>
+          {typeof errors["password"]?.message == "string" && (
+            <FormErrorMessage errorMessage={errors["password"]?.message} />
+          )}
         </>
       )}
-      <Input
-        type={showPassword ? "text" : "password"}
-        label={registerForm ? "Create password" : "Password"}
-        id="password"
-        required
-        watch={watch("password")}
-        register={register}
-        errors={errors}
-        maxLength={passwordMaxLength}
-        minLength={passwordMinLength}
-        disabled={isSubmitting}
-        validate={() => validatePasswords({ password })}
-        setShowPasswordCriteria={setShowPasswordCriteria}
-      >
-        <div className="flex items-center absolute right-2 top-2.5 justify-end">
-          <button
-            type="button"
-            className="underline decoration-gray-400 underline-offset-1"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? "hide" : "show"}
-          </button>
-        </div>
-      </Input>
-      {typeof errors["password"]?.message == "string" && (
-        <FormErrorMessage errorMessage={errors["password"]?.message} />
-      )}
-      {showPasswordCriteria && registerForm && (
+      {showPasswordCriteria && (
         <PasswordHint passwordCriteria={passwordCriteria} />
       )}
       {registerForm && <KeepMeSignedIn ref={keepMeSignedInRef} isLabelShown />}
@@ -239,13 +293,26 @@ export const AuthForm = ({ action }: AuthFormProps) => {
           secondary
           fullWidth
           className="outline outline-1 text-xl"
-          onClick={() => setVariant("REGISTER")}
+          onClick={() => {
+            setVariant("REGISTER");
+            reset();
+            clearErrors();
+          }}
         >
           Create your Target Account
         </Button>
       )}
       {registerForm && (
-        <Link href="#" onClick={() => setVariant("LOGIN")} className="flexCenter underline text-[#666666] hover:text-black">
+        <Link
+          href="#"
+          onClick={() => {
+            setVariant("LOGIN");
+            setShowPasswordCriteria(false);
+            reset();
+            clearErrors();
+          }}
+          className="flexCenter underline text-[#666666] hover:text-black"
+        >
           Or sign in
         </Link>
       )}

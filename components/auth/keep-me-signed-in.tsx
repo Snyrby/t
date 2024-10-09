@@ -1,7 +1,8 @@
+import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
 
 type KeepMeSignedInProps = {
-  isLabelShown: boolean;
+  isLabelShown?: boolean;
 };
 
 export const KeepMeSignedIn = forwardRef<HTMLInputElement, KeepMeSignedInProps>(
@@ -12,7 +13,7 @@ export const KeepMeSignedIn = forwardRef<HTMLInputElement, KeepMeSignedInProps>(
           type="checkbox"
           name="keep-me-signed-in"
           id="keep-me-signed-in"
-          className="size-10"
+          className={cn(isLabelShown ? "size-10" : "size-4")}
           ref={ref}
         />
         <div className="">
