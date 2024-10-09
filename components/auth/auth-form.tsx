@@ -23,7 +23,7 @@ type Variant = "LOGIN" | "REGISTER" | "";
 
 export const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>("");
-  const keepMeSignedInRef = useRef<HTMLInputElement>(null)
+  const keepMeSignedInRef = useRef<HTMLInputElement>(null);
   const session = useSession();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -93,21 +93,25 @@ export const AuthForm = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (data.mobileNumber !== "") {
-      await axios
-        .post("/api/register", data)
-        .then(() => signIn("credentials", { data, callbackUrl: "/" }))
-        .catch((error) => console.log("REGISTER ERROR: " + error));
+      data = {
+        ...data,
+        rememberMe: keepMeSignedInRef.current?.checked,
+      };
     } else {
-      await axios
-        .post("/api/register", {
-          email: data.email,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          password: data.password,
-        })
-        .then(() => signIn("credentials", { data, callbackUrl: "/" }))
-        .catch((error) => console.log("REGISTER ERROR: " + error));
+      data = {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+        rememberMe: keepMeSignedInRef.current?.checked,
+      };
     }
+    await axios
+      .post("/api/register", data)
+      .then(() =>
+        signIn("credentials", { ...data, rememberMe: false, callbackUrl: "/" })
+      )
+      .catch((error) => console.log("REGISTER ERROR: " + error));
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
@@ -201,7 +205,7 @@ export const AuthForm = () => {
       {showPasswordCriteria && (
         <PasswordHint passwordCriteria={passwordCriteria} />
       )}
-      <KeepMeSignedIn ref={keepMeSignedInRef} isLabelShown/>
+      <KeepMeSignedIn ref={keepMeSignedInRef} isLabelShown />
       <button type="submit" disabled={isSubmitting}>
         btn
       </button>
