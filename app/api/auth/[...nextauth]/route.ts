@@ -10,8 +10,6 @@ type ExtendedUser = User & {
   rememberMe: boolean;
 };
 
-
-let maxAge = 0;
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prismadb),
   providers: [
@@ -46,16 +44,13 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid credentials");
         }
 
-        maxAge = credentials.rememberMe ? 30 : 60 * 60
-
-        return { ...user, rememberMe: credentials.rememberMe === 'true' };
+        return { ...user, rememberMe: credentials.rememberMe === "true" };
       },
     }),
   ],
   debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",
-    maxAge: 60
   },
   callbacks: {
     // This manages the session expiration time based on rememberMe
@@ -63,9 +58,9 @@ export const authOptions: AuthOptions = {
       console.log("session: " + session.expires);
       console.log("User: " + user);
 
-        // If rememberMe is true, set session to 30 days, otherwise 1 day
-        session.expires = token.exp as string;
-        
+      // If rememberMe is true, set session to 30 days, otherwise 1 day
+      session.expires = token.exp as string;
+
       return session;
     },
 
@@ -73,15 +68,14 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       // When the user logs in for the first time, capture the rememberMe status
       console.log("Token: " + token.exp);
-      
+
       if (user) {
         const extendedUser = user as ExtendedUser;
         token.rememberMe = extendedUser.rememberMe;
         // Set JWT expiration dynamically
-        const maxAge = token.rememberMe ? 24 * 60 * 60 : 0; // 30 days or 1 day
+        const maxAge = token.rememberMe ? 30 * 24 * 60 * 60 : 60 * 60; // 30 days or 1 day
         token.exp = Math.floor(Date.now() / 1000) + maxAge; // Token expiration in UNIX timestamp
       }
-
 
       return token;
     },

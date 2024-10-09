@@ -28,7 +28,7 @@ export default function LoginPage() {
     <div className="flex flex-col justify-start items-center w-full h-full">
       <div className="flex flex-col justify-start items-center w-[500px] mt-8">
         <AuthHeader action={action} />
-        <AuthForm />
+        <AuthForm action={action} />
         <AuthLegal />
         <AuthFooter />
       </div>

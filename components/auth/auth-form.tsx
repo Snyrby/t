@@ -19,9 +19,15 @@ import {
 } from "@/lib/constants";
 import { validatePasswords } from "@/lib/validate-password";
 import { KeepMeSignedIn } from "./keep-me-signed-in";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 type Variant = "LOGIN" | "REGISTER" | "";
 
-export const AuthForm = () => {
+type AuthFormProps = {
+  action: string | null;
+};
+
+export const AuthForm = ({ action }: AuthFormProps) => {
   const [variant, setVariant] = useState<Variant>("");
   const keepMeSignedInRef = useRef<HTMLInputElement>(null);
   const session = useSession();
@@ -42,6 +48,12 @@ export const AuthForm = () => {
       router.push("/");
     }
   }, [session?.status, router]);
+
+  useEffect(() => {
+    action === "create_session_signin"
+      ? setVariant("LOGIN")
+      : setVariant("REGISTER");
+  }, []);
 
   const {
     register,
@@ -79,6 +91,7 @@ export const AuthForm = () => {
 
   const phoneNumber = watch("mobileNumber", "");
   const password = watch("password", "");
+  const registerForm = variant === "REGISTER";
 
   useEffect(() => {
     validatePasswords({ password, setPasswordCriteria });
@@ -117,7 +130,7 @@ export const AuthForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
       <Input
         type="email"
-        label="Email address"
+        label={registerForm ? "Email address" : "Email or mobile phone"}
         id="email"
         required
         watch={watch("email")}
@@ -130,54 +143,58 @@ export const AuthForm = () => {
       {typeof errors["email"]?.message == "string" && (
         <FormErrorMessage errorMessage={errors["email"]?.message} />
       )}
-      <Input
-        type="text"
-        label="First Name"
-        id="firstName"
-        required
-        watch={watch("firstName")}
-        maxLength={nameMaxLength}
-        minLength={nameMinLength}
-        register={register}
-        errors={errors}
-        disabled={isSubmitting}
-      />
-      {typeof errors["firstName"]?.message == "string" && (
-        <FormErrorMessage errorMessage={errors["firstName"]?.message} />
-      )}
-      <Input
-        type="text"
-        label="Last Name"
-        id="lastName"
-        required
-        watch={watch("lastName")}
-        maxLength={nameMaxLength}
-        minLength={nameMinLength}
-        register={register}
-        errors={errors}
-        disabled={isSubmitting}
-      />
-      {typeof errors["lastName"]?.message == "string" && (
-        <FormErrorMessage errorMessage={errors["lastName"]?.message} />
-      )}
-      <Input
-        type="tel"
-        label="Mobile phone number (optional)"
-        id="mobileNumber"
-        watch={phoneNumber}
-        register={register}
-        errors={errors}
-        maxLength={mobileNumberLength}
-        minLength={mobileNumberLength}
-        disabled={isSubmitting}
-        pattern={mobileNumberRegex}
-      />
-      {typeof errors["mobileNumber"]?.message == "string" && (
-        <FormErrorMessage errorMessage={errors["mobileNumber"]?.message} />
+      {registerForm && (
+        <>
+          <Input
+            type="text"
+            label="First Name"
+            id="firstName"
+            required
+            watch={watch("firstName")}
+            maxLength={nameMaxLength}
+            minLength={nameMinLength}
+            register={register}
+            errors={errors}
+            disabled={isSubmitting}
+          />
+          {typeof errors["firstName"]?.message == "string" && (
+            <FormErrorMessage errorMessage={errors["firstName"]?.message} />
+          )}
+          <Input
+            type="text"
+            label="Last Name"
+            id="lastName"
+            required
+            watch={watch("lastName")}
+            maxLength={nameMaxLength}
+            minLength={nameMinLength}
+            register={register}
+            errors={errors}
+            disabled={isSubmitting}
+          />
+          {typeof errors["lastName"]?.message == "string" && (
+            <FormErrorMessage errorMessage={errors["lastName"]?.message} />
+          )}
+          <Input
+            type="tel"
+            label="Mobile phone number (optional)"
+            id="mobileNumber"
+            watch={phoneNumber}
+            register={register}
+            errors={errors}
+            maxLength={mobileNumberLength}
+            minLength={mobileNumberLength}
+            disabled={isSubmitting}
+            pattern={mobileNumberRegex}
+          />
+          {typeof errors["mobileNumber"]?.message == "string" && (
+            <FormErrorMessage errorMessage={errors["mobileNumber"]?.message} />
+          )}
+        </>
       )}
       <Input
         type={showPassword ? "text" : "password"}
-        label="Create password"
+        label={registerForm ? "Create password" : "Password"}
         id="password"
         required
         watch={watch("password")}
@@ -202,13 +219,36 @@ export const AuthForm = () => {
       {typeof errors["password"]?.message == "string" && (
         <FormErrorMessage errorMessage={errors["password"]?.message} />
       )}
-      {showPasswordCriteria && (
+      {showPasswordCriteria && registerForm && (
         <PasswordHint passwordCriteria={passwordCriteria} />
       )}
-      <KeepMeSignedIn ref={keepMeSignedInRef} isLabelShown />
-      <button type="submit" disabled={isSubmitting}>
-        btn
-      </button>
+      {registerForm && <KeepMeSignedIn ref={keepMeSignedInRef} isLabelShown />}
+      <Button
+        type="submit"
+        disabled={isSubmitting}
+        fullWidth
+        center
+        className="text-xl mt-6"
+      >
+        {registerForm ? "Create account" : "Sign in with password"}
+      </Button>
+      {!registerForm && (
+        <Button
+          type="button"
+          center
+          secondary
+          fullWidth
+          className="outline outline-1 text-xl"
+          onClick={() => setVariant("REGISTER")}
+        >
+          Create your Target Account
+        </Button>
+      )}
+      {registerForm && (
+        <Link href="#" onClick={() => setVariant("LOGIN")} className="flexCenter underline text-[#666666] hover:text-black">
+          Or sign in
+        </Link>
+      )}
     </form>
   );
 };
