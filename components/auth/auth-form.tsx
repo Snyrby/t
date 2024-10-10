@@ -73,6 +73,7 @@ export const AuthForm = ({ action }: AuthFormProps) => {
       email: "",
       password: "",
       mobileNumber: "",
+      username: "",
     },
   });
 
@@ -119,8 +120,7 @@ export const AuthForm = ({ action }: AuthFormProps) => {
         .post("/api/register", data)
         .then(() =>
           signIn("credentials", {
-            ...data,
-            rememberMe: false,
+            data,
             callbackUrl: "/",
           })
         )
@@ -134,8 +134,18 @@ export const AuthForm = ({ action }: AuthFormProps) => {
       if (formattedUsername !== "") {
         data.email = formattedUsername;
       }
-      console.log(data);
+      await signIn("credentials", {
+        ...data,
+        callbackUrl: "/",
+      });
     }
+  };
+
+  const toggleForm = () => {
+    !registerForm ? setVariant("REGISTER") : setVariant("LOGIN");
+    setShowPasswordCriteria(false);
+    reset();
+    clearErrors();
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
@@ -202,38 +212,11 @@ export const AuthForm = ({ action }: AuthFormProps) => {
           {typeof errors["mobileNumber"]?.message == "string" && (
             <FormErrorMessage errorMessage={errors["mobileNumber"]?.message} />
           )}
-          <Input
-            type={showPassword ? "text" : "password"}
-            label="Create password"
-            id="password"
-            required
-            watch={password}
-            register={register}
-            errors={errors}
-            maxLength={passwordMaxLength}
-            minLength={passwordMinLength}
-            disabled={isSubmitting}
-            validate={() => validatePasswords({ password })}
-            setShowPasswordCriteria={setShowPasswordCriteria}
-          >
-            <div className="flex items-center absolute right-2 top-2.5 justify-end">
-              <button
-                type="button"
-                className="underline decoration-gray-400 underline-offset-1"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? "hide" : "show"}
-              </button>
-            </div>
-          </Input>
-          {typeof errors["password"]?.message == "string" && (
-            <FormErrorMessage errorMessage={errors["password"]?.message} />
-          )}
         </>
       ) : (
         <>
           <Input
-            type="email"
+            type="text"
             label="Email or mobile number"
             id="email"
             required
@@ -247,33 +230,35 @@ export const AuthForm = ({ action }: AuthFormProps) => {
           {typeof errors["email"]?.message == "string" && (
             <FormErrorMessage errorMessage={errors["email"]?.message} />
           )}
-          <Input
-            type={showPassword ? "text" : "password"}
-            label="Password"
-            id="password"
-            required
-            watch={password}
-            register={register}
-            errors={errors}
-            validate={() => validatePasswords({ password })}
-            disabled={isSubmitting}
-          >
-            <div className="flex items-center absolute right-2 top-2.5 justify-end">
-              <button
-                type="button"
-                className="underline decoration-gray-400 underline-offset-1"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? "hide" : "show"}
-              </button>
-            </div>
-          </Input>
-          {typeof errors["password"]?.message == "string" && (
-            <FormErrorMessage errorMessage={errors["password"]?.message} />
-          )}
         </>
       )}
-      {showPasswordCriteria && (
+      <Input
+        type={showPassword ? "text" : "password"}
+        label={registerForm ? "Create password" : "Password"}
+        id="password"
+        required
+        watch={password}
+        register={register}
+        errors={errors}
+        disabled={isSubmitting}
+        validate={() => validatePasswords({ password })}
+        setShowPasswordCriteria={setShowPasswordCriteria}
+      >
+        <div className="flex items-center absolute right-2 top-2.5 justify-end">
+          <button
+            type="button"
+            className="underline decoration-gray-400 underline-offset-1"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? "hide" : "show"}
+          </button>
+        </div>
+      </Input>
+      {typeof errors["password"]?.message == "string" && (
+        <FormErrorMessage errorMessage={errors["password"]?.message} />
+      )}
+
+      {showPasswordCriteria && registerForm && (
         <PasswordHint passwordCriteria={passwordCriteria} />
       )}
       {registerForm && <KeepMeSignedIn ref={keepMeSignedInRef} isLabelShown />}
@@ -293,11 +278,7 @@ export const AuthForm = ({ action }: AuthFormProps) => {
           secondary
           fullWidth
           className="outline outline-1 text-xl"
-          onClick={() => {
-            setVariant("REGISTER");
-            reset();
-            clearErrors();
-          }}
+          onClick={toggleForm}
         >
           Create your Target Account
         </Button>
@@ -305,12 +286,7 @@ export const AuthForm = ({ action }: AuthFormProps) => {
       {registerForm && (
         <Link
           href="#"
-          onClick={() => {
-            setVariant("LOGIN");
-            setShowPasswordCriteria(false);
-            reset();
-            clearErrors();
-          }}
+          onClick={toggleForm}
           className="flexCenter underline text-[#666666] hover:text-black"
         >
           Or sign in
