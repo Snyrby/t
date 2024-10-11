@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { FormErrorMessage } from "@/components/ui/form-error-message";
@@ -14,24 +14,21 @@ import {
   mobileNumberRegex,
   nameMaxLength,
   nameMinLength,
-  passwordMaxLength,
-  passwordMinLength,
 } from "@/lib/constants";
 import { validatePasswords } from "@/lib/validate-password";
 import { KeepMeSignedIn } from "./keep-me-signed-in";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { formatPhoneNumber } from "@/lib/format-phone-number";
 import { validateEmailAndMobileNunber } from "@/lib/validate-email-phone-number";
 import { formatEmailAddress } from "@/lib/format-email-address";
-type Variant = "LOGIN" | "REGISTER" | "";
+import { AuthFormToggle } from "./auth-form-toggle";
+import { Variant } from "@/lib/types";
+import { AuthContext } from "@/providers/auth-form-provider";
+import { AuthLegal } from "./auth-legal";
 
-type AuthFormProps = {
-  action: string | null;
-};
+export const AuthForm = () => {
+  const { registerForm, toggleState } = useContext(AuthContext);
 
-export const AuthForm = ({ action }: AuthFormProps) => {
-  const [variant, setVariant] = useState<Variant>("");
   const keepMeSignedInRef = useRef<HTMLInputElement>(null);
   const session = useSession();
   const router = useRouter();
@@ -51,12 +48,6 @@ export const AuthForm = ({ action }: AuthFormProps) => {
       router.push("/");
     }
   }, [session?.status, router]);
-
-  useEffect(() => {
-    action === "create_session_signin"
-      ? setVariant("LOGIN")
-      : setVariant("REGISTER");
-  }, []);
 
   const {
     register,
@@ -80,7 +71,6 @@ export const AuthForm = ({ action }: AuthFormProps) => {
   const phoneNumber = watch("mobileNumber", "");
   const password = watch("password", "");
   const emailAddress = watch("email", "");
-  const registerForm = variant === "REGISTER";
 
   useEffect(() => {
     validatePasswords({ password, setPasswordCriteria });
@@ -142,156 +132,143 @@ export const AuthForm = ({ action }: AuthFormProps) => {
   };
 
   const toggleForm = () => {
-    !registerForm ? setVariant("REGISTER") : setVariant("LOGIN");
+    toggleState();
     setShowPasswordCriteria(false);
     reset();
     clearErrors();
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
-      {!registerForm && <KeepMeSignedIn ref={keepMeSignedInRef} />}
-      {registerForm ? (
-        <>
-          <Input
-            type="email"
-            label="Email address"
-            id="email"
-            required
-            watch={emailAddress}
-            maxLength={nameMaxLength}
-            register={register}
-            errors={errors}
-            disabled={isSubmitting}
-            pattern={emailRegex}
-          />
-          {typeof errors["email"]?.message == "string" && (
-            <FormErrorMessage errorMessage={errors["email"]?.message} />
-          )}
-          <Input
-            type="text"
-            label="First Name"
-            id="firstName"
-            required
-            watch={watch("firstName")}
-            maxLength={nameMaxLength}
-            minLength={nameMinLength}
-            register={register}
-            errors={errors}
-            disabled={isSubmitting}
-          />
-          {typeof errors["firstName"]?.message == "string" && (
-            <FormErrorMessage errorMessage={errors["firstName"]?.message} />
-          )}
-          <Input
-            type="text"
-            label="Last Name"
-            id="lastName"
-            required
-            watch={watch("lastName")}
-            maxLength={nameMaxLength}
-            minLength={nameMinLength}
-            register={register}
-            errors={errors}
-            disabled={isSubmitting}
-          />
-          {typeof errors["lastName"]?.message == "string" && (
-            <FormErrorMessage errorMessage={errors["lastName"]?.message} />
-          )}
-          <Input
-            type="tel"
-            label="Mobile phone number (optional)"
-            id="mobileNumber"
-            watch={phoneNumber}
-            register={register}
-            errors={errors}
-            maxLength={mobileNumberLength}
-            minLength={mobileNumberLength}
-            disabled={isSubmitting}
-            pattern={mobileNumberRegex}
-          />
-          {typeof errors["mobileNumber"]?.message == "string" && (
-            <FormErrorMessage errorMessage={errors["mobileNumber"]?.message} />
-          )}
-        </>
-      ) : (
-        <>
-          <Input
-            type="text"
-            label="Email or mobile number"
-            id="email"
-            required
-            maxLength={nameMaxLength}
-            watch={emailAddress}
-            register={register}
-            errors={errors}
-            disabled={isSubmitting}
-            validate={() => validateEmailAndMobileNunber(emailAddress)}
-          />
-          {typeof errors["email"]?.message == "string" && (
-            <FormErrorMessage errorMessage={errors["email"]?.message} />
-          )}
-        </>
-      )}
-      <Input
-        type={showPassword ? "text" : "password"}
-        label={registerForm ? "Create password" : "Password"}
-        id="password"
-        required
-        watch={password}
-        register={register}
-        errors={errors}
-        disabled={isSubmitting}
-        validate={() => validatePasswords({ password })}
-        setShowPasswordCriteria={setShowPasswordCriteria}
-      >
-        <div className="flex items-center absolute right-2 top-2.5 justify-end">
-          <button
-            type="button"
-            className="underline decoration-gray-400 underline-offset-1"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? "hide" : "show"}
-          </button>
-        </div>
-      </Input>
-      {typeof errors["password"]?.message == "string" && (
-        <FormErrorMessage errorMessage={errors["password"]?.message} />
-      )}
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
+        {!registerForm && <KeepMeSignedIn ref={keepMeSignedInRef} />}
+        {registerForm ? (
+          <>
+            <Input
+              type="email"
+              label="Email address"
+              id="email"
+              required
+              watch={emailAddress}
+              maxLength={nameMaxLength}
+              register={register}
+              errors={errors}
+              disabled={isSubmitting}
+              pattern={emailRegex}
+            />
+            {typeof errors["email"]?.message == "string" && (
+              <FormErrorMessage errorMessage={errors["email"]?.message} />
+            )}
+            <Input
+              type="text"
+              label="First Name"
+              id="firstName"
+              required
+              watch={watch("firstName")}
+              maxLength={nameMaxLength}
+              minLength={nameMinLength}
+              register={register}
+              errors={errors}
+              disabled={isSubmitting}
+            />
+            {typeof errors["firstName"]?.message == "string" && (
+              <FormErrorMessage errorMessage={errors["firstName"]?.message} />
+            )}
+            <Input
+              type="text"
+              label="Last Name"
+              id="lastName"
+              required
+              watch={watch("lastName")}
+              maxLength={nameMaxLength}
+              minLength={nameMinLength}
+              register={register}
+              errors={errors}
+              disabled={isSubmitting}
+            />
+            {typeof errors["lastName"]?.message == "string" && (
+              <FormErrorMessage errorMessage={errors["lastName"]?.message} />
+            )}
+            <Input
+              type="tel"
+              label="Mobile phone number (optional)"
+              id="mobileNumber"
+              watch={phoneNumber}
+              register={register}
+              errors={errors}
+              maxLength={mobileNumberLength}
+              minLength={mobileNumberLength}
+              disabled={isSubmitting}
+              pattern={mobileNumberRegex}
+            />
+            {typeof errors["mobileNumber"]?.message == "string" && (
+              <FormErrorMessage
+                errorMessage={errors["mobileNumber"]?.message}
+              />
+            )}
+          </>
+        ) : (
+          <>
+            <Input
+              type="text"
+              label="Email or mobile number"
+              id="email"
+              required
+              maxLength={nameMaxLength}
+              watch={emailAddress}
+              register={register}
+              errors={errors}
+              disabled={isSubmitting}
+              validate={() => validateEmailAndMobileNunber(emailAddress)}
+            />
+            {typeof errors["email"]?.message == "string" && (
+              <FormErrorMessage errorMessage={errors["email"]?.message} />
+            )}
+          </>
+        )}
+        <Input
+          type={showPassword ? "text" : "password"}
+          label={registerForm ? "Create password" : "Password"}
+          id="password"
+          required
+          watch={password}
+          register={register}
+          errors={errors}
+          disabled={isSubmitting}
+          validate={() => validatePasswords({ password })}
+          setShowPasswordCriteria={setShowPasswordCriteria}
+        >
+          <div className="flex items-center absolute right-2 top-2.5 justify-end">
+            <button
+              type="button"
+              className="underline decoration-gray-400 underline-offset-1"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "hide" : "show"}
+            </button>
+          </div>
+        </Input>
+        {typeof errors["password"]?.message == "string" && (
+          <FormErrorMessage errorMessage={errors["password"]?.message} />
+        )}
 
-      {showPasswordCriteria && registerForm && (
-        <PasswordHint passwordCriteria={passwordCriteria} />
-      )}
-      {registerForm && <KeepMeSignedIn ref={keepMeSignedInRef} isLabelShown />}
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        fullWidth
-        center
-        className="text-xl mt-6"
-      >
-        {registerForm ? "Create account" : "Sign in with password"}
-      </Button>
-      {!registerForm && (
+        {showPasswordCriteria && registerForm && (
+          <PasswordHint passwordCriteria={passwordCriteria} />
+        )}
+        {registerForm && (
+          <KeepMeSignedIn ref={keepMeSignedInRef} isLabelShown />
+        )}
+        {registerForm && <AuthLegal />}
         <Button
-          type="button"
-          center
-          secondary
+          type="submit"
+          disabled={isSubmitting}
           fullWidth
-          className="outline outline-1 text-xl"
-          onClick={toggleForm}
+          center
+          className="text-xl my-4"
         >
-          Create your Target Account
+          {registerForm ? "Create account" : "Sign in with password"}
         </Button>
-      )}
-      {registerForm && (
-        <Link
-          href="#"
-          onClick={toggleForm}
-          className="flexCenter underline text-[#666666] hover:text-black"
-        >
-          Or sign in
-        </Link>
-      )}
-    </form>
+      </form>
+      <AuthFormToggle registerForm={registerForm} toggleForm={toggleForm} />
+    </>
   );
 };

@@ -32,7 +32,6 @@ export const DropDown = ({
         secondary
         start
         onClick={() => handleNavLinkClick(linkIndex)}
-        className="group-hover:bg-gray-300/30"
         fullWidth
       >
         <p className="text-base pr-2 whitespace-nowrap">{link.text}</p>

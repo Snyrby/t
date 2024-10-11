@@ -19,7 +19,7 @@ export const KeepMeSignedIn = forwardRef<HTMLInputElement, KeepMeSignedInProps>(
         <div className="">
           <h2 className="text-base font-medium">Keep me signed in</h2>
           {isLabelShown && (
-            <p className="text-[0.67rem] leading-4">
+            <p className="text-[0.67rem] leading-4 text-[#666666]">
               By checking this box you won't have to sign in as often on this
               device. For your security, we recommend only checking this box on
               your personal devices.

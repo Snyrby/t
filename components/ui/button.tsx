@@ -43,11 +43,11 @@ export const Button = ({
         start && "justify-start",
         disabled && "opacity-50 cursor-default",
         fullWidth && "w-full",
-        secondary ? "text-gray-900" : "text-white",
+        secondary ? "text-gray-900 hover:bg-gray-300/30" : "text-white",
         danger && "bg-black hover:bg-black focus-visible:outline-black",
         !secondary &&
           !danger &&
-          "target-red hover:target-red focus-visible:target-red"
+          "target-red hover:bg-red-800 focus-visible:target-red"
       )}
     >
       {children}

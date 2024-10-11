@@ -4,13 +4,13 @@ import { AuthForm } from "@/components/auth/auth-form";
 import { AuthHeader } from "@/components/auth/auth-header";
 import { AuthLegal } from "@/components/auth/auth-legal";
 import { useModal } from "@/hooks/use-modal-store";
-import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { AuthContext } from "@/providers/auth-form-provider";
+import Link from "next/link";
+import { useContext, useEffect, useState } from "react";
 
 export default function LoginPage() {
   const { isOpen, onClose } = useModal();
-  const searchParams = useSearchParams();
-  const action = searchParams.get("actions");
+  const { registerForm } = useContext(AuthContext);
 
   useEffect(() => {
     isOpen && onClose();
@@ -25,13 +25,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex flex-col justify-start items-center w-full h-full">
-      <div className="flex flex-col justify-start items-center w-[500px] mt-8">
-        <AuthHeader action={action} />
-        <AuthForm action={action} />
-        <AuthLegal />
-        <AuthFooter />
-      </div>
-    </div>
+    <>
+      <AuthHeader />
+      <AuthForm />
+      {!registerForm && <AuthLegal />}
+      <Link className="text-xs tracking-tighter whitespace-nowrap mt-14" href="/"><span className="font-bold">*See offer details.</span> Restrictions apply. Pricing, promotions and availability may vary by location and at Target.com</Link>
+      <AuthFooter />
+    </>
   );
 }

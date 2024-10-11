@@ -118,7 +118,7 @@ export const NavigationBar = () => {
               secondary
               start
               onClick={() => onOpen("ACCOUNT", {})}
-              className="group-hover:bg-gray-300/30 w-30 gap-x-2"
+              className="w-30 gap-x-2"
             >
               <CircleUser size={20} strokeWidth={1.25} />
               <p className="text-base text-black font-light pr-2 whitespace-nowrap tracking-tight">
@@ -139,7 +139,7 @@ export const NavigationBar = () => {
               secondary
               start
               onClick={() => signOut()}
-              className="group-hover:bg-gray-300/30 w-30 gap-x-2"
+              className="w-30 gap-x-2"
             >
               <CircleUser size={20} strokeWidth={1.25} />
               <p className="text-base text-black font-light pr-2 whitespace-nowrap tracking-tight">
@@ -152,7 +152,7 @@ export const NavigationBar = () => {
           type="button"
           center
           secondary
-          className="hover:bg-gray-300/30 sticky"
+          className="sticky"
         >
           <ShoppingCart size={24} strokeWidth={1.25} />
         </Button>

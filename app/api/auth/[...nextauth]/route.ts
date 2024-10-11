@@ -27,24 +27,23 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid Credentials");
         }
         const formattedUsername = formatPhoneNumber(credentials?.email);
-        if (formattedUsername !== "") {
+        if (formattedUsername === "") {
           if (!emailRegex.test(credentials?.email)) {
             throw new Error("Invalid Credentials");
           }
         }
-        let user = await prismadb.user.findUnique({
+        const user = await prismadb.user.findFirst({
           where: {
-            email: credentials.email,
+            OR: [
+              {
+                email: credentials.email,
+              },
+              {
+                mobileNumber: credentials.email,
+              },
+            ],
           },
         });
-
-        if (!user || !user?.hashedPassword) {
-          user = await prismadb.user.findUnique({
-            where: {
-              mobileNumber: credentials.email,
-            },
-          });
-        }
 
         if (!user || !user?.hashedPassword) {
           throw new Error("Invalid credentials");
