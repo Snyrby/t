@@ -141,3 +141,15 @@ export const lowercaseRegex = /[a-z]/;
 export const uppercaseRegex = /[A-Z]/;
 export const numberRegex = /[0-9]/;
 export const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.\/?]+/;
+
+export const authFooterLinks = [
+  { href: "/", text: "Terms" },
+  { href: "/", text: "CA Supply Chain" },
+  { href: "/", text: "Privacy" },
+  { href: "/", text: "CA Privacy Rights" },
+  { href: "/", text: "Survey" },
+  { href: "/", text: "Your Privacy Choices" },
+  { href: "/", text: "Interest Based Ads" },
+  { href: "/", text: "Health Privacy Policy" },
+  { href: "/", text: "TM & © 2024 Target Brands, Inc." },
+];
