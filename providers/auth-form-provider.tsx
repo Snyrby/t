@@ -5,9 +5,11 @@ import { createContext, useEffect, useMemo, useState } from "react";
 const initAuthContext: {
   registerForm: boolean;
   toggleState: () => void;
+  toggleForgotPassword: () => void;
 } = {
   registerForm: false,
   toggleState: () => {},
+  toggleForgotPassword: () => {},
 };
 
 export const AuthContext = createContext(initAuthContext);
@@ -31,9 +33,12 @@ export const AuthFormContextProvider = ({
   const toggleState = () =>
     variant === "REGISTER" ? setVariant("LOGIN") : setVariant("REGISTER");
 
+  const toggleForgotPassword = () => setVariant("FORGOT");
+
   const value = useMemo(() => {
     return {
       toggleState,
+      toggleForgotPassword,
       registerForm: variant === "REGISTER",
     };
   }, [variant]);

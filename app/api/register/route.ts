@@ -3,6 +3,7 @@ import prismadb from "@/lib/db";
 import { NextResponse } from "next/server";
 import {
   emailRegex,
+  letterRegex,
   mobileNumberLength,
   mobileNumberRegex,
   nameMaxLength,
@@ -38,6 +39,17 @@ export async function POST(request: Request) {
       lastName.length <= nameMaxLength;
     if (!testLastNameLength) {
       return new NextResponse("The last name doesn't meet size requirements", {
+        status: 400,
+      });
+    }
+
+    if (letterRegex.test(firstName)) {
+      return new NextResponse("Please enter a valid First Name", {
+        status: 400,
+      });
+    }
+    if (letterRegex.test(lastName)) {
+      return new NextResponse("Please enter a valid Last Name", {
         status: 400,
       });
     }

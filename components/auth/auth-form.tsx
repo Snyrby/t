@@ -10,6 +10,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
   emailRegex,
+  letterRegex,
   mobileNumberLength,
   mobileNumberRegex,
   nameMaxLength,
@@ -22,13 +23,12 @@ import { formatPhoneNumber } from "@/lib/format-phone-number";
 import { validateEmailAndMobileNunber } from "@/lib/validate-email-phone-number";
 import { formatEmailAddress } from "@/lib/format-email-address";
 import { AuthFormToggle } from "./auth-form-toggle";
-import { Variant } from "@/lib/types";
 import { AuthContext } from "@/providers/auth-form-provider";
 import { AuthLegal } from "./auth-legal";
 
 export const AuthForm = () => {
-  const { registerForm, toggleState } = useContext(AuthContext);
-
+  const { registerForm, toggleState, toggleForgotPassword } =
+    useContext(AuthContext);
   const keepMeSignedInRef = useRef<HTMLInputElement>(null);
   const session = useSession();
   const router = useRouter();
@@ -169,6 +169,7 @@ export const AuthForm = () => {
               register={register}
               errors={errors}
               disabled={isSubmitting}
+              pattern={letterRegex}
             />
             {typeof errors["firstName"]?.message == "string" && (
               <FormErrorMessage errorMessage={errors["firstName"]?.message} />
@@ -184,6 +185,7 @@ export const AuthForm = () => {
               register={register}
               errors={errors}
               disabled={isSubmitting}
+              pattern={letterRegex}
             />
             {typeof errors["lastName"]?.message == "string" && (
               <FormErrorMessage errorMessage={errors["lastName"]?.message} />
@@ -268,6 +270,18 @@ export const AuthForm = () => {
           {registerForm ? "Create account" : "Sign in with password"}
         </Button>
       </form>
+      {!registerForm && (
+        <Button
+          secondary
+          type="button"
+          disabled={isSubmitting}
+          center
+          onClick={toggleForgotPassword}
+          className="mb-4 hover:outline-none"
+        >
+          Forgot password?
+        </Button>
+      )}
       <AuthFormToggle registerForm={registerForm} toggleForm={toggleForm} />
     </>
   );

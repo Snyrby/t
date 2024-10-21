@@ -29,7 +29,7 @@ export default function LoginPage() {
       <AuthHeader />
       <AuthForm />
       {!registerForm && <AuthLegal />}
-      <Link className="text-xs tracking-tighter whitespace-nowrap mt-14" href="/"><span className="font-bold">*See offer details.</span> Restrictions apply. Pricing, promotions and availability may vary by location and at Target.com</Link>
+      <Link className="text-xs tracking-tighter md:whitespace-nowrap text-center mt-14" href="/"><span className="font-bold">*See offer details.</span> Restrictions apply. Pricing, promotions and availability may vary by location and at Target.com</Link>
       <AuthFooter />
     </>
   );

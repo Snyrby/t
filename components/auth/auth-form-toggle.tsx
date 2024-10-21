@@ -18,7 +18,7 @@ export const AuthFormToggle = ({
           center
           secondary
           fullWidth
-          className="outline outline-[0.1rem] text-xl"
+          className="outline outline-[0.1rem] outline-[#666666] text-xl"
           onClick={toggleForm}
         >
           Create your Target Account

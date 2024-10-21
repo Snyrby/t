@@ -8,8 +8,8 @@ export default async function LoginLayout({
 }) {
   return (
     <AuthFormContextProvider>
-      <div className="flex flex-col justify-start items-center w-full h-full">
-        <div className="flex flex-col justify-start items-center w-[500px] mt-8">
+      <div className="flex flex-col justify-start items-center w-full h-full overflow-x-hidden">
+        <div className="flex flex-col justify-start items-center w-screen max-w-[500px] px-4 sm:px-0 mt-8">
           {children}
         </div>
       </div>

@@ -15,4 +15,4 @@ export type TModalContext = TModalState & {
   onClose: () => void;
 };
 
-export type Variant = "LOGIN" | "REGISTER" | "";
+export type Variant = "LOGIN" | "REGISTER" | "FORGOT" | "";
