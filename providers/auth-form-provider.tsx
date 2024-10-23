@@ -4,10 +4,14 @@ import { createContext, useEffect, useMemo, useState } from "react";
 
 const initAuthContext: {
   registerForm: boolean;
+  loginForm: boolean;
+  forgotPasswordForm: boolean;
   toggleState: () => void;
   toggleForgotPassword: () => void;
 } = {
   registerForm: false,
+  loginForm: false,
+  forgotPasswordForm: false,
   toggleState: () => {},
   toggleForgotPassword: () => {},
 };
@@ -40,6 +44,8 @@ export const AuthFormContextProvider = ({
       toggleState,
       toggleForgotPassword,
       registerForm: variant === "REGISTER",
+      loginForm: variant === "LOGIN",
+      forgotPasswordForm: variant === "FORGOT",
     };
   }, [variant]);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

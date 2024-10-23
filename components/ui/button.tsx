@@ -34,11 +34,11 @@ export const Button = ({
       disabled={disabled}
       className={cn(
         `
-            flex items-center rounded-full px-3 py-2 text-sm font-semibold
-            focus-visible:outline-dotted
-            focus-visible:outline-2
-            focus-visible:outline-slate-500
-            ${className}`,
+        flex items-center rounded-full px-3 py-2 text-sm font-semibold
+        focus-visible:outline-dotted
+        focus-visible:outline-2
+      focus-visible:outline-slate-500
+        `,
         center && "justify-center",
         start && "justify-start",
         disabled && "opacity-50 cursor-default",
@@ -47,7 +47,8 @@ export const Button = ({
         danger && "bg-black hover:bg-black focus-visible:outline-black",
         !secondary &&
           !danger &&
-          "target-red hover:bg-red-800 focus-visible:target-red"
+          "target-red hover:bg-red-800 focus-visible:target-red",
+        `${className}`
       )}
     >
       {children}

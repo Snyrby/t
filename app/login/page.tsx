@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from "react";
 
 export default function LoginPage() {
   const { isOpen, onClose } = useModal();
-  const { registerForm } = useContext(AuthContext);
+  const { loginForm } = useContext(AuthContext);
 
   useEffect(() => {
     isOpen && onClose();
@@ -28,8 +28,15 @@ export default function LoginPage() {
     <>
       <AuthHeader />
       <AuthForm />
-      {!registerForm && <AuthLegal />}
-      <Link className="text-xs tracking-tighter md:whitespace-nowrap text-center mt-14" href="/"><span className="font-bold">*See offer details.</span> Restrictions apply. Pricing, promotions and availability may vary by location and at Target.com</Link>
+      {loginForm && <AuthLegal />}
+      <Link
+        className="text-xs tracking-tighter md:whitespace-nowrap text-center mt-14"
+        href="/"
+      >
+        <span className="font-bold">*See offer details.</span> Restrictions
+        apply. Pricing, promotions and availability may vary by location and at
+        Target.com
+      </Link>
       <AuthFooter />
     </>
   );

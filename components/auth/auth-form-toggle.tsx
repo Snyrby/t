@@ -1,18 +1,17 @@
 import { Button } from "@/components/ui/button";
+import { AuthContext } from "@/providers/auth-form-provider";
 import Link from "next/link";
+import { useContext } from "react";
 
 type AuthFormToggleProps = {
-  registerForm: boolean;
   toggleForm: () => void;
 };
 
-export const AuthFormToggle = ({
-  registerForm,
-  toggleForm,
-}: AuthFormToggleProps) => {
+export const AuthFormToggle = ({ toggleForm }: AuthFormToggleProps) => {
+  const { registerForm, loginForm } = useContext(AuthContext);
   return (
     <>
-      {!registerForm && (
+      {loginForm && (
         <Button
           type="button"
           center

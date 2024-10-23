@@ -27,7 +27,7 @@ import { AuthContext } from "@/providers/auth-form-provider";
 import { AuthLegal } from "./auth-legal";
 
 export const AuthForm = () => {
-  const { registerForm, toggleState, toggleForgotPassword } =
+  const { registerForm, loginForm, toggleState, toggleForgotPassword } =
     useContext(AuthContext);
   const keepMeSignedInRef = useRef<HTMLInputElement>(null);
   const session = useSession();
@@ -115,7 +115,8 @@ export const AuthForm = () => {
           })
         )
         .catch((error) => console.log("REGISTER ERROR: " + error));
-    } else {
+    }
+    if (loginForm) {
       data = {
         ...data,
         rememberMe: keepMeSignedInRef.current?.checked,
@@ -140,7 +141,7 @@ export const AuthForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
-        {!registerForm && <KeepMeSignedIn ref={keepMeSignedInRef} />}
+        {loginForm && <KeepMeSignedIn ref={keepMeSignedInRef} />}
         {registerForm ? (
           <>
             <Input
@@ -270,14 +271,14 @@ export const AuthForm = () => {
           {registerForm ? "Create account" : "Sign in with password"}
         </Button>
       </form>
-      {!registerForm && (
+      {loginForm && (
         <Button
           secondary
           type="button"
           disabled={isSubmitting}
           center
           onClick={toggleForgotPassword}
-          className="mb-4 hover:outline-none"
+          className="mb-4 hover:bg-white underline hover:no-underline"
         >
           Forgot password?
         </Button>

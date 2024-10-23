@@ -2,7 +2,7 @@ import { AuthFooterLinks } from "./auth-footer-links";
 
 export const AuthFooter = () => {
   return (
-    <div className="w-screen">
+    <div className="w-screen relative inset-0">
       <div className="h-[212px] w-full bg-gradient-to-r from-[#f7f7f7] to-[#eee]">
         <img
           alt="Target: Expect More. Pay Less."
