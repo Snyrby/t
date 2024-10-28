@@ -18,6 +18,13 @@ export const AuthHeader = () => {
         {registerForm && "Create your Target account"}
         {forgotPasswordForm && "Forgot Password"}
       </h1>
+      {forgotPasswordForm && (
+        <h3 className="text-center mt-8">
+          In order to change your password, we need to verify your identity.
+          Enter the email address associated with your
+          Target account.
+        </h3>
+      )}
     </>
   );
 };

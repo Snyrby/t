@@ -27,8 +27,13 @@ import { AuthContext } from "@/providers/auth-form-provider";
 import { AuthLegal } from "./auth-legal";
 
 export const AuthForm = () => {
-  const { registerForm, loginForm, toggleState, toggleForgotPassword } =
-    useContext(AuthContext);
+  const {
+    registerForm,
+    loginForm,
+    toggleState,
+    toggleForgotPassword,
+    forgotPasswordForm,
+  } = useContext(AuthContext);
   const keepMeSignedInRef = useRef<HTMLInputElement>(null);
   const session = useSession();
   const router = useRouter();
@@ -142,7 +147,7 @@ export const AuthForm = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
         {loginForm && <KeepMeSignedIn ref={keepMeSignedInRef} />}
-        {registerForm ? (
+        {registerForm && (
           <>
             <Input
               type="email"
@@ -209,7 +214,27 @@ export const AuthForm = () => {
               />
             )}
           </>
-        ) : (
+        )}
+        {forgotPasswordForm && (
+          <>
+            <Input
+              type="text"
+              label="Email"
+              id="email"
+              required
+              maxLength={nameMaxLength}
+              watch={emailAddress}
+              register={register}
+              errors={errors}
+              disabled={isSubmitting}
+              pattern={emailRegex}
+            />
+            {typeof errors["email"]?.message == "string" && (
+              <FormErrorMessage errorMessage={errors["email"]?.message} />
+            )}
+          </>
+        )}
+        {loginForm && (
           <>
             <Input
               type="text"
@@ -228,32 +253,33 @@ export const AuthForm = () => {
             )}
           </>
         )}
-        <Input
-          type={showPassword ? "text" : "password"}
-          label={registerForm ? "Create password" : "Password"}
-          id="password"
-          required
-          watch={password}
-          register={register}
-          errors={errors}
-          disabled={isSubmitting}
-          validate={() => validatePasswords({ password })}
-          setShowPasswordCriteria={setShowPasswordCriteria}
-        >
-          <div className="flex items-center absolute right-2 top-2.5 justify-end">
-            <button
-              type="button"
-              className="underline decoration-gray-400 underline-offset-1"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "hide" : "show"}
-            </button>
-          </div>
-        </Input>
+        {(registerForm || loginForm) && (
+          <Input
+            type={showPassword ? "text" : "password"}
+            label={registerForm ? "Create password" : "Password"}
+            id="password"
+            required
+            watch={password}
+            register={register}
+            errors={errors}
+            disabled={isSubmitting}
+            validate={() => validatePasswords({ password })}
+            setShowPasswordCriteria={setShowPasswordCriteria}
+          >
+            <div className="flex items-center absolute right-2 top-2.5 justify-end">
+              <button
+                type="button"
+                className="underline decoration-gray-400 underline-offset-1"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "hide" : "show"}
+              </button>
+            </div>
+          </Input>
+        )}
         {typeof errors["password"]?.message == "string" && (
           <FormErrorMessage errorMessage={errors["password"]?.message} />
         )}
-
         {showPasswordCriteria && registerForm && (
           <PasswordHint passwordCriteria={passwordCriteria} />
         )}
@@ -283,7 +309,7 @@ export const AuthForm = () => {
           Forgot password?
         </Button>
       )}
-      <AuthFormToggle registerForm={registerForm} toggleForm={toggleForm} />
+      <AuthFormToggle toggleForm={toggleForm} />
     </>
   );
 };
