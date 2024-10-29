@@ -8,12 +8,19 @@ type KeepMeSignedInProps = {
 export const KeepMeSignedIn = forwardRef<HTMLInputElement, KeepMeSignedInProps>(
   ({ isLabelShown }, ref) => {
     return (
-      <div className="flexCenter my-4 gap-x-4">
+      <div
+        className="flexCenter my-2 gap-x-4 focus-within:outline-dotted
+        focus-within:outline-2
+      focus-within:outline-slate-500"
+      >
         <input
           type="checkbox"
           name="keep-me-signed-in"
           id="keep-me-signed-in"
-          className={cn(isLabelShown ? "size-10" : "size-4")}
+          className={cn(
+            isLabelShown ? "size-10" : "size-4",
+            "focus-visible:outline-none accent-green-700"
+          )}
           ref={ref}
         />
         <div className="">

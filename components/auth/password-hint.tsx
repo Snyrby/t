@@ -13,7 +13,7 @@ type PasswordCriteriaProps = {
 
 export const PasswordHint = ({ passwordCriteria }: PasswordCriteriaProps) => {
   return (
-    <div className="text-xs flex flex-col justify-center items-start mt-4 text-[#666666] gap-y-4">
+    <div className="w-full text-xs flex flex-col justify-center items-start mt-4 text-[#666666] gap-y-4">
       <div>
         <span className="font-bold">Must contain:</span>
         <ul className="ml-4 mt-1.5">

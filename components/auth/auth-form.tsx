@@ -145,7 +145,7 @@ export const AuthForm = () => {
   };
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col justify-start items-center" noValidate>
         {loginForm && <KeepMeSignedIn ref={keepMeSignedInRef} />}
         {registerForm && (
           <>
@@ -269,7 +269,7 @@ export const AuthForm = () => {
             <div className="flex items-center absolute right-2 top-2.5 justify-end">
               <button
                 type="button"
-                className="underline decoration-gray-400 underline-offset-1"
+                className="underline decoration-gray-400 underline-offset-1 focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-slate-500 focus-visible:no-underline"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? "hide" : "show"}
@@ -292,7 +292,7 @@ export const AuthForm = () => {
           disabled={isSubmitting}
           fullWidth
           center
-          className="text-xl my-4"
+          className="text-xl my-4 focus-visible:underline"
         >
           {registerForm ? "Create account" : "Sign in with password"}
         </Button>

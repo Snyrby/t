@@ -17,7 +17,7 @@ export const AuthFormToggle = ({ toggleForm }: AuthFormToggleProps) => {
           center
           secondary
           fullWidth
-          className="outline outline-[0.1rem] outline-[#666666] text-xl"
+          className="outline outline-[0.1rem] outline-[#666666] text-xl focus-visible:underline"
           onClick={toggleForm}
         >
           Create your Target Account
@@ -27,7 +27,7 @@ export const AuthFormToggle = ({ toggleForm }: AuthFormToggleProps) => {
         <Link
           href="#"
           onClick={toggleForm}
-          className="flexCenter underline text-[#666666] hover:text-black"
+          className="flexCenter underline text-[#666666] hover:text-black focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-slate-500 focus-visible:no-underline"
         >
           Or sign in
         </Link>

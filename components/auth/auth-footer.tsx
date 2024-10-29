@@ -5,7 +5,7 @@ export const AuthFooter = () => {
   return (
     <>
       <Link
-        className="text-xs tracking-tighter md:whitespace-nowrap text-center mt-14 flexCenter mb-10"
+        className="text-xs tracking-tighter md:whitespace-nowrap text-center mt-14 flexCenter mb-10 hover:underline"
         href="/"
       >
         <span className="font-bold">*See offer details.</span> Restrictions
