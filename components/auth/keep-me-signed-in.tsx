@@ -9,9 +9,7 @@ export const KeepMeSignedIn = forwardRef<HTMLInputElement, KeepMeSignedInProps>(
   ({ isLabelShown }, ref) => {
     return (
       <div
-        className="flexCenter my-2 gap-x-4 focus-within:outline-dotted
-        focus-within:outline-2
-      focus-within:outline-slate-500"
+        className="flexCenter my-2 gap-x-4 dotted-outline-no-underline-on-focus"
       >
         <input
           type="checkbox"

@@ -16,7 +16,7 @@ export const MobilePickupDeliveryItem = ({
 }: MobilePickupDeliveryItemProps) => {
   return (
     <Link
-      className="flexBetween bg-gray-300/30 rounded-lg px-2 py-2 focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-slate-500"
+      className="flexBetween bg-gray-300/30 rounded-lg px-2 py-2 dotted-outline-no-underline-on-focus"
       href={href}
     >
       <Image

@@ -27,7 +27,7 @@ export const AuthFormToggle = ({ toggleForm }: AuthFormToggleProps) => {
         <Link
           href="#"
           onClick={toggleForm}
-          className="flexCenter underline text-[#666666] hover:text-black focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-slate-500 focus-visible:no-underline"
+          className="flexCenter underline text-[#666666] hover:text-black dotted-outline-no-underline-on-focus"
         >
           Or sign in
         </Link>

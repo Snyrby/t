@@ -29,7 +29,7 @@ export const AuthLegal = () => {
         <Link
           href="/"
           className={cn(
-            "underline hover:no-underline focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-slate-500 focus-visible:no-underline",
+            "underline hover:no-underline dotted-outline-no-underline-on-focus",
             !registerForm ? "text-xs text-blue-600" : "text-[#666666]"
           )}
         >
@@ -38,7 +38,7 @@ export const AuthLegal = () => {
         <Link
           href="/"
           className={cn(
-            "underline hover:no-underline mt-3 focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-slate-500 focus-visible:no-underline",
+            "underline hover:no-underline mt-3 dotted-outline-no-underline-on-focus",
             !registerForm ? "text-xs text-blue-600" : "text-[#666666]"
           )}
         >

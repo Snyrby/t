@@ -29,7 +29,6 @@ export default function LoginPage() {
       <AuthHeader />
       <AuthForm />
       {loginForm && <AuthLegal />}
-      
     </>
   );
 }

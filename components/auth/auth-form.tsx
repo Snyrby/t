@@ -269,7 +269,7 @@ export const AuthForm = () => {
             <div className="flex items-center absolute right-2 top-2.5 justify-end">
               <button
                 type="button"
-                className="underline decoration-gray-400 underline-offset-1 focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-slate-500 focus-visible:no-underline"
+                className="underline decoration-gray-400 underline-offset-1 dotted-outline-no-underline-on-focus"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? "hide" : "show"}

@@ -33,7 +33,7 @@ export const MobileDropDownList = ({
             <Link
               href={link.href}
               key={link.text}
-              className="flex flex-col justify-start mr-2 items-center text-wrap w-[70px] group focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-slate-500"
+              className="flex flex-col justify-start mr-2 items-center text-wrap w-[70px] group dotted-outline-no-underline-on-focus"
             >
               <Image
                 alt={link.text}
@@ -54,7 +54,7 @@ export const MobileDropDownList = ({
             <Link
               href={link.href}
               key={link.text}
-              className="flex flex-col justify-start mr-2 items-center text-wrap w-[70px] group focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-slate-500"
+              className="flex flex-col justify-start mr-2 items-center text-wrap w-[70px] group dotted-outline-no-underline-on-focus"
             >
               <Image
                 alt={link.text}
