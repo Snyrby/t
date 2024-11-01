@@ -29,8 +29,10 @@ export const AuthLegal = () => {
         <Link
           href="/"
           className={cn(
-            "underline hover:no-underline dotted-outline-no-underline-on-focus",
-            !registerForm ? "text-xs text-blue-600" : "text-[#666666]"
+            "underline hover:no-underline",
+            !registerForm
+              ? "text-xs text-blue-600 focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-blue-600"
+              : "text-[#666666] dotted-outline-no-underline-on-focus"
           )}
         >
           Terms & Conditions
@@ -38,8 +40,10 @@ export const AuthLegal = () => {
         <Link
           href="/"
           className={cn(
-            "underline hover:no-underline mt-3 dotted-outline-no-underline-on-focus",
-            !registerForm ? "text-xs text-blue-600" : "text-[#666666]"
+            "underline hover:no-underline mt-3",
+            !registerForm
+              ? "text-xs text-blue-600 focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-blue-600"
+              : "text-[#666666] dotted-outline-no-underline-on-focus"
           )}
         >
           Privacy Policy

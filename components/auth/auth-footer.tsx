@@ -3,9 +3,9 @@ import { AuthFooterLinks } from "./auth-footer-links";
 
 export const AuthFooter = () => {
   return (
-    <>
+    <div className="w-full flexCenter flex-col">
       <Link
-        className="text-xs tracking-tighter md:whitespace-nowrap text-center mt-14 flexCenter mb-10 hover:underline"
+        className="text-xs tracking-tighter md:whitespace-nowrap text-center mt-14 mb-10 hover:underline dotted-outline-no-underline-on-focus hover:focus:outline-0 line-clamp-2 md:line-clamp-1"
         href="/"
       >
         <span className="font-bold">*See offer details.</span> Restrictions
@@ -20,6 +20,6 @@ export const AuthFooter = () => {
         />
       </div>
       <AuthFooterLinks />
-    </>
+    </div>
   );
 };

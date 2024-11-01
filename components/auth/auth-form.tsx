@@ -145,7 +145,11 @@ export const AuthForm = () => {
   };
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col justify-start items-center" noValidate>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full flex flex-col justify-start items-center"
+        noValidate
+      >
         {loginForm && <KeepMeSignedIn ref={keepMeSignedInRef} />}
         {registerForm && (
           <>
@@ -294,7 +298,11 @@ export const AuthForm = () => {
           center
           className="text-xl my-4 focus-visible:underline"
         >
-          {registerForm ? "Create account" : "Sign in with password"}
+          {registerForm
+            ? "Create account"
+            : loginForm
+            ? "Sign in with password"
+            : "Continue"}
         </Button>
       </form>
       {loginForm && (

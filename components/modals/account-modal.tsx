@@ -53,7 +53,7 @@ export const AccountModal = ({ children }: AccountModalProps) => {
             <p className="text-xs text-[#666666] tracking-tighter">
               <sup className="text-[0.625rem]">1</sup>Restrictions apply.
               See&nbsp;
-              <Link href="/" className="underline">
+              <Link href="/" className="underline dotted-outline-on-focus">
                 Target.com/CircleCard
               </Link>{" "}
               for details.

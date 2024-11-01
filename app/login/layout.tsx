@@ -13,9 +13,7 @@ export default async function LoginLayout({
         <div className="flex flex-col justify-start items-center w-screen max-w-[500px] px-4 sm:px-0 mt-8">
           {children}
         </div>
-        <div className="w-full">
-          <AuthFooter />
-        </div>
+        <AuthFooter />
       </div>
     </AuthFormContextProvider>
   );

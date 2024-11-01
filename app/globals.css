@@ -111,3 +111,15 @@ input:-webkit-autofill:active {
   outline-style: dotted;
   text-decoration-line: none;
 }
+.dotted-outline-no-underline-on-focus-within:focus-within {
+  outline-width: 2px;
+  outline-color: #64748b;
+  outline-style: dotted;
+  text-decoration-line: none;
+}
+
+.dotted-outline-on-focus:focus-visible {
+  outline-width: 2px;
+  outline-color: #64748b;
+  outline-style: dotted;
+}

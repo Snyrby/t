@@ -11,7 +11,7 @@ export const AuthFooterLinks = () => {
             key={link.text}
             href={link.href}
             className={cn(
-              "text-xs text-white hover:text-slate-200",
+              "text-xs text-white hover:text-slate-300 dotted-outline-on-focus hover:outline-0",
               link.imageURL && "flexCenter gap-x-2"
             )}
           >
